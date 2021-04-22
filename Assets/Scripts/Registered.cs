@@ -1,0 +1,47 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+using UnityEngine.UI;
+
+
+namespace Victorina
+{
+    public class Registered : MonoBehaviour
+    {
+        [SerializeField] InputField _name;
+        [SerializeField] InputField _passwd;
+
+
+        private const string _urlIndex = "https://coxcombic-eliminato.000webhostapp.com/Test/";
+        private WWWForm _form;
+
+        public void PostText() => StartCoroutine(Post(_urlIndex,
+                (string error) => Debug.Log("Ошибка: " + error),
+                (string text) => Debug.Log("Текст отправлен" + text)));
+
+
+        private IEnumerator Post(string url, Action<string> onError, Action<string> onSucces)
+        {
+            _form = new WWWForm();
+            _form.AddField("question", _name.text);
+
+            using UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
+            yield return unityWebRequest.SendWebRequest();
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
+            {
+                onError(unityWebRequest.error);
+            }
+            else
+            {
+                onSucces(unityWebRequest.downloadHandler.text);
+            }
+        }
+
+        
+
+
+    }
+
+}
