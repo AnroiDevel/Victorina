@@ -46,9 +46,9 @@ namespace Victorina
             _form.AddField("question2", str);
             _form.AddField("question3", str);
 
-            using UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
+            UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
-            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
+            if (unityWebRequest.isHttpError || unityWebRequest.isNetworkError)
             {
                 onError(unityWebRequest.error);
             }

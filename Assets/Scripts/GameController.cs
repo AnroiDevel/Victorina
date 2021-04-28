@@ -1,7 +1,6 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -13,14 +12,16 @@ namespace Victorina
 {
     public class GameController : MonoBehaviour
     {
+        #region Fields
+
         private const string Path = "base";
-        private const string Yes = "Верно";
-        private const string No = "Ошибка";
-        private const string Res = "Вам удалось ответить верно на все вопросы! Поздравляем!";
-        private const string StartStr = "Старт";
+        private const string Yes = "Р’РµСЂРЅРѕ\n";
+        private const string No = "<color=red>РћС€РёР±РєР°</color>\n";
+        private const string Res = "Р’Р°Рј СѓРґР°Р»РѕСЃСЊ РѕС‚РІРµС‚РёС‚СЊ РІРµСЂРЅРѕ РЅР° РІСЃРµ РІРѕРїСЂРѕСЃС‹! РџРѕР·РґСЂР°РІР»СЏРµРј!";
+        private const string StartStr = "РЎС‚Р°СЂС‚";
         private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/question.txt";
 
-        private readonly string[] _load = { "загрузка", "загрузка.", "загрузка..", "загрузка..." };
+        private readonly string[] _load = { "Р·Р°РіСЂСѓР·РєР°", "Р·Р°РіСЂСѓР·РєР°.", "Р·Р°РіСЂСѓР·РєР°..", "Р·Р°РіСЂСѓР·РєР°..." };
 
         [SerializeField] private GameObject _nextBtn;
         [SerializeField] private GameObject _answersPanel;
@@ -30,6 +31,8 @@ namespace Victorina
         [SerializeField] private GameObject _loadingImg;
         [SerializeField] private GameObject _scorePanel;
         [SerializeField] private GameObject _exitPanel;
+        [SerializeField] private GameObject _logoUnity;
+        [SerializeField] private Text _commentText;
         [SerializeField] private Text _questionText;
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _scoreText;
@@ -40,13 +43,27 @@ namespace Victorina
         private string _base;
         private bool _errorConnection;
 
+        private GameObject _errorAnswerGO;
         private List<Question> _questions;
         private Question _currentQ;
+        private Animator _logoUnityRotate;
+
+
+        #endregion
+
+
+        #region Unity_Metods
 
         private void Start()
         {
             _start = _startBtn.GetComponent<Button>();
+            _logoUnityRotate = _logoUnity.GetComponent<Animator>();
             GetText();
+
+            float digit = 1f;
+            float digit2 = 1f;
+            bool isQ = digit == digit2;
+            Debug.Log(isQ);
         }
 
         private void Update()
@@ -54,6 +71,19 @@ namespace Victorina
             if (Input.GetKeyDown(KeyCode.Escape))
                 _exitPanel.SetActive(true);
         }
+
+        #endregion
+
+
+        #region Public_Metods
+
+        public void DeleteOneErrorAnswer()
+        {
+             var randomIndexErrorAnswer = Random.Range(1, _answers.Length);
+            _errorAnswerGO = _answers[randomIndexErrorAnswer].GetComponentInParent<Button>().gameObject;
+            _errorAnswerGO.SetActive(false);
+        }
+
 
         public void NextQuestion()
         {
@@ -71,80 +101,38 @@ namespace Victorina
                 _nextBtn.SetActive(false);
                 _scorePanel.SetActive(false);
                 _answersPanel.SetActive(true);
+                OnFiveAnswer();
             }
 
-            var i = Random.Range(0, _questions.Count);
+            var indexCurrentQuestion = Random.Range(0, _questions.Count);
 
-            _currentQ = _questions[i];
-            _questionText.text = _questions[i].TextQuestion;
+            _currentQ = _questions[indexCurrentQuestion];
+            _questionText.text = _questions[indexCurrentQuestion].TextQuestion;
 
-            List<int> index = new List<int>();
+            List<int> indexList = new List<int>();
 
-            var count = 0;
+            var countAnswers = 0;
 
             foreach (Text text in _answers)
             {
-                index.Add(count++);
+                indexList.Add(countAnswers++);
             }
 
 
-            while (index.Count > 0)
+            while (indexList.Count > 0)
             {
-                var r = Random.Range(0, index.Count);
-                _answers[--count].text = _questions[i].Answers[index[r]];
-                index.RemoveAt(r);
+                var randomIndexAnswers = Random.Range(0, indexList.Count);
+                print(countAnswers + " " + indexCurrentQuestion + " " + randomIndexAnswers);
+                _answers[--countAnswers].text = _questions[indexCurrentQuestion].Answers[indexList[randomIndexAnswers]];
+                indexList.RemoveAt(randomIndexAnswers);
             }
 
-            _questions.RemoveAt(i);
+            _questions.RemoveAt(indexCurrentQuestion);
         }
 
         public void GetText() => StartCoroutine(Get(UrlTextFile,
-                (string error) => Debug.Log("Ошибка: " + error),
+                (string error) => Debug.Log("РћС€РёР±РєР°: " + error),
                 (string text) => Debug.Log("+")));
-
-
-
-        private IEnumerator ProgressLoading(UnityWebRequest unityWebRequest)
-        {
-            var loadingText = _start.GetComponentInChildren<Text>();
-            var ind = 0;
-            if (unityWebRequest != null)
-                while (unityWebRequest.downloadProgress < 1.0f)
-                {
-                    loadingText.text = _load[ind++];
-                    yield return new WaitForSeconds(0.1f);
-                    if (ind + 1 >= _load.Length)
-                        ind = 0;
-
-                }
-            yield return new WaitForSeconds(1);
-            _razrabBtn.SetActive(true);
-            _start.GetComponentInChildren<Text>().text = StartStr;
-            _start.interactable = true;
-        }
-
-
-        private IEnumerator Get(string url, Action<string> onError, Action<string> onSucces)
-        {
-            UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
-
-            StartCoroutine(ProgressLoading(unityWebRequest));
-            yield return unityWebRequest.SendWebRequest();
-
-            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
-            {
-                onError(unityWebRequest.error);
-                _errorConnection = true;
-            }
-            else
-            {
-                onSucces(unityWebRequest.downloadHandler.text);
-                _base = unityWebRequest.downloadHandler.text;
-                _errorConnection = false;
-            }
-
-            CreateQuestionList();
-        }
 
         public void CreateQuestionList()
         {
@@ -154,27 +142,14 @@ namespace Victorina
             {
                 var resourcesTextFile = Resources.Load<TextAsset>(Path);
                 _base = resourcesTextFile.ToString();
-                Debug.Log("Вопросы загружены из файла");
+                Debug.Log("Р’РѕРїСЂРѕСЃС‹ Р·Р°РіСЂСѓР¶РµРЅС‹ РёР· С„Р°Р№Р»Р°");
             }
 
             if (_base != null)
             {
                 allQuestions = _base.Split('*');
-                Debug.Log("Вопросы загружены с сайта");
 
-                for (var i = 0; i < allQuestions.Length; i++)
-                {
-
-                    Question question = new Question();
-                    var q = allQuestions[i].Split('~');
-                    question.TextQuestion = q[0];
-                    question.Answers = new string[q.Length - 1];
-
-                    for (var j = 0; j < question.Answers.Length;)
-                        question.Answers[j] = q[++j];
-
-                    _questions.Add(question);
-                }
+                QuestionsListGenerate(allQuestions);
             }
 
         }
@@ -184,7 +159,7 @@ namespace Victorina
 
             if (_answers[index].text == _currentQ.Answers[0])
             {
-                _questionText.text = Yes;
+                _commentText.text = "<color=green>" + Yes + "</color>" + '\n' + _currentQ.Comment;
                 _nextBtn.SetActive(true);
                 _answersPanel.SetActive(false);
                 _scorePanel.SetActive(true);
@@ -192,7 +167,7 @@ namespace Victorina
             }
             else
             {
-                _questionText.text = No;
+                _commentText.text = No + '\n' + _currentQ.Comment;
                 _answersPanel.SetActive(false);
                 _reloadGameBtn.SetActive(true);
             }
@@ -207,6 +182,96 @@ namespace Victorina
         {
             Application.Quit();
         }
+
+        #endregion
+
+
+        #region Private_Metods
+
+        private void OnFiveAnswer()
+        {
+            if (_errorAnswerGO && !_errorAnswerGO.activeSelf)
+                _errorAnswerGO.SetActive(true);
+        }
+
+        private IEnumerator ProgressLoading(UnityWebRequest unityWebRequest)
+        {
+            _logoUnityRotate.enabled = true;
+            var loadingText = _start.GetComponentInChildren<Text>();
+            var ind = 0;
+            if (unityWebRequest != null)
+                while (unityWebRequest.downloadProgress < 1.0f)
+                {
+                    loadingText.text = _load[ind++];
+                    yield return new WaitForSeconds(0.1f);
+                    if (ind + 1 >= _load.Length)
+                        ind = 0;
+
+                }
+
+            yield return new WaitForSeconds(1);
+            _logoUnityRotate.enabled = false;
+
+            _razrabBtn.SetActive(true);
+            _start.GetComponentInChildren<Text>().text = StartStr;
+            _start.interactable = true;
+        }
+
+        private IEnumerator Get(string url, Action<string> onError, Action<string> onSucces)
+        {
+            UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
+
+            StartCoroutine(ProgressLoading(unityWebRequest));
+            yield return unityWebRequest.SendWebRequest();
+
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result ==  UnityWebRequest.Result.ProtocolError)
+            {
+                onError(unityWebRequest.error);
+                _errorConnection = true;
+            }
+            else
+            {
+                onSucces(unityWebRequest.downloadHandler.text);
+                _base = unityWebRequest.downloadHandler.text;
+                _errorConnection = false;
+            }
+
+            CreateQuestionList();
+        }
+
+        private void QuestionsListGenerate(string[] allQuestions)
+        {
+            for (var i = 0; i < allQuestions.Length; i++)
+            {
+                Question question = new Question();
+
+                var answers = 0;
+                var comment = false;
+                foreach (char ch in allQuestions[i])
+                {
+                    if (ch == '~')
+                        answers++;
+                    else if (ch == 'вє')
+                        comment = true;
+                }
+
+                var fullQuestion = allQuestions[i].Split('~', 'вє');
+                question.TextQuestion = fullQuestion[0];
+                question.Answers = new string[answers];
+
+                if (comment)
+                    question.Comment = fullQuestion[answers + 1];
+
+                for (var j = 0; j < question.Answers.Length;)
+                    question.Answers[j] = fullQuestion[++j];
+
+                _questions.Add(question);
+            }
+        }
+
+        #endregion
+
+        
     }
 
 }
