@@ -43,8 +43,6 @@ namespace Victorina
             _form = new WWWForm();
             var str = SendQuestionToBase() + "\n";
             _form.AddField("question", str);
-            _form.AddField("question2", str);
-            _form.AddField("question3", str);
 
             UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
