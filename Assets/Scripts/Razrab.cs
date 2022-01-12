@@ -48,11 +48,8 @@ namespace Victorina
 
             UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
-            if (unityWebRequest.isHttpError || unityWebRequest.isNetworkError)
-            {
-                onError(unityWebRequest.error);
-            }
-            else
+
+            if (unityWebRequest.result == UnityWebRequest.Result.Success)
             {
                 onSucces(unityWebRequest.downloadHandler.text);
                 ClearAllFields();
@@ -60,6 +57,7 @@ namespace Victorina
                 _errorSendText.color = Color.green;
                 _errorSendText.text = "Успешно";
             }
+            else onError(unityWebRequest.error);
         }
 
 

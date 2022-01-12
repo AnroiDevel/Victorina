@@ -59,11 +59,6 @@ namespace Victorina
             _start = _startBtn.GetComponent<Button>();
             _logoUnityRotate = _logoUnity.GetComponent<Animator>();
             GetText();
-
-            float digit = 1f;
-            float digit2 = 1f;
-            bool isQ = digit == digit2;
-            Debug.Log(isQ);
         }
 
         private void Update()
