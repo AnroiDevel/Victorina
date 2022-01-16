@@ -25,17 +25,20 @@ namespace Victorina
         private IEnumerator Post(string url, Action<string> onError, Action<string> onSucces)
         {
             _form = new WWWForm();
-            _form.AddField("question", _name.text);
+            var str = _name.text;
+            _form.AddField("regName", str);
 
             using UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
             if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 onError(unityWebRequest.error);
+                print("Ошибка отправки");
             }
             else
             {
                 onSucces(unityWebRequest.downloadHandler.text);
+                print("Отправлено");
             }
         }
 

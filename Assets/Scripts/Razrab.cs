@@ -43,16 +43,11 @@ namespace Victorina
             _form = new WWWForm();
             var str = SendQuestionToBase() + "\n";
             _form.AddField("question", str);
-            _form.AddField("question2", str);
-            _form.AddField("question3", str);
 
             UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
-            if (unityWebRequest.isHttpError || unityWebRequest.isNetworkError)
-            {
-                onError(unityWebRequest.error);
-            }
-            else
+
+            if (unityWebRequest.result == UnityWebRequest.Result.Success)
             {
                 onSucces(unityWebRequest.downloadHandler.text);
                 ClearAllFields();
@@ -60,6 +55,7 @@ namespace Victorina
                 _errorSendText.color = Color.green;
                 _errorSendText.text = "Успешно";
             }
+            else onError(unityWebRequest.error);
         }
 
 
