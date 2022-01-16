@@ -27,6 +27,7 @@ namespace Victorina
             else
             {
                 _inputField.gameObject.SetActive(false);
+                _currentName.text = _newName.text;
             }
         }
 
