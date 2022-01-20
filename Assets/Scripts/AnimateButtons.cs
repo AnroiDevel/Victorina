@@ -19,6 +19,11 @@ namespace Victorina
             _mainButton.onClick.Invoke();
         }
 
+        private void OnEnable()
+        {
+            _mainButton.onClick.Invoke();
+        }
+
         private void AnimationSelected(Button btn)
         {
             foreach (var button in _buttons)
