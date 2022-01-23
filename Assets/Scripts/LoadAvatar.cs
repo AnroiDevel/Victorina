@@ -8,8 +8,6 @@ namespace Victorina
 {
     public class LoadAvatar : MonoBehaviour
     {
-        WebCamTexture _wct = null;
-        WebCamDevice[] _devices;
         public RawImage _image;
         // Device cameras
         WebCamDevice _frontCameraDevice;
@@ -77,6 +75,14 @@ namespace Victorina
                 firstLeftCC.LoadImage(imageBytes);
                 _avatar.texture = firstLeftCC;
             }
+            else 
+            {
+                if (PlayerPrefs.HasKey("AvatarUrl"))
+                    _pathForUserImage = PlayerPrefs.GetString("AvatarUrl");
+                WWW www = new WWW(_pathForUserImage);
+                _avatar.texture = www.texture;
+
+            }
         }
 
         public void SetActiveCamera(WebCamTexture cameraToUse)
@@ -96,14 +102,17 @@ namespace Victorina
             _activeCameraTexture.Play();
         }
 
-
-
-
-        public void LoadSprite()
+        public void LoadImageFromDir() 
         {
 
-            //Application.OpenURL(_directory.FullName);
-            //_files = _directory.GetFiles("*.jpg", SearchOption.TopDirectoryOnly);
+            Application.OpenURL(Application.persistentDataPath);
+            _files = _directory.GetFiles("*.jpg", SearchOption.TopDirectoryOnly);
+        }
+
+
+        public void FotoFromCamera()
+        {
+
             _isActiveCamera = !_isActiveCamera;
             _image.gameObject.SetActive(_isActiveCamera);
 

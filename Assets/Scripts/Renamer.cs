@@ -6,7 +6,7 @@ namespace Victorina
 {
     public class Renamer : MonoBehaviour
     {
-        [SerializeField] private GameObject _profilePanel;
+        private GameObject _profilePanel;
         [SerializeField] private Button _renameBtn;
         [SerializeField] private Text _currentName;
         [SerializeField] private Text _newName;
@@ -16,6 +16,7 @@ namespace Victorina
 
         private void Start()
         {
+            _profilePanel = GameObject.Find("ProfilePanel");
             _renameBtn.onClick.AddListener(Switcher);
             _othersBtns = _profilePanel.GetComponentsInChildren<Button>();
         }
