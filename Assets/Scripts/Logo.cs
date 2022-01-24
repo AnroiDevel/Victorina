@@ -24,7 +24,7 @@ namespace Victorina
             //_logoText.SetActive(true);
             //yield return new WaitForSeconds(1);
 
-            GetComponent<SceneLoader>().LoadGameScene("Victorina");
+            GetComponent<SceneLoader>().LoadGameScene("Autorization");
 
         }
 
