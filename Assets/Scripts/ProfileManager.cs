@@ -1,5 +1,6 @@
 using PlayFab;
 using PlayFab.ClientModels;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,20 +21,20 @@ namespace Victorina
         private string _mail;
         private string _pass;
 
+        [SerializeField] private Text _MONEY;
+
+
+
         private void Start()
         {
-            if (_playerData.Email != string.Empty)
-            {
-                //_signOutAkkBtn.gameObject.SetActive(true);
-                //_createAkkBtn.gameObject.SetActive(false);
-                //_signInAkkBtn.gameObject.SetActive(false);
-            }
+            StartCoroutine(AccauntUserUpdater());
         }
+
 
         public void VerificationAccount()
         {
-            var newUserReq = new AddUsernamePasswordRequest 
-            { 
+            var newUserReq = new AddUsernamePasswordRequest
+            {
                 Username = _username,
                 Password = _pass,
                 Email = _mail
@@ -92,7 +93,7 @@ namespace Victorina
         {
             var request = new AddOrUpdateContactEmailRequest
             {
-                 EmailAddress = emailAddress               
+                EmailAddress = emailAddress
             };
             PlayFabClientAPI.AddOrUpdateContactEmail(request, result =>
             {
@@ -105,6 +106,19 @@ namespace Victorina
             Debug.LogWarning("Something went wrong with your API call. Here's some debug information:");
             Debug.LogError(error.GenerateErrorReport());
         }
+
+        private IEnumerator AccauntUserUpdater()
+        {
+            while (true)
+            {
+                _playerData.Init();
+                _MONEY.text = _playerData.Gold.ToString();
+                yield return new WaitForSeconds(1);
+
+            }
+        }
+
+
 
     }
 

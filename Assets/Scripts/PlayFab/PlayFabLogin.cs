@@ -46,28 +46,17 @@ namespace Victorina
                 CreateAccount = !needCreation
             }, success =>
             {
+                _playerData.Init();
                 PlayerPrefs.SetString(AuthGuidKey, id);
                 Login?.Invoke(true);
+
                 _loadText.text = "Загружено";
                 _playAndExitButton.gameObject.SetActive(true);
-
-                var accoutInfo = new GetAccountInfoRequest();
-                PlayFabClientAPI.GetAccountInfo(accoutInfo, OnCompletePlayFabAccountInfo, OnFailure);
 
                 _playAndExitButton.onClick.AddListener(() => SceneManager.LoadScene("Victorina"));
             }, OnFailure);
 
-          //  _playerData.Init();
-
         }
-
-        private void OnCompletePlayFabAccountInfo(GetAccountInfoResult result)
-        {
-            var userInfo = result;
-            _playerData.Email = userInfo.AccountInfo.PrivateInfo.Email;
-            _playerData.Name = userInfo.AccountInfo.TitleInfo.DisplayName;
-        }
-
 
         private void OnFailure(PlayFabError error)
         {
@@ -94,5 +83,8 @@ namespace Victorina
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene("Autorization");
         }
+
+
+
     }
 }
