@@ -86,7 +86,7 @@ namespace Victorina
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
         {
-            HandleCatalog(result.Catalog);
+            //HandleCatalog(result.Catalog);
             Debug.Log($"Catalog was loaded successfully!");
 
 
