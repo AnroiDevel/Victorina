@@ -1,6 +1,7 @@
 using System.IO;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 
@@ -75,12 +76,14 @@ namespace Victorina
                 firstLeftCC.LoadImage(imageBytes);
                 _avatar.texture = firstLeftCC;
             }
-            else 
+            else
             {
                 if (PlayerPrefs.HasKey("AvatarUrl"))
                     _pathForUserImage = PlayerPrefs.GetString("AvatarUrl");
+
                 WWW www = new WWW(_pathForUserImage);
                 _avatar.texture = www.texture;
+
 
             }
         }
@@ -102,7 +105,7 @@ namespace Victorina
             _activeCameraTexture.Play();
         }
 
-        public void LoadImageFromDir() 
+        public void LoadImageFromDir()
         {
 
             Application.OpenURL(Application.persistentDataPath);

@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 
@@ -19,12 +21,13 @@ namespace Victorina
         [SerializeField] private GameObject _filePrefab;
 
         [SerializeField] private RawImage _avatarImg;
+        [SerializeField] private Text _errorInfo;
 
         private string _pathToUserAvatar;
 
         private DirectoryInfo _dirInfo;
         private FileInfo[] _files;
-        private GameObject[] _spawnsGameObjects;
+        [SerializeField] private FileScript[] _placeToImage;
 
         private void Awake()
         {
@@ -33,52 +36,106 @@ namespace Victorina
 
         private void Start()
         {
-            if(PlayerPrefs.HasKey("AvatarUrl"))
+            if (PlayerPrefs.HasKey("AvatarUrl"))
                 _pathToUserAvatar = PlayerPrefs.GetString("AvatarUrl");
             WWW www = new WWW(_pathToUserAvatar);
             _avatarImg.texture = www.texture;
         }
 
-        public void LoadAvatarList()
+        private void OnEnable()
         {
-            var dir = Directory.GetCurrentDirectory();
+            LoadAvatarList();
+        }
+
+
+        public async void LoadAvatarList()
+        {
+            string[] dirs = {
+               "/mnt/sdcard/Pictures",
+               "/mnt/sdcard/Download",
+               "/mnt/sdcard/DCIM"
+            };
+
+            string res = "Доступные пути\n";
+            foreach (string s in dirs)
+            {
+                if (Directory.Exists(s))
+                {
+                    res += s + "\n";
+                }
+            }
+            _errorInfo.text = res;
+
+
+
             //dir = Path.GetDirectoryName(dir);
-            if (File.Exists(dir)) return;
+            var dir = "/mnt/sdcard/Download";
+
+            if (!Directory.Exists(dir))
+            {
+                dir = Directory.GetCurrentDirectory();
+                if (!Directory.Exists(dir))
+                {
+                    _errorInfo.text = "Путь не найден";
+                    return;
+                }
+
+            }
 
             _dirInfo = new DirectoryInfo(dir);
-            _fileListPan.SetActive(true);
-            FileListCreated();
+
+            _errorInfo.text = "Загрузка";
+
+            await Task.Run(() => FileListCreated());
+
+            StartCoroutine(LoadTextures());
+
         }
 
-        private void FileListCreated()
+        private Task FileListCreated()
         {
-            _files = _dirInfo.GetFiles("*.png", SearchOption.AllDirectories);
 
-            _spawnsGameObjects = new GameObject[_files.Length];
+            _files = new string[] { "*.png", "*.jpg" }.SelectMany(ext => _dirInfo.GetFiles(ext, SearchOption.AllDirectories)).ToArray();
 
-            for (int i = 0; i < _files.Length; i++)
+            return Task.CompletedTask;
+        }
+
+        private IEnumerator LoadTextures()
+        {
+            var cnt = 0;
+            var maxCount = _placeToImage.Length;
+            var currentIndex = 0;
+            while (cnt < _files.Length && currentIndex < maxCount)
             {
-                StartCoroutine(FileCreated(i));
-                if (i > 10) return;
+                FileInfo f = _files[cnt];
+
+                //if (f.Length < 10000)
+                //{
+                //    cnt++;
+                //    print(f.Name + "  " + f.Length);
+                //    continue;
+                //}
+
+                var request = UnityWebRequestTexture.GetTexture("file://" + _files[cnt].FullName);
+
+                yield return request.SendWebRequest();
+
+                if (request.result == UnityWebRequest.Result.Success)
+                {
+                    _placeToImage[currentIndex].Index = cnt;
+                    _placeToImage[currentIndex].Image.texture = DownloadHandlerTexture.GetContent(request);
+                    _placeToImage[currentIndex].gameObject.SetActive(true);
+                    currentIndex++;
+                }
+                else
+                    _errorInfo.text = request.error;
+
+                request.Dispose();
+                if (cnt > 40) yield break;
+                cnt++;
+
             }
-        }
-
-        private IEnumerator FileCreated(int i)
-        {
-            OneFileCreated(i);
-            yield return null;
-        }
-
-        private void OneFileCreated(int i)
-        {
-            FileInfo f = _files[i];
-            FileScript file = Instantiate(_filePrefab, _filesContent.transform).GetComponent<FileScript>();
-            file.FileNameText.text = f.Name;
-            file.Index = i;
-            _spawnsGameObjects[i] = file.gameObject;
-
-            WWW www = new WWW("file://" + _files[i].FullName);
-            file.Image.texture = www.texture;
+            _errorInfo.text = "Загружено";
         }
 
         public void SelectAvatar(int index)
@@ -88,16 +145,16 @@ namespace Victorina
             _fileListPan.SetActive(false);
 
             _pathToUserAvatar = www.url;
-            PlayerPrefs.SetString("AvatarUrl",_pathToUserAvatar);
+            PlayerPrefs.SetString("AvatarUrl", _pathToUserAvatar);
 
             DestroyTempFiles();
         }
 
         public void DestroyTempFiles()
         {
-            if (_spawnsGameObjects.Length > 0)
-                foreach (GameObject obj in _spawnsGameObjects)
-                    Destroy(obj);
+            if (_placeToImage.Length > 0)
+                foreach (var obj in _placeToImage)
+                    obj.gameObject.SetActive(false);
         }
     }
 
