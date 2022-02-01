@@ -32,6 +32,7 @@ namespace Victorina
         [SerializeField] private Button _nextBtn;
         [SerializeField] private Image[] _progressCells;
         [SerializeField] private GameObject _progressPanel;
+        [SerializeField] private GameObject _victory;
 
         private Queue<int> _questionIndexes = new Queue<int>();
 
@@ -56,6 +57,11 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
+            if(_currentStepProgress >= _progressCells.Length)
+            {
+                _victory.SetActive(true);
+                return;
+            }
             _question.text = LoadingQuestion;
             SetDefaultRateImage();
             StopAllCoroutines();

@@ -21,13 +21,15 @@ namespace Victorina
         private string _mail;
         private string _pass;
 
-        [SerializeField] private Text _MONEY;
+        [SerializeField] private Text _moneyText;
 
 
 
         private void Start()
         {
-            StartCoroutine(AccauntUserUpdater());
+            _playerData.Init();
+            _moneyText.text = _playerData.Bit.ToString();
+            //StartCoroutine(AccauntUserUpdater());
         }
 
 
@@ -112,8 +114,8 @@ namespace Victorina
             while (true)
             {
                 _playerData.Init();
-                _MONEY.text = _playerData.Gold.ToString();
-                yield return new WaitForSeconds(1);
+                _moneyText.text = _playerData.Bit.ToString();
+                yield return new WaitForSeconds(5);
 
             }
         }
