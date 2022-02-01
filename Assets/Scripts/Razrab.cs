@@ -15,13 +15,17 @@ namespace Victorina
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _errorSendText;
 
+        [SerializeField] private int _minLengthQuestion = 5;
+
         private string _questionTxt;
         private string[] _answersTxt;
+        
 
         private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
+        private const string UrlTextFile2 = "https://coxcombic-eliminato.000webhostapp.com/Victorina/";
         private const string EmptyAnswerError = "Ответ не может быть пустым\n";
-        private const string EmptyQuestionError = "Отсутствует вопрос\n";
-        private const string EqualsAnswersError = "Одинаковых ответов быть не должно";
+        private const string EmptyQuestionError = "Слишком короткий вопрос\n";
+        private const string EqualsAnswersError = "Одинаковых ответов быть не должно\n";
 
         private void Start()
         {
@@ -33,7 +37,7 @@ namespace Victorina
         public void PostText()
         {
             if (IsCorrectQuestion())
-                StartCoroutine(Post(UrlTextFile,
+                StartCoroutine(Post(UrlTextFile2,
                      (string error) => Debug.Log("Ошибка: " + error),
                      (string text) => Debug.Log("Текст отправлен" + text)));
         }
@@ -41,8 +45,12 @@ namespace Victorina
         private IEnumerator Post(string url, Action<string> onError, Action<string> onSucces)
         {
             _form = new WWWForm();
-            var str = SendQuestionToBase() + "\n";
-            _form.AddField("question", str);
+            _form.AddField("question", _question.text);
+            _form.AddField("ansverTrue", _answers[0].text);
+            _form.AddField("answerFalseVariantOne", _answers[1].text);
+            _form.AddField("answerFalseVariantTwo", _answers[2].text);
+            _form.AddField("answerFalseVariantThree", _answers[3].text);
+            _form.AddField("answerFalseVariantFour", _answers[4].text);
 
             UnityWebRequest unityWebRequest = UnityWebRequest.Post(url, _form);
             yield return unityWebRequest.SendWebRequest();
@@ -80,16 +88,14 @@ namespace Victorina
             _errorSendText.color = Color.red;
             _errorSendText.text = string.Empty;
 
-            if (_question.text.Length <= 0)
+            if (_question.text.Length <= 5)
             {
                 correct = false;
                 _errorSendText.text = EmptyQuestionError;
-
             }
 
             foreach (Text text in _answers)
             {
-
                 if (text.text.Length <= 0)
                 {
                     correct = false;
@@ -112,7 +118,6 @@ namespace Victorina
                         _errorSendText.text = EqualsAnswersError;
                         break;
                     }
-
                 }
             }
             return correct;
@@ -120,8 +125,8 @@ namespace Victorina
 
         private void ClearAllFields()
         {
-            foreach (InputField inputField in _inputFields)
-                inputField.text = string.Empty;
+            //foreach (InputField inputField in _inputFields)
+            //    inputField.text = string.Empty;
         }
     }
 

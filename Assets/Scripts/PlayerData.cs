@@ -16,19 +16,24 @@ namespace Victorina
         public string PlayFabId;
         public string TitlePlayerAccountId;
 
+        public string RechargedBonusTime;
+
         public string Item;
 
         public string GuidID;
         public string Name;
         public string Email;
         public string Password;
+        public bool IsBonusReady;
 
         public string ErrorInformation;
+
+        public DateTime RechargedBonusT;
 
         private readonly Dictionary<string, CatalogItem> _catalog = new Dictionary<string, CatalogItem>();
         private readonly Dictionary<string, int> _virtualCurrency = new Dictionary<string, int>();
 
-        public int Gold;
+        public int Bit;
 
         public void Init()
         {
@@ -40,8 +45,25 @@ namespace Victorina
             //    Password = PlayerPrefs.GetString("Password");
             //    Money = PlayerPrefs.GetInt("Money");
             //}
-            
+
+            // RechargedBonusT = DateTime.MinValue.AddMinutes(5);
+            RechargedBonusT = DateTime.MinValue.AddSeconds(10);
+
+            RechargedBonusTime = RechargedBonusT.ToLongTimeString();
+
             GetAccauntUserInfo();
+        }
+
+        internal void AddMoney(int val)
+        {
+            AddUserVirtualCurrencyRequest request = new AddUserVirtualCurrencyRequest
+            {
+                Amount = val,
+                VirtualCurrency = "BT"
+            };
+
+            PlayFabClientAPI.AddUserVirtualCurrency(request, complete => Debug.Log(complete), error => Debug.Log(error));
+
         }
 
         public void Reset()
@@ -50,7 +72,7 @@ namespace Victorina
             Name = string.Empty;
             Email = string.Empty;
             Password = string.Empty;
-            Gold = 0;
+            Bit = 0;
         }
 
         private void GetAccauntUserInfo()
@@ -78,17 +100,20 @@ namespace Victorina
             {
                 _virtualCurrency.Add(pair.Key, pair.Value);
             }
-            int goldValue;
-            var isGetGold = _virtualCurrency.TryGetValue("GD", out goldValue);
-            if (isGetGold)
-                Gold = goldValue;
+            int bitValue;
+            var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
+            if (isGetBit)
+                Bit = bitValue;
+            int bonus;
+            var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
+            if (isGetBonus && bonus > 0)
+                IsBonusReady = true;
         }
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
         {
             //HandleCatalog(result.Catalog);
             Debug.Log($"Catalog was loaded successfully!");
-
 
             PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }

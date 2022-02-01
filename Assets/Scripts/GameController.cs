@@ -56,8 +56,8 @@ namespace Victorina
 
         private void Start()
         {
-            _start = _startBtn.GetComponent<Button>();
-            _logoUnityRotate = _logoUnity.GetComponent<Animator>();
+            //_start = _startBtn.GetComponent<Button>();
+            //_logoUnityRotate = _logoUnity.GetComponent<Animator>();
             GetText();
         }
 
@@ -75,7 +75,7 @@ namespace Victorina
 
         public void DeleteOneErrorAnswer()
         {
-             var randomIndexErrorAnswer = Random.Range(1, _answers.Length);
+            var randomIndexErrorAnswer = Random.Range(1, _answers.Length);
             _errorAnswerGO = _answers[randomIndexErrorAnswer].GetComponentInParent<Button>().gameObject;
             _errorAnswerGO.SetActive(false);
         }
@@ -217,10 +217,10 @@ namespace Victorina
         {
             UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
 
-            StartCoroutine(ProgressLoading(unityWebRequest));
+            //StartCoroutine(ProgressLoading(unityWebRequest));
             yield return unityWebRequest.SendWebRequest();
 
-            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result ==  UnityWebRequest.Result.ProtocolError)
+            if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
             {
                 onError(unityWebRequest.error);
                 _errorConnection = true;
@@ -267,7 +267,32 @@ namespace Victorina
 
         #endregion
 
-        
+
+        public void BaseReplace()
+        {
+            StartCoroutine(Post());
+        }
+
+        private IEnumerator Post()
+        {
+            for (var i = 0; i < _questions.Count - 2; i++)
+            {
+
+                var form = new WWWForm();
+                form.AddField("question", _questions[i].TextQuestion);
+                form.AddField("ansverTrue", _questions[i].Answers[0]);
+                form.AddField("answerFalseVariantOne", _questions[i].Answers[1]);
+                form.AddField("answerFalseVariantTwo", _questions[i].Answers[2]);
+                form.AddField("answerFalseVariantThree", _questions[i].Answers[3]);
+                form.AddField("answerFalseVariantFour", _questions[i].Answers[4]);
+                print(i);
+                UnityWebRequest unityWebRequest = UnityWebRequest.Post("https://coxcombic-eliminato.000webhostapp.com/Victorina/", form);
+                yield return unityWebRequest.SendWebRequest();
+            }
+            print("ujnjdj");
+        }
+
+
     }
 
 }
