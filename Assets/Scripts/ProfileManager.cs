@@ -23,15 +23,10 @@ namespace Victorina
 
         [SerializeField] private Text _moneyText;
 
-
-
         private void Start()
         {
-            _playerData.Init();
             _moneyText.text = _playerData.Bit.ToString();
-            //StartCoroutine(AccauntUserUpdater());
         }
-
 
         public void VerificationAccount()
         {
@@ -107,17 +102,6 @@ namespace Victorina
         {
             Debug.LogWarning("Something went wrong with your API call. Here's some debug information:");
             Debug.LogError(error.GenerateErrorReport());
-        }
-
-        private IEnumerator AccauntUserUpdater()
-        {
-            while (true)
-            {
-                _playerData.Init();
-                _moneyText.text = _playerData.Bit.ToString();
-                yield return new WaitForSeconds(5);
-
-            }
         }
 
 

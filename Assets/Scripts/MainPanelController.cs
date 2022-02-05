@@ -7,17 +7,20 @@ namespace Victorina
 {
     public class MainPanelController : MonoBehaviour
     {
+        private const string Avatar = "/photo.png";
         [SerializeField] Text _nameUser;
         [SerializeField] RawImage _userImage;
 
         private string _pathForUserImage;
+        private Texture _avatarTexture;
 
-        private void OnEnable()
+        private void Start()
         {
+            _pathForUserImage = Application.persistentDataPath + Avatar;
+
             if (PlayerPrefs.HasKey("Name"))
                 _nameUser.text = PlayerPrefs.GetString("Name");
 
-            _pathForUserImage = Application.persistentDataPath + "/photo.png";
             if (File.Exists(_pathForUserImage))
             {
                 var imageBytes = File.ReadAllBytes(_pathForUserImage);
@@ -30,7 +33,8 @@ namespace Victorina
                 if (PlayerPrefs.HasKey("AvatarUrl"))
                     _pathForUserImage = PlayerPrefs.GetString("AvatarUrl");
                 WWW www = new WWW(_pathForUserImage);
-                _userImage.texture = www.texture;
+                _avatarTexture = www.texture;
+                _userImage.texture = _avatarTexture;
             }
 
 

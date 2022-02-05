@@ -16,10 +16,12 @@ MonoBehaviour:
   CustomId: 65121842-faf7-4ae8-b6e7-ceafd778f55f
   PlayFabId: 9718216EC7B16B74
   TitlePlayerAccountId: 50D45910BF589D06
+  ErrorInformation: 
   Item: 
+  RechargedBonusTime: 
   GuidID: 
   Name: 
   Email: 
   Password: 
-  ErrorInformation: 
-  Bit: 1000
+  Bit: 4800
+  _isBonusReady: 0

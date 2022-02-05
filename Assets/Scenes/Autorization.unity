@@ -172,6 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _titleLabel: {fileID: 116619244}
   _workedInfoLabel: {fileID: 1396751092}
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!4 &98403658
 Transform:
   m_ObjectHideFlags: 0

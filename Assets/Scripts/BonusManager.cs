@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _timeToNext;
+        [SerializeField] private Text _bit;
 
         private Button _bonusButton;
 
@@ -18,35 +20,39 @@ namespace Victorina
         private void Start()
         {
             _bonusButton = GetComponent<Button>();
-            _startTime = DateTime.Now;
-            _timeToNext.text = _playerData.RechargedBonusTime;
+            //_playerData.BonusComplete += OnBonusComplete;
+            _isBonusComplete = _playerData.IsBonusReady;
+            StartCoroutine(BonusTimerUpdater(_playerData.BonusRechargeSeconds));
         }
 
-        private void FixedUpdate()
+        private void OnBonusComplete(bool val)
         {
-            if (!_isBonusComplete)
-            {
-                var tempTime = _playerData.RechargedBonusT - (DateTime.Now - _startTime);
-                _timeToNext.text = tempTime.ToLongTimeString();
-                if (tempTime.Minute < 1 && tempTime.Second < 1)
+            _bonusButton.interactable = val;
+            _timeToNext.text = "Готово";
+        }
+
+
+        private IEnumerator BonusTimerUpdater(int seconds)
+        {
+            if (!_playerData.IsBonusReady)
+                while (seconds-- > 0)
                 {
-                    _isBonusComplete = true;
-                    _bonusButton.interactable = true;
+                    var tempTime = DateTime.MinValue.AddSeconds(seconds);
+                    _timeToNext.text = tempTime.ToLongTimeString();
+                    yield return new WaitForSeconds(1);
                 }
-            }
+            OnBonusComplete(true);
         }
 
-        public void StartTimer()
-        {
-            _startTime = DateTime.Now;
-            _isBonusComplete = false;
+
+        public void GetBonus()
+        {          
+            _playerData.GetBonus();
+
             _bonusButton.interactable = false;
-            BonusMoney(100);
-        }
-
-        private void BonusMoney(int val)
-        {
-            _playerData.AddMoney(val);
+            var tempBit = _playerData.Bit;
+            _bit.text = tempBit.ToString();
+            StartCoroutine(BonusTimerUpdater(60));
         }
     }
 

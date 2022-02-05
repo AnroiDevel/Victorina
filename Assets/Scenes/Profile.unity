@@ -7141,7 +7141,7 @@ MonoBehaviour:
   _signInAkkBtn: {fileID: 1562800380}
   _signOutAkkBtn: {fileID: 1058122311}
   _workedInfoLabel: {fileID: 771436977}
-  _MONEY: {fileID: 1984421447}
+  _moneyText: {fileID: 1984421447}
 --- !u!114 &2133994179
 MonoBehaviour:
   m_ObjectHideFlags: 0
