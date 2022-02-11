@@ -19,7 +19,7 @@ namespace Victorina
         WebCamTexture _backCameraTexture;
         WebCamTexture _activeCameraTexture;
 
-        private RawImage _avatar;
+        [SerializeField] private RawImage _avatar;
         private Sprite _sprite;
 
         private DirectoryInfo _directory = new DirectoryInfo("C:");
@@ -28,7 +28,7 @@ namespace Victorina
 
         private void Start()
         {
-            _avatar = GetComponentInParent<RawImage>();
+            //_avatar = GetComponentInParent<RawImage>();
             LoadImageAvatar();
 
             if (WebCamTexture.devices.Length == 0)
@@ -80,12 +80,14 @@ namespace Victorina
             {
                 if (PlayerPrefs.HasKey("AvatarUrl"))
                     _pathForUserImage = PlayerPrefs.GetString("AvatarUrl");
-
+                else return;
                 WWW www = new WWW(_pathForUserImage);
                 _avatar.texture = www.texture;
 
 
             }
+            if (_avatar.texture != null)
+                _avatar.gameObject.SetActive(true);
         }
 
         public void SetActiveCamera(WebCamTexture cameraToUse)

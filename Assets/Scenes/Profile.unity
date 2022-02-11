@@ -156,8 +156,8 @@ RectTransform:
   m_Father: {fileID: 2133994181}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15222222, y: 0.351}
-  m_AnchorMax: {x: 0.84700006, y: 0.41333333}
+  m_AnchorMin: {x: 0.15222222, y: 0.36741668}
+  m_AnchorMax: {x: 0.84700006, y: 0.43025002}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1251,6 +1251,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d633cecbe9837e4da1e853e617e58b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &235438605
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235438607}
+  - component: {fileID: 235438606}
+  - component: {fileID: 235438608}
+  m_Layer: 0
+  m_Name: SceneController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &235438606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235438605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3dd5999326833d459f890aa481412d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _backgroundImg: {fileID: 2133994179}
+--- !u!4 &235438607
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235438605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.050360113, y: 0.16897513, z: 108.27163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235438608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235438605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef60e186249d3846afbbd25efb99f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _profileThema: {fileID: 235438606}
 --- !u!1 &239427404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1936,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1946,10 +2004,10 @@ RectTransform:
   m_Father: {fileID: 2133994181}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.62323123, y: 0}
-  m_AnchorMax: {x: 1, y: 0.32879004}
-  m_AnchoredPosition: {x: -236.66, y: 1924.99}
-  m_SizeDelta: {x: -230.61, y: -616.92}
+  m_AnchorMin: {x: 0.6175556, y: 0.8016668}
+  m_AnchorMax: {x: 0.7802963, y: 0.874}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &540960818
 MonoBehaviour:
@@ -1964,6 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 47043260}
+  _avatar: {fileID: 47043260}
 --- !u!114 &540960819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2095,8 +2154,8 @@ RectTransform:
   m_Father: {fileID: 2133994181}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.19674076, y: 0.5916668}
-  m_AnchorMax: {x: 0.80714816, y: 0.66166675}
+  m_AnchorMin: {x: 0.19674076, y: 0.6116667}
+  m_AnchorMax: {x: 0.809, y: 0.66166675}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3007,8 +3066,8 @@ RectTransform:
   m_Father: {fileID: 2133994181}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.13466665, y: 0.171}
-  m_AnchorMax: {x: 0.8682964, y: 0.25100002}
+  m_AnchorMin: {x: 0.13466665, y: 0.18766667}
+  m_AnchorMax: {x: 0.87000006, y: 0.26758334}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
@@ -3793,6 +3852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 47043260}
+  _avatar: {fileID: 0}
 --- !u!114 &1105512012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4424,7 +4484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4437,7 +4497,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 300
+    m_MaxSize: 68
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4932,7 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4994,8 +5054,8 @@ RectTransform:
   m_Father: {fileID: 2133994181}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.15222222, y: 0.47225}
-  m_AnchorMax: {x: 0.84888905, y: 0.53641665}
+  m_AnchorMin: {x: 0.15037036, y: 0.48966667}
+  m_AnchorMax: {x: 0.84700006, y: 0.55383337}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5043,16 +5103,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1701861372}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 235438608}
+        m_TargetAssemblyTypeName: Victorina.ThemaSwither, Assembly-CSharp
+        m_MethodName: SwithThema
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: FuturismThema
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1562800381

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045def0b7c95e554c8f23fff1decf179, type: 3}
+  m_Name: FuturismThema
+  m_EditorClassIdentifier: 
+  Confidential: {fileID: 21300000, guid: 394228a6324eee74b8cd4a9ce990ce99, type: 3}
+  ProfileBackground: {fileID: 21300000, guid: ea38662f0dee16340af7b8f6ed67eb13, type: 3}
+  WelcomeBackground: {fileID: 21300000, guid: 624027e73800e71469124391ab046b7f, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: 624027e73800e71469124391ab046b7f, type: 3}
+  GameProgressPanel: {fileID: 21300000, guid: 903bf4e1d1a2fd144b96cda6d711711b, type: 3}
+  GamePanel: {fileID: 21300000, guid: 3dde3bd4bb9a2ae40b58e504bbe8cc08, type: 3}
+  GameExitPanel: {fileID: 21300000, guid: 29ba1c3b5ae4c884cbd7a9a4d9b6919f, type: 3}

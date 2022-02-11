@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -33,6 +34,9 @@ namespace Victorina
         [SerializeField] private Image[] _progressCells;
         [SerializeField] private GameObject _progressPanel;
         [SerializeField] private GameObject _victory;
+        [SerializeField] private Color _defaultColor;
+        [SerializeField] private Color _activeColor;
+        [SerializeField] private TMP_ColorGradient _colorGradient;
 
         private Queue<int> _questionIndexes = new Queue<int>();
 
@@ -44,6 +48,7 @@ namespace Victorina
         private float _stepGrade = 0.1f;
         private int _userGradeQuestion;
         private int _indexCurrentQuestion;
+        private Image _prevImgSignal;
 
         #endregion
 
@@ -57,7 +62,7 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
-            if(_currentStepProgress >= _progressCells.Length)
+            if (_currentStepProgress >= _progressCells.Length)
             {
                 _victory.SetActive(true);
                 return;
@@ -282,6 +287,13 @@ namespace Victorina
         private IEnumerator PrevRaundPause(int currentStep)
         {
             var clip = 3;
+            if (_prevImgSignal != null)
+                _prevImgSignal.color = _defaultColor;
+            _prevImgSignal = _progressCells[currentStep].GetComponentsInChildren<Image>()[1];
+            _prevImgSignal.color = _activeColor;
+
+            _progressCells[currentStep].GetComponentInChildren<TMP_Text>().colorGradientPreset = _colorGradient;
+
             while (clip > 0)
             {
                 _progressCells[currentStep].color = Color.green;
