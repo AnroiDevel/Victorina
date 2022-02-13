@@ -19,3 +19,13 @@ MonoBehaviour:
   GameProgressPanel: {fileID: 21300000, guid: 6997b4c038fac3d46a3b0075face3d6a, type: 3}
   GamePanel: {fileID: 21300000, guid: 66ae3355506574441b44f625288b408e, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 00b8c7fe6ec24334d8eca85fc517ac5a, type: 3}
+  MainMenuBack: {fileID: 21300000, guid: 3346911af3bc7f44e87dc7cff4f86c41, type: 3}
+  ShopMenuBack: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
+  StatisticsPanelBack: {fileID: 21300000, guid: 4085a62394fcbb446ac4368518e63d51, type: 3}
+  AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
+  BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
+  OptionIcon: {fileID: 21300000, guid: 017fd62c3f84d444ebb0d2fa7e682474, type: 3}
+  ReitingIcon: {fileID: 21300000, guid: 4ea5b94734c04d04ea158189afdcb269, type: 3}
+  MainIcon: {fileID: 21300000, guid: 157398544aa27b8479d20bbdf469cc84, type: 3}
+  ShopIcon: {fileID: 21300000, guid: 5aa8812415bc0d043a9d7ef7c10b77ae, type: 3}
+  OptionMenuBack: {fileID: 21300000, guid: ad029d02da33a5a4d9f70fbaa3207186, type: 3}
