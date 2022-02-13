@@ -19,6 +19,8 @@ namespace Victorina
         public Sprite StatisticsPanelBack;
         public Sprite AchivPanelBack;
 
+        public Sprite QuestionRedactorBack;
+
         [Header("Меню")]
         public Sprite BottomAnimMenuBack;
         public Sprite OptionIcon;

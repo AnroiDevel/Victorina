@@ -23,6 +23,7 @@ MonoBehaviour:
   ShopMenuBack: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
   StatisticsPanelBack: {fileID: 21300000, guid: 4085a62394fcbb446ac4368518e63d51, type: 3}
   AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
+  QuestionRedactorBack: {fileID: 21300000, guid: bbfe7b79b46fc254685bd68bc0198ee9, type: 3}
   BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
   OptionIcon: {fileID: 21300000, guid: 017fd62c3f84d444ebb0d2fa7e682474, type: 3}
   ReitingIcon: {fileID: 21300000, guid: 4ea5b94734c04d04ea158189afdcb269, type: 3}
