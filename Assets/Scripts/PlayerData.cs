@@ -15,42 +15,29 @@ namespace Victorina
         public string CustomId;
         public string PlayFabId;
         public string TitlePlayerAccountId;
-
-        public string RechargedBonusTime;
-
+        public string ErrorInformation;
         public string Item;
-
+        public string RechargedBonusTime;
         public string GuidID;
         public string Name;
         public string Email;
         public string Password;
-        public bool IsBonusReady;
-
-        public string ErrorInformation;
-
+        public int Bit = 0;
+        [SerializeField] private bool _isBonusReady;
         public DateTime RechargedBonusT;
+
+        public int BonusRechargeSeconds;
+
+        public Action<bool> BonusComplete;
 
         private readonly Dictionary<string, CatalogItem> _catalog = new Dictionary<string, CatalogItem>();
         private readonly Dictionary<string, int> _virtualCurrency = new Dictionary<string, int>();
 
-        public int Bit;
+        public bool IsBonusReady { get => _isBonusReady; private set => _isBonusReady = value; }
+
 
         public void Init()
         {
-            //if (PlayerPrefs.HasKey("authorization-guid"))
-            //{ 
-            //    GuidID = PlayerPrefs.GetString("authorization-guid");
-            //    Name = PlayerPrefs.GetString("Name");
-            //    Email = PlayerPrefs.GetString("Email");
-            //    Password = PlayerPrefs.GetString("Password");
-            //    Money = PlayerPrefs.GetInt("Money");
-            //}
-
-            // RechargedBonusT = DateTime.MinValue.AddMinutes(5);
-            RechargedBonusT = DateTime.MinValue.AddSeconds(10);
-
-            RechargedBonusTime = RechargedBonusT.ToLongTimeString();
-
             GetAccauntUserInfo();
         }
 
@@ -62,7 +49,7 @@ namespace Victorina
                 VirtualCurrency = "BT"
             };
 
-            PlayFabClientAPI.AddUserVirtualCurrency(request, complete => Debug.Log(complete), error => Debug.Log(error));
+            //PlayFabClientAPI.AddUserVirtualCurrency(request, complete => Debug.Log(complete), error => Debug.Log(error));
 
         }
 
@@ -106,8 +93,22 @@ namespace Victorina
                 Bit = bitValue;
             int bonus;
             var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
-            if (isGetBonus && bonus > 0)
-                IsBonusReady = true;
+            if (isGetBonus)
+            {
+                VirtualCurrencyRechargeTime BSRechargedTimes;
+                var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
+                if (isT)
+                {
+                    BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
+                    //var tempTime = BSRechargedTimes.SecondsToRecharge;
+                    //RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
+                }
+                if (bonus > 0)
+                {
+                    BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
+                    _isBonusReady = true;
+                }
+            }
         }
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
@@ -131,8 +132,54 @@ namespace Victorina
             ErrorInformation = obj.GenerateErrorReport();
         }
 
+        public void GetIsCompletetedBonus()
+        {
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), IsBonusComplete, Debug.Log);
+        }
+
+        private void IsBonusComplete(GetUserInventoryResult result)
+        {
+            int bonusValue;
+            if (result.VirtualCurrency.TryGetValue("BS", out bonusValue))
+            {
+                _isBonusReady = bonusValue > 0 ? true : false;
+            }
+        }
+
+        public void GetBonus()
+        {
+            Bit += 100;
+            IsBonusReady = false;
+            PurchaseItemRequest request = new PurchaseItemRequest
+            {
+                CatalogVersion = "Bonuses",
+                ItemId = "bonusBundels",
+                VirtualCurrency = "BS",
+                Price = 1,
+
+            };
+            PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
+        }
+
+        private void OnBonusComplete()
+        {
+            BonusComplete?.Invoke(true);
+            BonusRechargeSeconds = 60;
+        }
 
 
+        public void GetUserToBonusRechargedTime() =>
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnRechargedTime, OnFailure);
+
+        private void OnRechargedTime(GetUserInventoryResult result)
+        {
+            VirtualCurrencyRechargeTime BSRechargedTimes;
+            var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
+            if (isT)
+            {
+                var tempTime = BSRechargedTimes.SecondsToRecharge;
+                RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
+            }
+        }
     }
-
 }

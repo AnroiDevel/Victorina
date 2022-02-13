@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 045def0b7c95e554c8f23fff1decf179, type: 3}
+  m_Name: ClassicThema
+  m_EditorClassIdentifier: 
+  Confidential: {fileID: 21300000, guid: 35e74643fb889b6468b617b520cbb554, type: 3}
+  ProfileBackground: {fileID: 21300000, guid: 658abb3f7b7794844b1346908d11b5ac, type: 3}
+  WelcomeBackground: {fileID: 21300000, guid: fa59482b8b0c59445bad1c4e3d564dcf, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
+  GameProgressPanel: {fileID: 21300000, guid: 6997b4c038fac3d46a3b0075face3d6a, type: 3}
+  GamePanel: {fileID: 21300000, guid: 66ae3355506574441b44f625288b408e, type: 3}
+  GameExitPanel: {fileID: 21300000, guid: 00b8c7fe6ec24334d8eca85fc517ac5a, type: 3}
+  MainMenuBack: {fileID: 21300000, guid: 3346911af3bc7f44e87dc7cff4f86c41, type: 3}
+  ShopMenuBack: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
+  StatisticsPanelBack: {fileID: 21300000, guid: 4085a62394fcbb446ac4368518e63d51, type: 3}
+  AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
+  QuestionRedactorBack: {fileID: 21300000, guid: bbfe7b79b46fc254685bd68bc0198ee9, type: 3}
+  BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
+  OptionIcon: {fileID: 21300000, guid: 017fd62c3f84d444ebb0d2fa7e682474, type: 3}
+  ReitingIcon: {fileID: 21300000, guid: 4ea5b94734c04d04ea158189afdcb269, type: 3}
+  MainIcon: {fileID: 21300000, guid: 157398544aa27b8479d20bbdf469cc84, type: 3}
+  ShopIcon: {fileID: 21300000, guid: 5aa8812415bc0d043a9d7ef7c10b77ae, type: 3}
+  OptionMenuBack: {fileID: 21300000, guid: ad029d02da33a5a4d9f70fbaa3207186, type: 3}

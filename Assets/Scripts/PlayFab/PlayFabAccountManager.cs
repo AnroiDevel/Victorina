@@ -13,6 +13,8 @@ namespace Victorina
 
         private PlayFabLogin _playFabLogin;
 
+        [SerializeField] private PlayerData _playerData;
+
         private void Start()
         {
             _playFabLogin = FindObjectOfType<PlayFabLogin>();
@@ -28,6 +30,7 @@ namespace Victorina
                 _titleLabel.text = $"С возвращением {PlayerPrefs.GetString("Name")}";
             _workedInfoLabel.text = $"Уникальный ID:  {result.AccountInfo.PlayFabId}\n" +
                 $"Персональная информация:  {result.AccountInfo.TitleInfo.DisplayName}\n";
+            _playerData.Init();
 
         }
         private void OnFailure(PlayFabError error)

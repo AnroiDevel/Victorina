@@ -46,7 +46,6 @@ namespace Victorina
                 CreateAccount = !needCreation
             }, success =>
             {
-                _playerData.Init();
                 PlayerPrefs.SetString(AuthGuidKey, id);
                 Login?.Invoke(true);
 
