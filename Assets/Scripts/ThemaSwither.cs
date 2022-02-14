@@ -7,19 +7,29 @@ namespace Victorina
     {
         [SerializeField] private ProfileThema _profileThema;
 
-        public void SwithThema(string nameThema)
+        public void SwithThema()
         {
+            ThemaType themaType = 0;
             if (PlayerPrefs.HasKey("Thema"))
             {
-                var nt = PlayerPrefs.GetString("Thema");
-                if (nt == nameThema)
-                    nameThema = "ClassicThema";
+                themaType += PlayerPrefs.GetInt("Thema");
             }
+            themaType++;
 
-            PlayerPrefs.SetString("Thema", nameThema);
+            if (themaType > ThemaType.NeonThema)
+                themaType = ThemaType.ClassicThema;
+
+            PlayerPrefs.SetInt("Thema", (int)themaType);
             ThemaConrtoller.ThemaActivation();
             _profileThema.ThemaApply();
         }
+    }
+
+    public enum ThemaType
+    {
+        ClassicThema,
+        FuturismThema,
+        NeonThema,
     }
 
 }
