@@ -15,7 +15,7 @@ MonoBehaviour:
   Confidential: {fileID: 21300000, guid: 35e74643fb889b6468b617b520cbb554, type: 3}
   ProfileBackground: {fileID: 21300000, guid: 658abb3f7b7794844b1346908d11b5ac, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: fa59482b8b0c59445bad1c4e3d564dcf, type: 3}
-  GameWelcomePanel: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: ab14944c430ed6948910ff5e503e8d33, type: 3}
   GameProgressPanel: {fileID: 21300000, guid: 6997b4c038fac3d46a3b0075face3d6a, type: 3}
   GamePanel: {fileID: 21300000, guid: 66ae3355506574441b44f625288b408e, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 00b8c7fe6ec24334d8eca85fc517ac5a, type: 3}
@@ -26,15 +26,16 @@ MonoBehaviour:
   AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: bbfe7b79b46fc254685bd68bc0198ee9, type: 3}
   BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
-  OptionIcon: {fileID: 21300000, guid: 017fd62c3f84d444ebb0d2fa7e682474, type: 3}
-  ReitingIcon: {fileID: 21300000, guid: 4ea5b94734c04d04ea158189afdcb269, type: 3}
-  MainIcon: {fileID: 21300000, guid: 157398544aa27b8479d20bbdf469cc84, type: 3}
-  ShopIcon: {fileID: 21300000, guid: 5aa8812415bc0d043a9d7ef7c10b77ae, type: 3}
-  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.614}
-  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.66133344}
-  ThemeBtnAnchoredMinPosition: {x: 0.15037036, y: 0.48966667}
-  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.55383337}
-  EnterFBBtnAnchoredMinPosition: {x: 0.19025928, y: 0.29354164}
-  EnterFBBtnAnchoredMaxPosition: {x: 0.79974085, y: 0.35856253}
-  SendFrendBtnAnchoredMinPosition: {x: 0.19025928, y: 0.18100001}
-  SendFrendBtnAnchoredMaxPosition: {x: 0.80066675, y: 0.24772918}
+  OptionIcon: {fileID: 3334585890235954068, guid: af059d018c600be4daacf05b3fab7621, type: 3}
+  ReitingIcon: {fileID: -5765054506968938745, guid: af059d018c600be4daacf05b3fab7621, type: 3}
+  MainIcon: {fileID: -8690396945167788949, guid: af059d018c600be4daacf05b3fab7621, type: 3}
+  ShopIcon: {fileID: 7084346585972752456, guid: af059d018c600be4daacf05b3fab7621, type: 3}
+  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.5736667}
+  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.6201667}
+  ThemeBtnAnchoredMinPosition: {x: 0.15222222, y: 0.44983336}
+  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.51341665}
+  EnterFBBtnAnchoredMinPosition: {x: 0.15222222, y: 0.32466668}
+  EnterFBBtnAnchoredMaxPosition: {x: 0.84333336, y: 0.3915}
+  SendFrendBtnAnchoredMinPosition: {x: 0.13651851, y: 0.14864585}
+  SendFrendBtnAnchoredMaxPosition: {x: 0.8672223, y: 0.22841668}
+  GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}

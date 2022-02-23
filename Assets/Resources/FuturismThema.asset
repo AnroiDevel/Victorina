@@ -26,15 +26,16 @@ MonoBehaviour:
   AchivPanelBack: {fileID: 21300000, guid: 34728b09712d51e448585c6df6f9d859, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: 94d62be28c0c842499081601f4f21d2f, type: 3}
   BottomAnimMenuBack: {fileID: -2626224823857740691, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  OptionIcon: {fileID: -7916560527927247262, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  ReitingIcon: {fileID: 8798662772253696365, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  MainIcon: {fileID: 6962862529552481772, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  ShopIcon: {fileID: -7417786277198636686, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.614}
-  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.66133344}
-  ThemeBtnAnchoredMinPosition: {x: 0.15037036, y: 0.48966667}
-  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.55383337}
-  EnterFBBtnAnchoredMinPosition: {x: 0.19025928, y: 0.29354164}
-  EnterFBBtnAnchoredMaxPosition: {x: 0.79974085, y: 0.35856253}
-  SendFrendBtnAnchoredMinPosition: {x: 0.19025928, y: 0.18100001}
-  SendFrendBtnAnchoredMaxPosition: {x: 0.80066675, y: 0.24772918}
+  OptionIcon: {fileID: 3439132153937509602, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  ReitingIcon: {fileID: 4602990453198872921, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  MainIcon: {fileID: 8778140282220386815, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  ShopIcon: {fileID: 4023653802134763252, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.53866667}
+  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.58325005}
+  ThemeBtnAnchoredMinPosition: {x: 0.15222222, y: 0.40150005}
+  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.4654167}
+  EnterFBBtnAnchoredMinPosition: {x: 0.15222222, y: 0.26275}
+  EnterFBBtnAnchoredMaxPosition: {x: 0.84333336, y: 0.32900003}
+  SendFrendBtnAnchoredMinPosition: {x: 0.13744445, y: 0.087666675}
+  SendFrendBtnAnchoredMaxPosition: {x: 0.8645556, y: 0.16783334}
+  GameMusic: {fileID: 8300000, guid: 03a5dca50fb07194c9482d8a3fc945f5, type: 3}

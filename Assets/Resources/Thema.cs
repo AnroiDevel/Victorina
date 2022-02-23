@@ -41,5 +41,7 @@ namespace Victorina
 
         public Vector2 SendFrendBtnAnchoredMinPosition;
         public Vector2 SendFrendBtnAnchoredMaxPosition;
+
+        public AudioClip GameMusic;
     }
 }

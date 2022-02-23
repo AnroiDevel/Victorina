@@ -17,12 +17,21 @@ namespace Victorina
         private bool _isBonusComplete;
         private DateTime _startTime;
 
-        private void Start()
+        private void Awake()
         {
             _bonusButton = GetComponent<Button>();
-            //_playerData.BonusComplete += OnBonusComplete;
+            _playerData.BonusComplete += OnBonusComplete;
             _isBonusComplete = _playerData.IsBonusReady;
+        }
+
+        private void OnEnable()
+        {
             StartCoroutine(BonusTimerUpdater(_playerData.BonusRechargeSeconds));
+        }
+
+        private void OnDisable()
+        {
+            StopCoroutine(BonusTimerUpdater(_playerData.BonusRechargeSeconds));
         }
 
         private void OnBonusComplete(bool val)
@@ -52,7 +61,7 @@ namespace Victorina
             _bonusButton.interactable = false;
             var tempBit = _playerData.Bit;
             _bit.text = tempBit.ToString();
-            StartCoroutine(BonusTimerUpdater(60));
+            StartCoroutine(BonusTimerUpdater(_playerData.BonusRechargeSeconds));
         }
     }
 

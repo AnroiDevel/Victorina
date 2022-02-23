@@ -11,7 +11,7 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
-        public string Created;
+        public string CreatedDateTimePlayfabProfile;
         public string CustomId;
         public string PlayFabId;
         public string TitlePlayerAccountId;
@@ -26,15 +26,22 @@ namespace Victorina
         [SerializeField] private bool _isBonusReady;
         public DateTime RechargedBonusT;
 
-        public int BonusRechargeSeconds;
+        private int bonusRechargeSeconds;
 
         public Action<bool> BonusComplete;
+        public bool IsPlayed;
+        public int TicketsBit;
 
+        public string[] ItemCatalog;
         private readonly Dictionary<string, CatalogItem> _catalog = new Dictionary<string, CatalogItem>();
+
+        public string[] CurrencyVirtual;
         private readonly Dictionary<string, int> _virtualCurrency = new Dictionary<string, int>();
 
         public bool IsBonusReady { get => _isBonusReady; private set => _isBonusReady = value; }
-
+        public int BonusRechargeSeconds { get {
+                PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
+                return bonusRechargeSeconds; } set => bonusRechargeSeconds = value; }
 
         public void Init()
         {
@@ -65,26 +72,30 @@ namespace Victorina
         private void GetAccauntUserInfo()
         {
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnCompletePlayFabAccountInfo, OnFailure);
+            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest(), OnGetCatalogSuccess, OnFailure);
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
 
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
-            Created = info.AccountInfo.Created.ToString();
+            CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
             CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
 
-            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest(), OnGetCatalogSuccess, OnFailure);
-
+            Debug.Log("Информация об аккаунте Playfab получена");
         }
 
         private void GetInventoryComplete(GetUserInventoryResult result)
         {
             _virtualCurrency.Clear();
+            CurrencyVirtual = new string[result.VirtualCurrency.Count];
+            var cnt = 0;
             foreach (var pair in result.VirtualCurrency)
             {
+                CurrencyVirtual[cnt++] = pair.Key + " = "+ pair.Value;
                 _virtualCurrency.Add(pair.Key, pair.Value);
             }
             int bitValue;
@@ -113,23 +124,25 @@ namespace Victorina
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
         {
-            //HandleCatalog(result.Catalog);
-            Debug.Log($"Catalog was loaded successfully!");
+            HandleCatalog(result.Catalog);
+            Debug.Log($"Каталог успешно загружен");
 
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
         private void HandleCatalog(List<CatalogItem> catalog)
         {
+            ItemCatalog = new string[catalog.Count];
+            var cnt = 0;
             foreach (var item in catalog)
             {
+                ItemCatalog[cnt++] = item.ItemId;
                 _catalog.Add(item.ItemId, item);
-                Debug.Log($"Catalog item {item.ItemId} was added successfully!");
             }
         }
         private void OnFailure(PlayFabError obj)
         {
             ErrorInformation = obj.GenerateErrorReport();
+            Debug.Log(ErrorInformation);
         }
 
         public void GetIsCompletetedBonus()

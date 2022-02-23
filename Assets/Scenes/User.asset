@@ -25,3 +25,6 @@ MonoBehaviour:
   Password: 
   Bit: 4800
   _isBonusReady: 0
+  BonusRechargeSeconds: 0
+  IsPlayed: 0
+  TicketsBit: 0
