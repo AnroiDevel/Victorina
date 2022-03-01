@@ -3,6 +3,7 @@ using PlayFab.ClientModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 using UnityEngine;
 
 
@@ -17,20 +18,21 @@ namespace Victorina
         public string TitlePlayerAccountId;
         public string ErrorInformation;
         public string Item;
-        public string RechargedBonusTime;
         public string GuidID;
         public string Name;
         public string Email;
         public string Password;
         public int Bit = 0;
-        [SerializeField] private bool _isBonusReady;
+
+        public bool IsBonusReady;
         public DateTime RechargedBonusT;
-
-        private int bonusRechargeSeconds;
-
+        public int MaxBonusTimeSeconds;
+        public int BonusRechargeSeconds;
         public Action<bool> BonusComplete;
+
         public bool IsPlayed;
         public int TicketsBit;
+        public uint PriceBitTicket;
 
         public string[] ItemCatalog;
         private readonly Dictionary<string, CatalogItem> _catalog = new Dictionary<string, CatalogItem>();
@@ -38,14 +40,48 @@ namespace Victorina
         public string[] CurrencyVirtual;
         private readonly Dictionary<string, int> _virtualCurrency = new Dictionary<string, int>();
 
-        public bool IsBonusReady { get => _isBonusReady; private set => _isBonusReady = value; }
-        public int BonusRechargeSeconds { get {
+        private Timer _bonusTimer;
+
+        public Action InitComplete;
+        public Action<string> ConsumeComplete;
+        public int GetBonusRechargeSeconds
+        {
+            get
+            {
                 PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-                return bonusRechargeSeconds; } set => bonusRechargeSeconds = value; }
+                return BonusRechargeSeconds;
+            }
+            set => BonusRechargeSeconds = value;
+        }
 
         public void Init()
         {
+            IsPlayed = false;
+            IsBonusReady = false;
             GetAccauntUserInfo();
+            if (_bonusTimer == null)
+                TimerInit();
+        }
+
+        private void TimerInit()
+        {
+            _bonusTimer = new Timer(1000);
+            _bonusTimer.Elapsed += TimeUpdate;
+        }
+
+        private void TimeUpdate(object sender, ElapsedEventArgs e)
+        {
+            BonusRechargeSeconds = BonusRechargeSeconds <= 0 ? 0 : BonusRechargeSeconds - 1;
+            if (BonusRechargeSeconds > 0)
+            {
+                RechargedBonusT = DateTime.MinValue;
+                RechargedBonusT += DateTime.Now.AddSeconds(BonusRechargeSeconds) - DateTime.Now;
+            }
+            else
+            {
+                IsBonusReady = true;
+                _bonusTimer?.Stop();
+            }
         }
 
         internal void AddMoney(int val)
@@ -72,7 +108,7 @@ namespace Victorina
         private void GetAccauntUserInfo()
         {
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnCompletePlayFabAccountInfo, OnFailure);
-            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest(), OnGetCatalogSuccess, OnFailure);
+            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Tickets" }, OnGetCatalogSuccess, OnFailure);
             PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
@@ -95,9 +131,23 @@ namespace Victorina
             var cnt = 0;
             foreach (var pair in result.VirtualCurrency)
             {
-                CurrencyVirtual[cnt++] = pair.Key + " = "+ pair.Value;
+                CurrencyVirtual[cnt++] = pair.Key + " = " + pair.Value;
                 _virtualCurrency.Add(pair.Key, pair.Value);
             }
+
+            var ticketBit = 0;
+            foreach (var item in result.Inventory)
+            {
+                if (item.DisplayName == "BitTicket")
+                {
+                    ticketBit++;
+                }
+                else if (item.DisplayName == "PlayToken")
+                    IsPlayed = true;
+
+            }
+            TicketsBit = ticketBit;
+
             int bitValue;
             var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
             if (isGetBit)
@@ -111,15 +161,22 @@ namespace Victorina
                 if (isT)
                 {
                     BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
-                    //var tempTime = BSRechargedTimes.SecondsToRecharge;
-                    //RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
                 }
                 if (bonus > 0)
                 {
-                    BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
-                    _isBonusReady = true;
+                    MaxBonusTimeSeconds = BSRechargedTimes.SecondsToRecharge;
+                    IsBonusReady = true;
+                    _bonusTimer.Stop();
+                }
+                else
+                {
+                    IsBonusReady = false;
+                    _bonusTimer.Start();
                 }
             }
+
+            InitComplete?.Invoke();
+
         }
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
@@ -131,12 +188,17 @@ namespace Victorina
 
         private void HandleCatalog(List<CatalogItem> catalog)
         {
+
             ItemCatalog = new string[catalog.Count];
+            _catalog.Clear();
+
             var cnt = 0;
             foreach (var item in catalog)
             {
-                ItemCatalog[cnt++] = item.ItemId;
+                ItemCatalog.SetValue(item.ItemId, cnt++);
                 _catalog.Add(item.ItemId, item);
+                if (item.DisplayName.Equals("BitTicket"))
+                    PriceBitTicket = item.VirtualCurrencyPrices["BT"];
             }
         }
         private void OnFailure(PlayFabError obj)
@@ -155,8 +217,9 @@ namespace Victorina
             int bonusValue;
             if (result.VirtualCurrency.TryGetValue("BS", out bonusValue))
             {
-                _isBonusReady = bonusValue > 0 ? true : false;
+                IsBonusReady = bonusValue > 0 ? true : false;
             }
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
         public void GetBonus()
@@ -172,12 +235,12 @@ namespace Victorina
 
             };
             PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
+            RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
         }
 
         private void OnBonusComplete()
         {
-            BonusComplete?.Invoke(true);
-            BonusRechargeSeconds = 60;
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
 
@@ -193,6 +256,35 @@ namespace Victorina
                 var tempTime = BSRechargedTimes.SecondsToRecharge;
                 RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
             }
+        }
+
+        public void ConsumeItem(string nameItem)
+        {
+            var iii = string.Empty;
+            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), result =>
+            {
+                if (result.Inventory.Count <= 0) return;
+
+                var iii = result.Inventory[0].ItemInstanceId;
+                foreach (var item in result.Inventory)
+                    if (item.DisplayName == nameItem)
+                    {
+                        iii = item.ItemInstanceId;
+                    }
+                if (iii != string.Empty)
+                    PlayFabClientAPI.ConsumeItem(new ConsumeItemRequest
+                    {
+                        ConsumeCount = 1,
+                        ItemInstanceId = iii
+
+                    }, result =>
+                    {
+                        Init();
+                        ConsumeComplete?.Invoke(nameItem);
+                    }, OnFailure);
+
+            }, OnFailure);
+
         }
     }
 }
