@@ -44,6 +44,8 @@ namespace Victorina
 
         public Action InitComplete;
         public Action<string> ConsumeComplete;
+        public Action BitInfoUpdate;
+
         public int GetBonusRechargeSeconds
         {
             get
@@ -285,6 +287,22 @@ namespace Victorina
 
             }, OnFailure);
 
+        }
+
+        public void GetPrize(int level)
+        {
+            PurchaseItemRequest request = new PurchaseItemRequest
+            {
+                CatalogVersion = "Prizes",
+                ItemId = "Prize-" + level,
+                VirtualCurrency = "BT",
+                Price = 0,
+            };
+            PlayFabClientAPI.PurchaseItem(request, result =>
+            {
+                PlayerPrefs.SetInt("CurrentStep", 0);
+                BitInfoUpdate?.Invoke();
+            }, error => Debug.Log(error));
         }
     }
 }

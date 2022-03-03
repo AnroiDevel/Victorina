@@ -43,5 +43,7 @@ namespace Victorina
         public Vector2 SendFrendBtnAnchoredMaxPosition;
 
         public AudioClip GameMusic;
+        public Sprite ByeBtn;
+        public Color LotShopColor;
     }
 }

@@ -16,7 +16,7 @@ namespace Victorina
             _playerData.ConsumeComplete += OnConsumeComplete;
         }
 
-        private void OnDisable() 
+        private void OnDisable()
         {
             _playerData.ConsumeComplete -= OnConsumeComplete;
         }
@@ -24,9 +24,9 @@ namespace Victorina
         private void OnConsumeComplete(string item)
         {
             if (item != "PlayToken") return;
-            var sceneLoader =  gameObject?.GetComponent<SceneLoader>();
-            if(sceneLoader != null)
-            sceneLoader.LoadGameScene("Victorina");
+            var sceneLoader = gameObject?.GetComponent<SceneLoader>();
+            if (sceneLoader != null)
+                sceneLoader.LoadGameScene("Victorina");
         }
 
         public void GameOver()
@@ -36,6 +36,8 @@ namespace Victorina
 
         public void GetWinAndGameOver()
         {
+            var level = PlayerPrefs.GetInt("CurrentStep");
+            _playerData.GetPrize(level);
             GameOver();
         }
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045def0b7c95e554c8f23fff1decf179, type: 3}
   m_Name: ClassicThema
   m_EditorClassIdentifier: 
-  Confidential: {fileID: 21300000, guid: 35e74643fb889b6468b617b520cbb554, type: 3}
+  Confidential: {fileID: 21300000, guid: 84a7158164b4f554bb456cf96394c98b, type: 3}
   ProfileBackground: {fileID: 21300000, guid: 658abb3f7b7794844b1346908d11b5ac, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: fa59482b8b0c59445bad1c4e3d564dcf, type: 3}
   GameWelcomePanel: {fileID: 21300000, guid: ab14944c430ed6948910ff5e503e8d33, type: 3}
@@ -39,3 +39,5 @@ MonoBehaviour:
   SendFrendBtnAnchoredMinPosition: {x: 0.13651851, y: 0.14864585}
   SendFrendBtnAnchoredMaxPosition: {x: 0.8672223, y: 0.22841668}
   GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}
+  ByeBtn: {fileID: 21300000, guid: 2ed638fbc12813b49879493d25d5f6b4, type: 3}
+  LotShopColor: {r: 0.89019614, g: 0.69803923, b: 0.4666667, a: 1}

@@ -58,6 +58,10 @@ namespace Victorina
 
         #region UnityMethods
 
+        private void Start()
+        {
+            _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
+        }
 
         #endregion
 
@@ -308,6 +312,8 @@ namespace Victorina
             }
             _progressPanel.SetActive(false);
             StartingTimer();
+
+            PlayerPrefs.SetInt("CurrentStep", currentStep);
 
         }
 

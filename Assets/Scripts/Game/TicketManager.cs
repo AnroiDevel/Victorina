@@ -89,6 +89,8 @@ namespace Victorina
                 return;
             }
 
+            _money.text = (int.Parse(_money.text) - _playerData.PriceBitTicket).ToString();
+
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Tickets",
