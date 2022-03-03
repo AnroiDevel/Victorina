@@ -11,7 +11,7 @@ namespace Victorina
 
         private void Start()
         {
-            _confidencial.sprite = ThemaConrtoller.ActiveThema.Confidential;
+            _confidencial.sprite = ThemaConrtoller.ActiveThema?.Confidential;
             _welcomeBackground.sprite = ThemaConrtoller.ActiveThema?.WelcomeBackground;
         }
     }
