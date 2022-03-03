@@ -28,6 +28,21 @@ namespace Victorina
             _moneyText.text = _playerData.Bit.ToString();
         }
 
+        private void OnEnable()
+        {
+            _playerData.BitInfoUpdate += MoneyUpdate;
+        }
+
+        private void OnDisable()
+        {
+            _playerData.BitInfoUpdate -= MoneyUpdate;
+        }
+
+        private void MoneyUpdate()
+        {
+            _moneyText.text = _playerData.Bit.ToString();
+        }
+
         public void VerificationAccount()
         {
             var newUserReq = new AddUsernamePasswordRequest

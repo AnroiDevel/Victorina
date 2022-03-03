@@ -24,16 +24,18 @@ namespace Victorina
 
         private static void GetActiveThema(Thema[] allThems)
         {
-            string nameThema;
-
+            int nameThema;
             if (PlayerPrefs.HasKey("Thema"))
             {
-                nameThema = PlayerPrefs.GetString("Thema");
+                nameThema = PlayerPrefs.GetInt("Thema");
             }
-            else nameThema = "ClassicThema";
+            else nameThema = (int)ThemaType.ClassicThema;
+
+            ThemaType themaType = 0;
+            themaType += nameThema;
 
             foreach (Thema thema in allThems)
-                if (thema.name == nameThema)
+                if (thema.name == themaType.ToString())
                     ActiveThema = thema;
         }
     }

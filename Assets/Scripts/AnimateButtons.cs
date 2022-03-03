@@ -8,7 +8,7 @@ namespace Victorina
     {
         private Button[] _buttons;
         [SerializeField] Button _mainButton;
-
+        [SerializeField] AudioSource _audioSource;
 
         private void Start()
         {
@@ -34,8 +34,20 @@ namespace Victorina
 
             btn.animator.SetBool("Selected", true);
             btn.animator.SetBool("Normal", false);
+
+            if (!IsMute)
+                _audioSource.Play();
         }
 
+        private bool IsMute
+        {
+            get
+            {
+                if (PlayerPrefs.HasKey("Sfx"))
+                    return PlayerPrefs.GetInt("Sfx") == 0;
+                return false;
+            }
+        }
     }
 
 }

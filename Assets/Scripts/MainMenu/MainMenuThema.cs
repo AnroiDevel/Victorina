@@ -21,6 +21,9 @@ namespace Victorina
         [SerializeField] private Image _mainIcon;
         [SerializeField] private Image _shopIcon;
 
+        [Header("Магазин")]
+        [SerializeField] private Image[] _sendBtns;
+        [SerializeField] private Image[] _lots;
 
         private void Start()
         {
@@ -37,6 +40,12 @@ namespace Victorina
             _mainIcon.sprite = ThemaConrtoller.ActiveThema?.MainIcon;
             _shopIcon.sprite = ThemaConrtoller.ActiveThema?.ShopIcon;
 
+            for (int i = 0; i < _sendBtns.Length; i++)
+            {
+                Image img = _sendBtns[i];
+                img.sprite = ThemaConrtoller.ActiveThema?.ByeBtn;
+                _lots[i].color = ThemaConrtoller.ActiveThema.LotShopColor;
+            }
         }
     }
 }

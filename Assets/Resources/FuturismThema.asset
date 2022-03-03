@@ -19,14 +19,25 @@ MonoBehaviour:
   GameProgressPanel: {fileID: 21300000, guid: 903bf4e1d1a2fd144b96cda6d711711b, type: 3}
   GamePanel: {fileID: 21300000, guid: 3dde3bd4bb9a2ae40b58e504bbe8cc08, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 29ba1c3b5ae4c884cbd7a9a4d9b6919f, type: 3}
+  OptionMenuBack: {fileID: 21300000, guid: 0d6a60de116e1454782a7661c4628dce, type: 3}
   MainMenuBack: {fileID: 21300000, guid: 5e341f7f582aced45b6e2b82c2f2b062, type: 3}
   ShopMenuBack: {fileID: 21300000, guid: 8b2caf59622a65245a7c5de085f7df6b, type: 3}
   StatisticsPanelBack: {fileID: 21300000, guid: 576e0e0b8dcc4f046b7413d7df6eb6dc, type: 3}
   AchivPanelBack: {fileID: 21300000, guid: 34728b09712d51e448585c6df6f9d859, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: 94d62be28c0c842499081601f4f21d2f, type: 3}
   BottomAnimMenuBack: {fileID: -2626224823857740691, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  OptionIcon: {fileID: -7916560527927247262, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  ReitingIcon: {fileID: 8798662772253696365, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  MainIcon: {fileID: 6962862529552481772, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  ShopIcon: {fileID: -7417786277198636686, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
-  OptionMenuBack: {fileID: 21300000, guid: 96b5e734f60473942900e2a460f68b38, type: 3}
+  OptionIcon: {fileID: 3439132153937509602, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  ReitingIcon: {fileID: 4602990453198872921, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  MainIcon: {fileID: 8778140282220386815, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  ShopIcon: {fileID: 4023653802134763252, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
+  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.53866667}
+  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.58325005}
+  ThemeBtnAnchoredMinPosition: {x: 0.15222222, y: 0.40150005}
+  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.4654167}
+  EnterFBBtnAnchoredMinPosition: {x: 0.15222222, y: 0.26275}
+  EnterFBBtnAnchoredMaxPosition: {x: 0.84333336, y: 0.32900003}
+  SendFrendBtnAnchoredMinPosition: {x: 0.13744445, y: 0.087666675}
+  SendFrendBtnAnchoredMaxPosition: {x: 0.8645556, y: 0.16783334}
+  GameMusic: {fileID: 8300000, guid: 03a5dca50fb07194c9482d8a3fc945f5, type: 3}
+  ByeBtn: {fileID: 21300000, guid: c9812198ae8260d4e89bf512a519d8b5, type: 3}
+  LotShopColor: {r: 0.6745098, g: 0.86666673, b: 0.82745105, a: 1}

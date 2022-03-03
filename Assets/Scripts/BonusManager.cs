@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,42 +16,39 @@ namespace Victorina
         private bool _isBonusComplete;
         private DateTime _startTime;
 
-        private void Start()
+        private void Awake()
         {
             _bonusButton = GetComponent<Button>();
-            //_playerData.BonusComplete += OnBonusComplete;
             _isBonusComplete = _playerData.IsBonusReady;
-            StartCoroutine(BonusTimerUpdater(_playerData.BonusRechargeSeconds));
         }
 
-        private void OnBonusComplete(bool val)
+        private void Start()
+        {
+            if (_isBonusComplete)
+                OnBonusComplete(true);
+        }
+
+        private void OnBonusComplete(bool val = false)
         {
             _bonusButton.interactable = val;
             _timeToNext.text = "Готово";
         }
 
-
-        private IEnumerator BonusTimerUpdater(int seconds)
+        private void FixedUpdate()
         {
-            if (!_playerData.IsBonusReady)
-                while (seconds-- > 0)
-                {
-                    var tempTime = DateTime.MinValue.AddSeconds(seconds);
-                    _timeToNext.text = tempTime.ToLongTimeString();
-                    yield return new WaitForSeconds(1);
-                }
-            OnBonusComplete(true);
+            if (_playerData.IsBonusReady)
+                OnBonusComplete(true);
+            else 
+                _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
         }
 
-
         public void GetBonus()
-        {          
+        {
             _playerData.GetBonus();
-
+            _isBonusComplete = false;
             _bonusButton.interactable = false;
             var tempBit = _playerData.Bit;
             _bit.text = tempBit.ToString();
-            StartCoroutine(BonusTimerUpdater(60));
         }
     }
 

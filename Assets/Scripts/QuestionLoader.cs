@@ -50,11 +50,18 @@ namespace Victorina
         private int _indexCurrentQuestion;
         private Image _prevImgSignal;
 
+        public bool IsLoadComplete { get; private set; }
+
+
         #endregion
 
 
         #region UnityMethods
 
+        private void Start()
+        {
+            _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
+        }
 
         #endregion
 
@@ -175,6 +182,7 @@ namespace Victorina
                 StartCoroutine(GetQuestion());
                 return;
             }
+            else IsLoadComplete = true;
 
             _question.text = texts[1];
 
@@ -286,7 +294,7 @@ namespace Victorina
 
         private IEnumerator PrevRaundPause(int currentStep)
         {
-            var clip = 3;
+            var clip = 5;
             if (_prevImgSignal != null)
                 _prevImgSignal.color = _defaultColor;
             _prevImgSignal = _progressCells[currentStep].GetComponentsInChildren<Image>()[1];
@@ -304,6 +312,8 @@ namespace Victorina
             }
             _progressPanel.SetActive(false);
             StartingTimer();
+
+            PlayerPrefs.SetInt("CurrentStep", currentStep);
 
         }
 

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+using UnityEngine.UI;
 
 namespace Victorina
 {
@@ -13,6 +13,7 @@ namespace Victorina
         public Sprite GameProgressPanel;
         public Sprite GamePanel;
         public Sprite GameExitPanel;
+        public Sprite OptionMenuBack;
 
         public Sprite MainMenuBack;
         public Sprite ShopMenuBack;
@@ -27,6 +28,22 @@ namespace Victorina
         public Sprite ReitingIcon;
         public Sprite MainIcon;
         public Sprite ShopIcon;
-        public Sprite OptionMenuBack;
+
+        [Header("Профиль")]
+        public Vector2 NamePanelAnchoredMinPosition;
+        public Vector2 NamePanelAnchoredMaxPosition;
+
+        public Vector2 ThemeBtnAnchoredMinPosition;
+        public Vector2 ThemeBtnAnchoredMaxPosition;
+
+        public Vector2 EnterFBBtnAnchoredMinPosition;
+        public Vector2 EnterFBBtnAnchoredMaxPosition;
+
+        public Vector2 SendFrendBtnAnchoredMinPosition;
+        public Vector2 SendFrendBtnAnchoredMaxPosition;
+
+        public AudioClip GameMusic;
+        public Sprite ByeBtn;
+        public Color LotShopColor;
     }
 }

@@ -12,16 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
   m_Name: User
   m_EditorClassIdentifier: 
-  Created: 24.01.2022 10:50:04
+  CreatedDateTimePlayfabProfile: 24.01.2022 10:50:04
   CustomId: 65121842-faf7-4ae8-b6e7-ceafd778f55f
   PlayFabId: 9718216EC7B16B74
   TitlePlayerAccountId: 50D45910BF589D06
   ErrorInformation: 
   Item: 
-  RechargedBonusTime: 
   GuidID: 
   Name: 
   Email: 
   Password: 
-  Bit: 4800
-  _isBonusReady: 0
+  Bit: 14300
+  IsBonusReady: 1
+  MaxBonusTimeSeconds: 29
+  BonusRechargeSeconds: 29
+  IsPlayed: 0
+  TicketsBit: 1
+  PriceBitTicket: 0
+  ItemCatalog:
+  - test
+  CurrencyVirtual:
+  - QB = 0
+  - BT = 14300
+  - BS = 1
