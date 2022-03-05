@@ -61,6 +61,15 @@ namespace Victorina
         private void Start()
         {
             _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
+            var cnt = 0;
+            if (_currentStepProgress > 0)
+                foreach (var cell in _progressCells)
+                {
+                    cell.color = Color.yellow; 
+                    cnt++;
+                    if (cnt > _currentStepProgress)
+                        return;
+                }
         }
 
         #endregion
@@ -294,7 +303,7 @@ namespace Victorina
 
         private IEnumerator PrevRaundPause(int currentStep)
         {
-            var clip = 5;
+            var clip = 3;
             if (_prevImgSignal != null)
                 _prevImgSignal.color = _defaultColor;
             _prevImgSignal = _progressCells[currentStep].GetComponentsInChildren<Image>()[1];

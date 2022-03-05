@@ -39,6 +39,7 @@ namespace Victorina
                 _inputField.Select();
                 _currentName.gameObject.SetActive(false);
                 _renameBtn.GetComponent<Image>().color = Color.red;
+                _profilePanel.GetComponent<Image>().color = Color.grey;
                 ActivateButtons(false);
             }
             else
@@ -52,6 +53,7 @@ namespace Victorina
 
                 _currentName.gameObject.SetActive(true);
                 _renameBtn.GetComponent<Image>().color = Color.white;
+                _profilePanel.GetComponent<Image>().color = Color.white;
                 ActivateButtons(true);
             }
         }

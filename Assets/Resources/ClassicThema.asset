@@ -30,8 +30,8 @@ MonoBehaviour:
   ReitingIcon: {fileID: -5765054506968938745, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   MainIcon: {fileID: -8690396945167788949, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   ShopIcon: {fileID: 7084346585972752456, guid: af059d018c600be4daacf05b3fab7621, type: 3}
-  NamePanelAnchoredMinPosition: {x: 0.19025928, y: 0.5736667}
-  NamePanelAnchoredMaxPosition: {x: 0.8118149, y: 0.6201667}
+  NamePanelAnchoredMinPosition: {x: 0.0865926, y: 0.57383335}
+  NamePanelAnchoredMaxPosition: {x: 0.9154444, y: 0.62025005}
   ThemeBtnAnchoredMinPosition: {x: 0.15222222, y: 0.44983336}
   ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.51341665}
   EnterFBBtnAnchoredMinPosition: {x: 0.15222222, y: 0.32466668}
