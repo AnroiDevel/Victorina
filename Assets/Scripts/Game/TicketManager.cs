@@ -19,7 +19,8 @@ namespace Victorina
         [SerializeField] private GameObject _welcomePanel;
         [SerializeField] private GameObject _progressPanel;
         [SerializeField] private Animator _animator;
-        [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private AudioSource _animTicket;
+        [SerializeField] private AudioSource _byeTicket;
 
         private QuestionLoader _questionLoader;
 
@@ -78,7 +79,7 @@ namespace Victorina
         {
             _animator.enabled = true;
             _animator.Play("TicketTrash");
-            _audioSource.Play();
+            _animTicket.Play();
         }
 
         public void BuyingTicket()
@@ -88,6 +89,10 @@ namespace Victorina
                 Debug.Log("Недостаточно средств для покупки билета");
                 return;
             }
+
+            _byeTicket.enabled = true;
+            if (PlayerPrefs.GetInt("Sfx") > 0)
+                _byeTicket.Play();
 
             _money.text = (int.Parse(_money.text) - _playerData.PriceBitTicket).ToString();
 
@@ -117,6 +122,7 @@ namespace Victorina
 
         private void PlayTockenComplete(PurchaseItemResult result)
         {
+            _byeTicket.enabled = false;
             _playerData.ConsumeItem("BitTicket");
             StartCoroutine(WaitLoadFirstQuestion(false));
         }
@@ -125,7 +131,6 @@ namespace Victorina
         {
             BuyingPlayTocken();
             Debug.Log("Билет куплен");
-            _money.text = _playerData.Bit.ToString();
         }
 
         private void SetPriceTicket(string price)

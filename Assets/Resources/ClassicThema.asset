@@ -41,3 +41,5 @@ MonoBehaviour:
   GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}
   ByeBtn: {fileID: 21300000, guid: 2ed638fbc12813b49879493d25d5f6b4, type: 3}
   LotShopColor: {r: 0.89019614, g: 0.69803923, b: 0.4666667, a: 1}
+  WinPanel: {fileID: 21300000, guid: 0306deae9deeeac42aac626bdd0ea21a, type: 3}
+  WinPanelBtn: {fileID: 21300000, guid: f219b663f98203d4eb9929416c689888, type: 3}
