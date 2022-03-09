@@ -992,7 +992,7 @@ MonoBehaviour:
   - {fileID: 1022860046}
   - {fileID: 379877127}
   - {fileID: 779387793}
-  _errorSendText: {fileID: 0}
+  _errorSendText: {fileID: 974934687}
   _minLengthQuestion: 5
 --- !u!114 &519969177
 MonoBehaviour:

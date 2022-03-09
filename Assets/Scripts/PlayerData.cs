@@ -46,6 +46,8 @@ namespace Victorina
         public Action<string> ConsumeComplete;
         public Action BitInfoUpdate;
 
+        public string LastGameTime;
+
         public int GetBonusRechargeSeconds
         {
             get
@@ -272,6 +274,14 @@ namespace Victorina
                     if (item.DisplayName == nameItem)
                     {
                         iii = item.ItemInstanceId;
+                        if (nameItem == "PlayToken")
+                        {
+                            var createDate = item.PurchaseDate;
+                            var a = item.PurchaseDate.Value;
+                            var nowDate = DateTime.UtcNow;
+                            var sec = (nowDate - createDate).Value.TotalSeconds;
+                            LastGameTime = DateTime.MinValue.AddSeconds(sec).ToLongTimeString();
+                        }
                     }
                 if (iii != string.Empty)
                     PlayFabClientAPI.ConsumeItem(new ConsumeItemRequest
@@ -300,6 +310,7 @@ namespace Victorina
             };
             PlayFabClientAPI.PurchaseItem(request, result =>
             {
+                Init();
                 PlayerPrefs.SetInt("CurrentStep", 0);
                 BitInfoUpdate?.Invoke();
             }, error => Debug.Log(error));
