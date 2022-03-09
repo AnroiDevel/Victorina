@@ -45,5 +45,7 @@ namespace Victorina
         public AudioClip GameMusic;
         public Sprite ByeBtn;
         public Color LotShopColor;
+        public Sprite WinPanel;
+        public Sprite WinPanelBtn;
     }
 }

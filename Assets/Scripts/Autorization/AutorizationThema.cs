@@ -11,6 +11,9 @@ namespace Victorina
 
         private void Start()
         {
+            PlayerPrefs.SetInt("Sfx", 1);
+            PlayerPrefs.SetInt("Music", 1);
+
             _confidencial.sprite = ThemaConrtoller.ActiveThema?.Confidential;
             _welcomeBackground.sprite = ThemaConrtoller.ActiveThema?.WelcomeBackground;
         }

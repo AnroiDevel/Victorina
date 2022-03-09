@@ -15,7 +15,7 @@ MonoBehaviour:
   Confidential: {fileID: 21300000, guid: 48f8c2533db39ac48b7734044097bd1a, type: 3}
   ProfileBackground: {fileID: 21300000, guid: c64db7ed59876eb4696c0f0c841c41b7, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: 769434ed42b657a4a95e001d5c8b8f69, type: 3}
-  GameWelcomePanel: {fileID: 21300000, guid: 769434ed42b657a4a95e001d5c8b8f69, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: 41653ab433e3fa940a3fee8c5d920ae4, type: 3}
   GameProgressPanel: {fileID: 21300000, guid: d94caf212c36f504f9fd2223f5a1ac68, type: 3}
   GamePanel: {fileID: 21300000, guid: 5a6b27cc951c02544bbeea046cb1f669, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 7f0119b9dbea39b45aea142b03386753, type: 3}
@@ -41,3 +41,5 @@ MonoBehaviour:
   GameMusic: {fileID: 8300000, guid: 97b168377a77fa948af30f6183d86b8d, type: 3}
   ByeBtn: {fileID: 21300000, guid: adc47f4540d53ac409072ed47cbd318f, type: 3}
   LotShopColor: {r: 0.7843138, g: 0.5686275, b: 0.7960785, a: 1}
+  WinPanel: {fileID: 21300000, guid: 84801f93044db96488ee669f71e482bb, type: 3}
+  WinPanelBtn: {fileID: 21300000, guid: 86014b7f49478444086d97719b98d8f9, type: 3}

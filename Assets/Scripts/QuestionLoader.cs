@@ -33,10 +33,18 @@ namespace Victorina
         [SerializeField] private Button _nextBtn;
         [SerializeField] private Image[] _progressCells;
         [SerializeField] private GameObject _progressPanel;
+
+        [SerializeField] private AudioSource _backAudio;
+        [SerializeField] private AudioSource _winAudio;
+        [SerializeField] private AudioSource _looseAudio;
+        [SerializeField] private GameObject _resultPanel;
         [SerializeField] private GameObject _victory;
+        [SerializeField] private GameObject _loose;
+
         [SerializeField] private Color _defaultColor;
         [SerializeField] private Color _activeColor;
         [SerializeField] private TMP_ColorGradient _colorGradient;
+        [SerializeField] private GameObject _commentPanel;
 
         private Queue<int> _questionIndexes = new Queue<int>();
 
@@ -52,6 +60,8 @@ namespace Victorina
 
         public bool IsLoadComplete { get; private set; }
 
+        public Toggle _endQuestion;
+
 
         #endregion
 
@@ -60,16 +70,30 @@ namespace Victorina
 
         private void Start()
         {
-            _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
+            SetCurrentStep();
+        }
+
+        private void PreviousCellMark()
+        {
             var cnt = 0;
             if (_currentStepProgress > 0)
                 foreach (var cell in _progressCells)
                 {
-                    cell.color = Color.yellow; 
+                    cell.color = Color.yellow;
                     cnt++;
                     if (cnt > _currentStepProgress)
                         return;
                 }
+            else foreach (var cell in _progressCells)
+                    cell.color = _defaultColor;
+        }
+
+        public void SetCurrentStep()
+        {
+            if (!_endQuestion.isOn)
+                _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
+            else _currentStepProgress = _progressCells.Length - 1;
+            PreviousCellMark();
         }
 
         #endregion
@@ -80,7 +104,7 @@ namespace Victorina
         {
             if (_currentStepProgress >= _progressCells.Length)
             {
-                _victory.SetActive(true);
+                Win();
                 return;
             }
             _question.text = LoadingQuestion;
@@ -89,6 +113,17 @@ namespace Victorina
             StartCoroutine(PrevRaundPause(_currentStepProgress++));
             StartCoroutine(GetQuestion(_currentStepProgress / 5 + 1));
         }
+
+        public void Win()
+        {
+            _resultPanel.SetActive(true);
+            _loose.SetActive(false);
+            _victory.SetActive(true);
+            _backAudio.Stop();
+            _winAudio.Play();
+            GetComponent<ButtleBitController>().GetWinAndGameOver();
+        }
+
         public void StartingTimer()
         {
             if (_coroutine != null)
@@ -104,10 +139,25 @@ namespace Victorina
                 _ratePanel.SetActive(true);
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
+                _commentPanel.SetActive(true);
             }
             else
-                _answers[index].color = Color.red;
+            {
+                //_answers[index].color = Color.red;
+                Loose();
+            }
         }
+
+        private void Loose()
+        {
+            _resultPanel.SetActive(true);
+            _loose.SetActive(true);
+            _backAudio.Stop();
+            _looseAudio.Play();
+            PlayerPrefs.SetInt("CurrentStep", 0);
+            GetComponent<ButtleBitController>().GameOver();
+        }
+
         public void SetUserGrade(int value)
         {
             SetDefaultRateImage();
@@ -224,6 +274,9 @@ namespace Victorina
 
             if (!_startBtn.gameObject.activeInHierarchy)
                 _startBtn.gameObject.SetActive(true);
+
+            _commentPanel.SetActive(false);
+
         }
 
         private bool IsNewIndex(int index)
