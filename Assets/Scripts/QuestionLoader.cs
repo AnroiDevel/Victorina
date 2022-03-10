@@ -45,6 +45,9 @@ namespace Victorina
         [SerializeField] private Color _activeColor;
         [SerializeField] private TMP_ColorGradient _colorGradient;
         [SerializeField] private GameObject _commentPanel;
+        [SerializeField] private Text _comment;
+
+        private string _commentText;
 
         private Queue<int> _questionIndexes = new Queue<int>();
 
@@ -252,10 +255,13 @@ namespace Victorina
             textsList.RemoveAt(0);
             textsList.RemoveAt(0);
 
-            _grade = float.Parse(textsList[textsList.Count - 1]);
+            _grade = float.Parse(textsList[textsList.Count - 2]);
 
             _gradeText.text = ((int)_grade).ToString();
 
+
+            _commentText = textsList[textsList.Count - 1];
+            textsList.RemoveAt(textsList.Count - 1);
             textsList.RemoveAt(textsList.Count - 1);
 
             while (textsList.Count > 0)
@@ -272,9 +278,10 @@ namespace Victorina
 
             SetDefaultColorAnswersText();
 
-            if (!_startBtn.gameObject.activeInHierarchy)
-                _startBtn.gameObject.SetActive(true);
+            //if (!_startBtn.gameObject.activeInHierarchy)
+            //    _startBtn.gameObject.SetActive(true);
 
+            _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
         }
