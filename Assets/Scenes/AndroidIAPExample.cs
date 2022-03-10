@@ -3,12 +3,18 @@ using PlayFab.ClientModels;
 using PlayFab.Json;
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Purchasing;
+using UnityEngine.UI;
 
 
 public class AndroidIAPExample : MonoBehaviour, IStoreListener
 {
+    [SerializeField] private Button[] _payBtns;
+    [SerializeField] private GameObject[] _lots;
+    [SerializeField] private GameObject _loadShopPanel;
+
     // Items list, configurable via inspector
     private List<CatalogItem> Catalog;
 
@@ -20,41 +26,51 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
     {
         // Make PlayFab log in
         Login();
+        _loadShopPanel.SetActive(true);
     }
 
-    public void OnGUI()
+    public void BuyLot(int numberLot)
     {
-        // This line just scales the UI up for high-res devices
-        // Comment it out if you find the UI too large.
-        GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
-
-        // if we are not initialized, only draw a message
-        if (!IsInitialized)
-        {
-            GUILayout.Label("Initializing IAP and logging in...");
-            return;
-        }
-
-        // Draw menu to purchase items
-        foreach (var item in Catalog)
-        {
-            if (GUILayout.Button("Buy " + item.DisplayName))
-            {
-                // On button click buy a product
-                BuyProductID(item.ItemId);
-            }
-        }
+        BuyProductID(Catalog[numberLot].ItemId);
     }
+
+    //public void OnGUI()
+    //{
+    //    // This line just scales the UI up for high-res devices
+    //    // Comment it out if you find the UI too large.
+    //    GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
+
+    //    // if we are not initialized, only draw a message
+    //    if (!IsInitialized)
+    //    {
+    //        GUILayout.Label("Initializing IAP and logging in...");
+    //        return;
+    //    }
+
+    //    // Draw menu to purchase items
+    //    foreach (var item in Catalog)
+    //    {
+    //        if (GUILayout.Button("Buy " + item.DisplayName))
+    //        {
+    //            // On button click buy a product
+    //            BuyProductID(item.ItemId);
+    //        }
+    //    }
+    //}
 
     // This is invoked manually on Start to initiate login ops
     private void Login()
     {
+        _loadShopPanel.SetActive(true);
+
+
         // Login with Android ID
         PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
         {
             CreateAccount = true,
             AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
-        }, result => {
+        }, result =>
+        {
             Debug.Log("Logged in");
             // Refresh available items
             RefreshIAPItems();
@@ -63,7 +79,8 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
 
     private void RefreshIAPItems()
     {
-        PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest(), result => {
+        PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest(), result =>
+        {
             Catalog = result.Catalog;
 
             // Make UnityIAP initialize
@@ -74,6 +91,14 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
     // This is invoked manually on Start to initialize UnityIAP
     public void InitializePurchasing()
     {
+        if (m_StoreController != null)
+        {
+            _loadShopPanel.SetActive(false);
+            _payBtns[0].interactable = true;
+            _payBtns[1].interactable = true;
+            InitPayBtns();
+        }
+
         // If IAP is already initialized, return gently
         if (IsInitialized) return;
 
@@ -84,6 +109,7 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         foreach (var item in Catalog)
         {
             builder.AddProduct(item.ItemId, ProductType.Consumable);
+
         }
 
         // Trigger IAP service initialization
@@ -103,6 +129,11 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
     public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
     {
         m_StoreController = controller;
+
+        _loadShopPanel.SetActive(false);
+        _payBtns[0].interactable = true;
+        _payBtns[1].interactable = true;
+        InitPayBtns();
     }
 
     // This is automatically invoked automatically when IAP service failed to initialized
@@ -166,7 +197,33 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
            error => Debug.Log("Validation failed: " + error.GenerateErrorReport())
         );
 
+
         return PurchaseProcessingResult.Complete;
+    }
+
+    private void InitPayBtns()
+    {
+        Product product = m_StoreController.products.WithID("500bit");
+        if (product != null)
+        {
+            var price = product.metadata.localizedPriceString;
+            price = price.Remove(price.Length - 1);
+            _payBtns[0].GetComponentInChildren<TMP_Text>().text = price + "RUB";
+            _lots[0].SetActive(true);
+        }
+        else
+            _payBtns[0].GetComponentInChildren<TMP_Text>().text = "нет продукта";
+
+
+        Product product2 = m_StoreController.products.WithID("50000bit");
+        if (product2 != null)
+        {
+            var price = product2.metadata.localizedPriceString;
+            price = price.Remove(price.Length - 1);
+
+            _payBtns[1].GetComponentInChildren<TMP_Text>().text = price + "RUB";
+            _lots[1].SetActive(true);
+        }
     }
 
     // This is invoked manually to initiate purchase

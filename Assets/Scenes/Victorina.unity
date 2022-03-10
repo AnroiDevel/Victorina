@@ -1565,7 +1565,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "N \u043C\u043E\u043D\u0435\u0442"
+  m_Text: "50000 \u043C\u043E\u043D\u0435\u0442"
 --- !u!222 &123144535
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3262,7 +3262,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 356956871}
   m_OnClick:
     m_PersistentCalls:
@@ -4236,7 +4236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "N \u043C\u043E\u043D\u0435\u0442"
+  m_Text: "500 \u043C\u043E\u043D\u0435\u0442"
 --- !u!222 &469577720
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4495,7 +4495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &493909311
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4510,8 +4510,8 @@ RectTransform:
   m_Father: {fileID: 1120176287}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.14500001, y: 0.823625}
-  m_AnchorMax: {x: 0.8534817, y: 0.8985209}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4548,7 +4548,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u041C\u0430\u0433\u0430\u0437\u0438\u043D"
+  m_Text: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430 \u043C\u0430\u0433\u0430\u0437\u0438\u043D\u0430"
 --- !u!222 &493909313
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4635,7 +4635,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 498122359}
   m_OnClick:
     m_PersistentCalls:
@@ -4644,6 +4644,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1120176292}
+        m_TargetAssemblyTypeName: AndroidIAPExample, Assembly-CSharp
+        m_MethodName: BuyLot
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6488,7 +6500,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 777421335}
   m_OnClick:
     m_PersistentCalls:
@@ -6501,6 +6513,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1120176292}
+        m_TargetAssemblyTypeName: AndroidIAPExample, Assembly-CSharp
+        m_MethodName: BuyLot
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -7065,7 +7089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &832906094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8718,7 +8742,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1097224924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8835,6 +8859,7 @@ GameObject:
   - component: {fileID: 1120176288}
   - component: {fileID: 1120176290}
   - component: {fileID: 1120176291}
+  - component: {fileID: 1120176292}
   m_Layer: 5
   m_Name: ShopPanel
   m_TagString: Untagged
@@ -9028,6 +9053,29 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1120176292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120176286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0532f5e354a07424bb34b0a14fce7baa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _payBtns:
+  - {fileID: 498122358}
+  - {fileID: 777421334}
+  - {fileID: 1656226906}
+  - {fileID: 356956870}
+  _lots:
+  - {fileID: 1626024024}
+  - {fileID: 832906093}
+  - {fileID: 1549250500}
+  - {fileID: 1097224923}
+  _loadShopPanel: {fileID: 493909310}
 --- !u!1 &1129546517
 GameObject:
   m_ObjectHideFlags: 0
@@ -12838,7 +12886,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1549250501
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13170,7 +13218,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1626024025
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13588,7 +13636,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1656226907}
   m_OnClick:
     m_PersistentCalls:

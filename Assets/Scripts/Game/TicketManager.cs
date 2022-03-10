@@ -23,7 +23,7 @@ namespace Victorina
         [SerializeField] private AudioSource _byeTicket;
 
         private QuestionLoader _questionLoader;
-
+        private bool _isStartBtnListenerComplete;
 
 
         private void Start()
@@ -41,12 +41,15 @@ namespace Victorina
 
         private void InitComplete()
         {
-            if (_enterBtn)
+            if (_enterBtn && !_isStartBtnListenerComplete)
                 CreateClikEvent(_enterBtn);
         }
 
         private void CreateClikEvent(Button button)
         {
+            if (!_isStartBtnListenerComplete)
+                button.gameObject.SetActive(true);
+
             if (!_playerData.IsPlayed && _playerData.TicketsBit <= 0)
                 button.onClick.AddListener(BuyingTicket);
             else if (!_playerData.IsPlayed && _playerData.TicketsBit > 0)
@@ -64,15 +67,22 @@ namespace Victorina
 
         private void ContinuePlay()
         {
+            _enterBtn.gameObject.SetActive(false);
             StartCoroutine(WaitLoadFirstQuestion(false));
+
+            _isStartBtnListenerComplete = true;
         }
 
         private void EnterOnTicket()
         {
+            _enterBtn.gameObject.SetActive(false);
+
             _playerData.ConsumeItem("BitTicket");
             BuyingPlayTocken();
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
+
+            _isStartBtnListenerComplete = true;
         }
 
         private void AnimateEquipTicket()
@@ -84,6 +94,8 @@ namespace Victorina
 
         public void BuyingTicket()
         {
+            _enterBtn.gameObject.SetActive(false);
+
             if (_playerData.Bit < _playerData.PriceBitTicket)
             {
                 Debug.Log("Недостаточно средств для покупки билета");
@@ -130,6 +142,7 @@ namespace Victorina
         private void OnBuyingTicketComplete()
         {
             BuyingPlayTocken();
+            _isStartBtnListenerComplete = true;
             Debug.Log("Билет куплен");
         }
 
