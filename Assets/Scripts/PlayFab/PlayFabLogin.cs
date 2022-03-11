@@ -43,7 +43,8 @@ namespace Victorina
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
                 CustomId = id,
-                CreateAccount = !needCreation
+                CreateAccount = !needCreation,
+                
             }, success =>
             {
                 PlayerPrefs.SetString(AuthGuidKey, id);

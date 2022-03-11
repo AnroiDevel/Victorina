@@ -34,29 +34,30 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         BuyProductID(Catalog[numberLot].ItemId);
     }
 
-    //public void OnGUI()
-    //{
-    //    // This line just scales the UI up for high-res devices
-    //    // Comment it out if you find the UI too large.
-    //    GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
+    public void OnGUI()
+    {
+       // This line just scales the UI up for high - res devices
 
-    //    // if we are not initialized, only draw a message
-    //    if (!IsInitialized)
-    //    {
-    //        GUILayout.Label("Initializing IAP and logging in...");
-    //        return;
-    //    }
+       // Comment it out if you find the UI too large.
+       GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
 
-    //    // Draw menu to purchase items
-    //    foreach (var item in Catalog)
-    //    {
-    //        if (GUILayout.Button("Buy " + item.DisplayName))
-    //        {
-    //            // On button click buy a product
-    //            BuyProductID(item.ItemId);
-    //        }
-    //    }
-    //}
+      //  if we are not initialized, only draw a message
+        if (!IsInitialized)
+        {
+            GUILayout.Label("Initializing IAP and logging in...");
+            return;
+        }
+
+     //   Draw menu to purchase items
+        foreach (var item in Catalog)
+        {
+            if (GUILayout.Button("Buy " + item.DisplayName))
+            {
+              //  On button click buy a product
+                BuyProductID(item.ItemId);
+            }
+        }
+    }
 
     // This is invoked manually on Start to initiate login ops
     private void Login()
@@ -203,7 +204,7 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
 
     private void InitPayBtns()
     {
-        Product product = m_StoreController.products.WithID("500bit");
+        Product product = m_StoreController.products.WithID("bandle500bit");
         if (product != null)
         {
             var price = product.metadata.localizedPriceString;
@@ -211,11 +212,8 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             _payBtns[0].GetComponentInChildren<TMP_Text>().text = price + "RUB";
             _lots[0].SetActive(true);
         }
-        else
-            _payBtns[0].GetComponentInChildren<TMP_Text>().text = "нет продукта";
 
-
-        Product product2 = m_StoreController.products.WithID("50000bit");
+        Product product2 = m_StoreController.products.WithID("bundle50000bit");
         if (product2 != null)
         {
             var price = product2.metadata.localizedPriceString;
@@ -223,6 +221,26 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
 
             _payBtns[1].GetComponentInChildren<TMP_Text>().text = price + "RUB";
             _lots[1].SetActive(true);
+        }
+
+        Product product3 = m_StoreController.products.WithID("notreclama");
+        if (product3 != null)
+        {
+            var price = product3.metadata.localizedPriceString;
+            price = price.Remove(price.Length - 1);
+
+            _payBtns[2].GetComponentInChildren<TMP_Text>().text = price + "RUB";
+            _lots[2].SetActive(true);
+        }
+
+        Product product4 = m_StoreController.products.WithID("vipday");
+        if (product4 != null)
+        {
+            var price = product4.metadata.localizedPriceString;
+            price = price.Remove(price.Length - 1);
+
+            _payBtns[3].GetComponentInChildren<TMP_Text>().text = price + "RUB";
+            _lots[3].SetActive(true);
         }
     }
 

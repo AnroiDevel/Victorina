@@ -2104,6 +2104,7 @@ MonoBehaviour:
   _currentName: {fileID: 495838891}
   _newName: {fileID: 1560809339}
   _inputField: {fileID: 1587163245}
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!114 &558259198
 MonoBehaviour:
   m_ObjectHideFlags: 0
