@@ -11,6 +11,7 @@ namespace Victorina
         [SerializeField] private Text _currentName;
         [SerializeField] private Text _newName;
         [SerializeField] private InputField _inputField;
+        [SerializeField] private PlayerData _playerData;
 
         Button[] _othersBtns;
 
@@ -55,6 +56,7 @@ namespace Victorina
                 _renameBtn.GetComponent<Image>().color = Color.white;
                 _profilePanel.GetComponent<Image>().color = Color.white;
                 ActivateButtons(true);
+                _playerData.SetDisplayName(_newName.text);
             }
         }
 
