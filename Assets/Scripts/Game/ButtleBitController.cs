@@ -12,6 +12,13 @@ namespace Victorina
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _timeGame;
 
+        private LeaderBoardsController _boardsController;
+
+
+        private void Start()
+        {
+            _boardsController = GetComponent<LeaderBoardsController>();
+        }
 
         private void OnEnable()
         {
@@ -40,6 +47,7 @@ namespace Victorina
             var level = PlayerPrefs.GetInt("CurrentStep");
             _playerData.GetPrize(level);
             GameOver();
+            _playerData.SubmitScore(level);
             //var sceneLoader = gameObject?.GetComponent<SceneLoader>();
             //if (sceneLoader != null)
             //    sceneLoader.LoadGameScene("Victorina");

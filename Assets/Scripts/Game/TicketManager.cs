@@ -50,7 +50,13 @@ namespace Victorina
             if (!_isStartBtnListenerComplete)
                 button.gameObject.SetActive(true);
 
-            if (!_playerData.IsPlayed && _playerData.TicketsBit <= 0)
+            if (_playerData.IsVip && !_playerData.IsPlayed)
+            {
+                _ticketPricePanel?.SetActive(false);
+                button.GetComponentInChildren<Text>().text = "VIP вход";
+                button.onClick.AddListener(EnterOnVip);
+            }
+            else if (!_playerData.IsPlayed && _playerData.TicketsBit <= 0)
                 button.onClick.AddListener(BuyingTicket);
             else if (!_playerData.IsPlayed && _playerData.TicketsBit > 0)
             {
@@ -82,6 +88,15 @@ namespace Victorina
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
 
+            _isStartBtnListenerComplete = true;
+        }
+
+        private void EnterOnVip()
+        {
+            _enterBtn.gameObject.SetActive(false);
+            BuyingPlayTocken();
+            AnimateEquipTicket();
+            StartCoroutine(WaitLoadFirstQuestion(false));
             _isStartBtnListenerComplete = true;
         }
 

@@ -31,6 +31,7 @@ namespace Victorina
         public Action<bool> BonusComplete;
 
         public bool IsPlayed;
+        public bool IsVip;
         public int TicketsBit;
         public uint PriceBitTicket;
 
@@ -58,10 +59,36 @@ namespace Victorina
             set => BonusRechargeSeconds = value;
         }
 
+        public void SubmitScore(int playerScore)
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "MonthRank",
+                Value = playerScore
+            }
+        }
+            }, result => OnStatisticsUpdated(result), FailureCallback);
+
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "WeeklyRank",
+                Value = playerScore
+            }
+        }
+            }, result => OnStatisticsUpdated(result), FailureCallback);
+        }
+
         public void Init()
         {
             IsPlayed = false;
+            IsVip = false;
             IsBonusReady = false;
+            CustomId = string.Empty;
+
             GetAccauntUserInfo();
             if (_bonusTimer == null)
                 TimerInit();
@@ -120,12 +147,39 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            CustomId = info.AccountInfo.CustomIdInfo.CustomId;
+            //CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
+            Name = info.AccountInfo.TitleInfo.DisplayName;
+
+            if (Name == null || Name == string.Empty)
+                SetDisplayName("Игрок");
 
             Debug.Log("Информация об аккаунте Playfab получена");
+        }
+
+        public void SetDisplayName(string name)
+        {
+            PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
+            {
+                DisplayName = name
+            }, AddedNameComplete, error => Debug.LogError(error.GenerateErrorReport()));
+        }
+
+        private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
+        {
+            Name = obj.DisplayName;
+        }
+        private void OnStatisticsUpdated(UpdatePlayerStatisticsResult updateResult)
+        {
+            Debug.Log("Successfully submitted high score");
+        }
+
+        private void FailureCallback(PlayFabError error)
+        {
+            Debug.LogWarning("Something went wrong with your API call. Here's some debug information:");
+            Debug.LogError(error.GenerateErrorReport());
         }
 
         private void GetInventoryComplete(GetUserInventoryResult result)
@@ -148,6 +202,8 @@ namespace Victorina
                 }
                 else if (item.DisplayName == "PlayToken")
                     IsPlayed = true;
+                else if (item.DisplayName == "Vip Day")
+                    IsVip = true;
 
             }
             TicketsBit = ticketBit;
