@@ -5048,6 +5048,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b5e6ec5332ee247a8fbf3918d71f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _question: {fileID: 111489289}
   _startBtn: {fileID: 101829957}
   _timeText: {fileID: 1352868715}

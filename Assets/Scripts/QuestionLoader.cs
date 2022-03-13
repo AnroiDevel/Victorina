@@ -20,6 +20,8 @@ namespace Victorina
         private const string GradeInfo = "Оцените сложность";
         private const string Next = "Продолжить";
 
+        [SerializeField] private PlayerData _playerData;
+
         [SerializeField] private Text _question;
         [SerializeField] private Button _startBtn;
         [SerializeField] private Text _timeText;
@@ -139,7 +141,7 @@ namespace Victorina
             if (index == _trueIndex)
             {
                 _answers[index].color = Color.green;
-                _ratePanel.SetActive(true);
+                //_ratePanel.SetActive(true);
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
                 _commentPanel.SetActive(true);
@@ -284,6 +286,7 @@ namespace Victorina
             _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
+            _playerData.AllAnswersCount++;
         }
 
         private bool IsNewIndex(int index)

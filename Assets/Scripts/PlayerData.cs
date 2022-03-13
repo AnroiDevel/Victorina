@@ -49,6 +49,8 @@ namespace Victorina
 
         public string LastGameTime;
 
+        public int AllAnswersCount;
+
         public int GetBonusRechargeSeconds
         {
             get
