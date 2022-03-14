@@ -77,15 +77,15 @@ namespace Victorina
         }
             }, result => OnStatisticsUpdated(result), FailureCallback);
 
-        //    PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
-        //    {
-        //        Statistics = new List<StatisticUpdate> {
-        //    new StatisticUpdate {
-        //        StatisticName = "WeeklyRank",
-        //        Value = playerScore
-        //    }
-        //}
-        //    }, result => OnStatisticsUpdated(result), FailureCallback);
+            //    PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            //    {
+            //        Statistics = new List<StatisticUpdate> {
+            //    new StatisticUpdate {
+            //        StatisticName = "WeeklyRank",
+            //        Value = playerScore
+            //    }
+            //}
+            //    }, result => OnStatisticsUpdated(result), FailureCallback);
         }
 
         public void Init()
@@ -363,6 +363,8 @@ namespace Victorina
 
         public void GetPrize(int level)
         {
+            if (level == 0) return;
+
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Prizes",
