@@ -69,19 +69,23 @@ namespace Victorina
             new StatisticUpdate {
                 StatisticName = "MonthRank",
                 Value = playerScore
-            }
-        }
-            }, result => OnStatisticsUpdated(result), FailureCallback);
-
-            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
-            {
-                Statistics = new List<StatisticUpdate> {
+            },
             new StatisticUpdate {
                 StatisticName = "WeeklyRank",
                 Value = playerScore
-            }
+            },
         }
             }, result => OnStatisticsUpdated(result), FailureCallback);
+
+        //    PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+        //    {
+        //        Statistics = new List<StatisticUpdate> {
+        //    new StatisticUpdate {
+        //        StatisticName = "WeeklyRank",
+        //        Value = playerScore
+        //    }
+        //}
+        //    }, result => OnStatisticsUpdated(result), FailureCallback);
         }
 
         public void Init()
