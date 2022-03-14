@@ -212,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _firstText: {fileID: 0}
   _logoText: {fileID: 1693204550}
-  _time: 20
+  _time: 10
 --- !u!4 &69414121
 Transform:
   m_ObjectHideFlags: 0

@@ -34,30 +34,30 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         BuyProductID(Catalog[numberLot].ItemId);
     }
 
-    public void OnGUI()
-    {
-       // This line just scales the UI up for high - res devices
+    //public void OnGUI()
+    //{
+    //   // This line just scales the UI up for high - res devices
 
-       // Comment it out if you find the UI too large.
-       GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
+    //   // Comment it out if you find the UI too large.
+    //   GUI.matrix = Matrix4x4.TRS(new Vector3(0, 0, 0), Quaternion.identity, new Vector3(3, 3, 3));
 
-      //  if we are not initialized, only draw a message
-        if (!IsInitialized)
-        {
-            GUILayout.Label("Initializing IAP and logging in...");
-            return;
-        }
+    //  //  if we are not initialized, only draw a message
+    //    if (!IsInitialized)
+    //    {
+    //        GUILayout.Label("Initializing IAP and logging in...");
+    //        return;
+    //    }
 
-     //   Draw menu to purchase items
-        foreach (var item in Catalog)
-        {
-            if (GUILayout.Button("Buy " + item.DisplayName))
-            {
-              //  On button click buy a product
-                BuyProductID(item.ItemId);
-            }
-        }
-    }
+    // //   Draw menu to purchase items
+    //    foreach (var item in Catalog)
+    //    {
+    //        if (GUILayout.Button("Buy " + item.DisplayName))
+    //        {
+    //          //  On button click buy a product
+    //            BuyProductID(item.ItemId);
+    //        }
+    //    }
+    //}
 
     // This is invoked manually on Start to initiate login ops
     private void Login()
