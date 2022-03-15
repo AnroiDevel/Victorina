@@ -16,14 +16,23 @@ namespace Victorina
         [SerializeField] private Text _monthReiting;
         [SerializeField] private Text _weekReiting;
         [SerializeField] private Text _pointsLable;
-        [SerializeField] private Text _answersCnt;
+        [SerializeField] private Text _questionsCnt;
+        [SerializeField] private Text _rightAnswersCnt;
 
         private void Start()
         {
             GetLeaderBoardMonthRank();
             GetLeaderBoardWeeklyRank();
             _pointsLable.text = _playerData.Bit.ToString();
-            _answersCnt.text = _playerData.AllAnswersCount.ToString();
+            _questionsCnt.text = _playerData.AllQuestionsCount.ToString();
+            _rightAnswersCnt.text = _playerData.RightAnswersCount.ToString();
+        }
+
+        private void OnEnable()
+        {
+            _pointsLable.text = _playerData.Bit.ToString();
+            _questionsCnt.text = _playerData.AllQuestionsCount.ToString();
+            _rightAnswersCnt.text = _playerData.RightAnswersCount.ToString();
         }
 
         private void GetLeaderBoardMonthRank()
@@ -31,6 +40,7 @@ namespace Victorina
             var request = new GetLeaderboardAroundPlayerRequest()
             {
                 StatisticName = "MonthRank",
+                PlayFabId = _playerData.PlayFabId,
                 MaxResultsCount = 1,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetMonthRangValue, error => Debug.LogError(error));
@@ -42,9 +52,11 @@ namespace Victorina
             {
                 StatisticName = "WeeklyRank",
                 MaxResultsCount = 1,
+                PlayFabId = _playerData.PlayFabId,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetWeeklyRangValue, error => Debug.LogError(error));
         }
+
 
         private void SetWeeklyRangValue(GetLeaderboardAroundPlayerResult obj)
         {

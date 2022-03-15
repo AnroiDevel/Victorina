@@ -127,6 +127,8 @@ namespace Victorina
             _backAudio.Stop();
             _winAudio.Play();
             GetComponent<ButtleBitController>().GetWinAndGameOver();
+            _playerData.GetQuestionsCount();
+            _playerData.GetRightAnswersCount();
         }
 
         public void StartingTimer()
@@ -145,6 +147,7 @@ namespace Victorina
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
                 _commentPanel.SetActive(true);
+                _playerData.AddRightAnswersCount();
             }
             else
             {
@@ -155,6 +158,9 @@ namespace Victorina
 
         private void Loose()
         {
+            _playerData.GetQuestionsCount();
+            _playerData.GetRightAnswersCount();
+
             _resultPanel.SetActive(true);
             _loose.SetActive(true);
             _backAudio.Stop();
@@ -286,7 +292,7 @@ namespace Victorina
             _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
-            _playerData.AllAnswersCount++;
+            _playerData.AddQuestionCount();
         }
 
         private bool IsNewIndex(int index)

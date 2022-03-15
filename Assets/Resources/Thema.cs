@@ -42,6 +42,14 @@ namespace Victorina
         public Vector2 SendFrendBtnAnchoredMinPosition;
         public Vector2 SendFrendBtnAnchoredMaxPosition;
 
+        [Header("Окно выхода из приложения")]
+        public Sprite ExitWindow;
+        public Sprite ExitBtn;
+        public Sprite NoExitBtn;
+
+        [Header("Магазин")]
+        public Sprite LoadShop;
+
         public AudioClip GameMusic;
         public Sprite ByeBtn;
         public Color LotShopColor;

@@ -38,6 +38,10 @@ MonoBehaviour:
   EnterFBBtnAnchoredMaxPosition: {x: 0.84333336, y: 0.3915}
   SendFrendBtnAnchoredMinPosition: {x: 0.13651851, y: 0.14864585}
   SendFrendBtnAnchoredMaxPosition: {x: 0.8672223, y: 0.22841668}
+  ExitWindow: {fileID: 21300000, guid: 520814ea45f1b144bac906c1e6399435, type: 3}
+  ExitBtn: {fileID: 21300000, guid: 9ffc6ba15becd1b40b34609426b07dee, type: 3}
+  NoExitBtn: {fileID: 21300000, guid: ad438f4f876815240a709655b246d4fe, type: 3}
+  LoadShop: {fileID: 21300000, guid: f8629d861a78b4a4b83cf974e3089da1, type: 3}
   GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}
   ByeBtn: {fileID: 21300000, guid: 2ed638fbc12813b49879493d25d5f6b4, type: 3}
   LotShopColor: {r: 0.89019614, g: 0.69803923, b: 0.4666667, a: 1}

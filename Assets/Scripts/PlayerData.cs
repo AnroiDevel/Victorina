@@ -49,7 +49,8 @@ namespace Victorina
 
         public string LastGameTime;
 
-        public int AllAnswersCount;
+        public int AllQuestionsCount;
+        public int RightAnswersCount;
 
         public int GetBonusRechargeSeconds
         {
@@ -76,16 +77,32 @@ namespace Victorina
             },
         }
             }, result => OnStatisticsUpdated(result), FailureCallback);
+        }
 
-        //    PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
-        //    {
-        //        Statistics = new List<StatisticUpdate> {
-        //    new StatisticUpdate {
-        //        StatisticName = "WeeklyRank",
-        //        Value = playerScore
-        //    }
-        //}
-        //    }, result => OnStatisticsUpdated(result), FailureCallback);
+        public void AddQuestionCount()
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "QuestionCount",
+                Value = 1,
+            }
+        }
+            }, result => Debug.Log(" оличество вопросов обновлено"), FailureCallback);
+        }
+
+        public void AddRightAnswersCount()
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "RightAnswersCount",
+                Value = 1,
+            }
+        }
+            }, result => Debug.Log(" оличество правильных ответов обновлено"), FailureCallback);
         }
 
         public void Init()
@@ -98,6 +115,9 @@ namespace Victorina
             GetAccauntUserInfo();
             if (_bonusTimer == null)
                 TimerInit();
+
+            GetQuestionsCount();
+            GetRightAnswersCount();
         }
 
         private void TimerInit()
@@ -363,6 +383,8 @@ namespace Victorina
 
         public void GetPrize(int level)
         {
+            if (level == 0) return;
+
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Prizes",
@@ -377,5 +399,28 @@ namespace Victorina
                 BitInfoUpdate?.Invoke();
             }, error => Debug.Log(error));
         }
+
+        public void GetQuestionsCount()
+        {
+            var request = new GetLeaderboardAroundPlayerRequest()
+            {
+                StatisticName = "QuestionCount",
+                MaxResultsCount = 1,
+                PlayFabId = PlayFabId,
+            };
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => AllQuestionsCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
+        }
+
+        public void GetRightAnswersCount()
+        {
+            var request = new GetLeaderboardAroundPlayerRequest()
+            {
+                StatisticName = "RightAnswersCount",
+                MaxResultsCount = 1,
+                PlayFabId = PlayFabId,
+            };
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => RightAnswersCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
+        }
+
     }
 }
