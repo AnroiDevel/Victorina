@@ -24,6 +24,13 @@ namespace Victorina
         [Header("Магазин")]
         [SerializeField] private Image[] _sendBtns;
         [SerializeField] private Image[] _lots;
+        [SerializeField] private Image _loadShop;
+
+        [Header("Выход")]
+        [SerializeField] private Image _exitPanel;
+        [SerializeField] private Image _exitBtn;
+        [SerializeField] private Image _noExitBtn;
+
 
         private void Start()
         {
@@ -39,6 +46,7 @@ namespace Victorina
             _reitingIcon.sprite = ThemaConrtoller.ActiveThema?.ReitingIcon;
             _mainIcon.sprite = ThemaConrtoller.ActiveThema?.MainIcon;
             _shopIcon.sprite = ThemaConrtoller.ActiveThema?.ShopIcon;
+            _loadShop.sprite = ThemaConrtoller.ActiveThema?.LoadShop;
 
             for (int i = 0; i < _sendBtns.Length; i++)
             {
@@ -46,6 +54,10 @@ namespace Victorina
                 img.sprite = ThemaConrtoller.ActiveThema?.ByeBtn;
                 _lots[i].color = ThemaConrtoller.ActiveThema.LotShopColor;
             }
+
+            _exitPanel.sprite = ThemaConrtoller.ActiveThema?.ExitWindow;
+            _exitBtn.sprite = ThemaConrtoller.ActiveThema?.ExitBtn;
+            _noExitBtn.sprite = ThemaConrtoller.ActiveThema?.NoExitBtn;
         }
     }
 }
