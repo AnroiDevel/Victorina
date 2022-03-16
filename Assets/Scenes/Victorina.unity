@@ -4695,7 +4695,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 498122359}
   m_OnClick:
     m_PersistentCalls:
@@ -6767,7 +6767,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 777421335}
   m_OnClick:
     m_PersistentCalls:
@@ -7356,7 +7356,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &832906094
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9161,7 +9161,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1097224924
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9285,7 +9285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1120176287
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9489,11 +9489,6 @@ MonoBehaviour:
   - {fileID: 777421334}
   - {fileID: 1656226906}
   - {fileID: 356956870}
-  _lots:
-  - {fileID: 1626024024}
-  - {fileID: 832906093}
-  - {fileID: 1549250500}
-  - {fileID: 1097224923}
   _loadShopPanel: {fileID: 571242685}
 --- !u!1 &1129546517
 GameObject:
@@ -13336,7 +13331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1549250501
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13668,7 +13663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1626024025
 RectTransform:
   m_ObjectHideFlags: 0
