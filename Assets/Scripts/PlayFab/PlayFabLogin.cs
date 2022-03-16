@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Victorina
 {
-    public class PlayFabLogin : MonoBehaviour
+    public partial class PlayFabLogin : MonoBehaviour
     {
         private const string AuthGuidKey = "authorization-guid";
 
@@ -44,7 +44,7 @@ namespace Victorina
             {
                 CustomId = id,
                 CreateAccount = !needCreation,
-                
+
             }, success =>
             {
                 PlayerPrefs.SetString(AuthGuidKey, id);
