@@ -12,7 +12,6 @@ using UnityEngine.UI;
 public class AndroidIAPExample : MonoBehaviour, IStoreListener
 {
     [SerializeField] private Button[] _payBtns;
-    [SerializeField] private GameObject[] _lots;
     [SerializeField] private GameObject _loadShopPanel;
 
     // Items list, configurable via inspector
@@ -95,8 +94,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         if (m_StoreController != null)
         {
             _loadShopPanel.SetActive(false);
-            _payBtns[0].interactable = true;
-            _payBtns[1].interactable = true;
             InitPayBtns();
         }
 
@@ -132,8 +129,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         m_StoreController = controller;
 
         _loadShopPanel.SetActive(false);
-        _payBtns[0].interactable = true;
-        _payBtns[1].interactable = true;
         InitPayBtns();
     }
 
@@ -210,7 +205,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             var price = product.metadata.localizedPriceString;
             price = price.Remove(price.Length - 1);
             _payBtns[0].GetComponentInChildren<TMP_Text>().text = price + "RUB";
-            _lots[0].SetActive(true);
         }
 
         Product product2 = m_StoreController.products.WithID("bundle50000bit");
@@ -220,7 +214,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             price = price.Remove(price.Length - 1);
 
             _payBtns[1].GetComponentInChildren<TMP_Text>().text = price + "RUB";
-            _lots[1].SetActive(true);
         }
 
         Product product3 = m_StoreController.products.WithID("notreclama");
@@ -230,7 +223,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             price = price.Remove(price.Length - 1);
 
             _payBtns[2].GetComponentInChildren<TMP_Text>().text = price + "RUB";
-            _lots[2].SetActive(true);
         }
 
         Product product4 = m_StoreController.products.WithID("vipday");
@@ -240,7 +232,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             price = price.Remove(price.Length - 1);
 
             _payBtns[3].GetComponentInChildren<TMP_Text>().text = price + "RUB";
-            _lots[3].SetActive(true);
         }
     }
 

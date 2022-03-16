@@ -180,7 +180,7 @@ namespace Victorina
             Name = info.AccountInfo.TitleInfo.DisplayName;
 
             if (Name == null || Name == string.Empty)
-                SetDisplayName("Игрок");
+                SetDisplayName(PlayFabId);
 
             Debug.Log("Информация об аккаунте Playfab получена");
         }

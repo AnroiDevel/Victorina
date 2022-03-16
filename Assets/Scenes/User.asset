@@ -13,25 +13,30 @@ MonoBehaviour:
   m_Name: User
   m_EditorClassIdentifier: 
   CreatedDateTimePlayfabProfile: 24.01.2022 10:50:04
-  CustomId: 65121842-faf7-4ae8-b6e7-ceafd778f55f
+  CustomId: 
   PlayFabId: 9718216EC7B16B74
   TitlePlayerAccountId: 50D45910BF589D06
   ErrorInformation: 
   Item: 
   GuidID: 
-  Name: 
+  Name: AnroiDevel
   Email: 
   Password: 
-  Bit: 14300
+  Bit: 840100
   IsBonusReady: 1
   MaxBonusTimeSeconds: 29
   BonusRechargeSeconds: 29
   IsPlayed: 0
-  TicketsBit: 1
-  PriceBitTicket: 0
+  IsVip: 0
+  TicketsBit: 0
+  PriceBitTicket: 100
   ItemCatalog:
-  - test
+  - BitTicket
+  - PlayToken
   CurrencyVirtual:
   - QB = 0
-  - BT = 14300
+  - BT = 840100
   - BS = 1
+  LastGameTime: 
+  AllQuestionsCount: 14
+  RightAnswersCount: 10
