@@ -12,6 +12,9 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
+        public bool IsNewPlayer;
+        public bool IsNewVersionApp;
+
         public string CreatedDateTimePlayfabProfile;
         public string CustomId;
         public string PlayFabId;
@@ -24,6 +27,7 @@ namespace Victorina
         public string Password;
         public int Bit = 0;
 
+        [Header("Бонус")]
         public bool IsBonusReady;
         public DateTime RechargedBonusT;
         public int MaxBonusTimeSeconds;

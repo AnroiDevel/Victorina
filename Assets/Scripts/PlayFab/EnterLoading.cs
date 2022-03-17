@@ -2,6 +2,7 @@
 using PlayFab.ClientModels;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Victorina
@@ -10,11 +11,15 @@ namespace Victorina
     {
         private const string AuthGuidKey = "authorization-guid";
         [SerializeField] private PlayerData _playerData;
-        [SerializeField] private bool _isNewUser;
+
+        [Header("Для разработчика")]
+        [SerializeField] private Toggle _setNewPlayerToogle;
 
         private void Start()
         {
-            if (!_isNewUser)
+            _playerData.IsNewVersionApp = IsNewVersionApp();
+            SetIsNewPlayerOption();
+            if (!_playerData.IsNewPlayer)
                 PlayFabAutorization(_playerData);
         }
 
@@ -39,6 +44,22 @@ namespace Victorina
                 playerData.Init();
 
             }, Debug.Log);
+        }
+
+        public void SetIsNewPlayerOption()
+        {
+            _playerData.IsNewPlayer = _setNewPlayerToogle.isOn;
+        }
+
+        private bool IsNewVersionApp()
+        {
+            var currentVersion = Application.version;
+            string prevVersion = string.Empty;
+
+            if (PlayerPrefs.HasKey("Version"))
+                prevVersion = PlayerPrefs.GetString("Version");
+
+            return !currentVersion.Equals(prevVersion);
         }
 
     }
