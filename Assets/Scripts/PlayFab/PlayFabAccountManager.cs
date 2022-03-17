@@ -27,13 +27,9 @@ namespace Victorina
 
         private void OnGetAccountSuccess(GetAccountInfoResult result)
         {
-            if (PlayerPrefs.GetString("authorization-guid") != string.Empty)
-                _titleLabel.text = $"С возвращением {PlayerPrefs.GetString("Name")}";
-            _workedInfoLabel.text = $"Уникальный ID:  {result.AccountInfo.PlayFabId}\n" +
-                $"Персональная информация:  {result.AccountInfo.TitleInfo.DisplayName}\n";
             _playerData.Init();
-
         }
+
         private void OnFailure(PlayFabError error)
         {
             var errorMessage = error.GenerateErrorReport();

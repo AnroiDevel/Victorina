@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
-  m_Name: User
+  m_Name: ghfjghj
   m_EditorClassIdentifier: 
+  IsNewPlayer: 1
+  IsNewVersionApp: 0
   CreatedDateTimePlayfabProfile: 24.01.2022 10:50:04
   CustomId: 
   PlayFabId: 9718216EC7B16B74
@@ -22,7 +24,7 @@ MonoBehaviour:
   Name: AnroiDevel
   Email: 
   Password: 
-  Bit: 840100
+  Bit: 840500
   IsBonusReady: 1
   MaxBonusTimeSeconds: 29
   BonusRechargeSeconds: 29
@@ -35,8 +37,8 @@ MonoBehaviour:
   - PlayToken
   CurrencyVirtual:
   - QB = 0
-  - BT = 840100
+  - BT = 840500
   - BS = 1
   LastGameTime: 
-  AllQuestionsCount: 14
-  RightAnswersCount: 10
+  AllQuestionsCount: 2
+  RightAnswersCount: 0
