@@ -21,11 +21,16 @@ namespace Victorina
         [SerializeField] private Text _workedInfoLabel;
         [SerializeField] private Text _loadText;
         [SerializeField] private Button _playAndExitButton;
+        [SerializeField] private Text _nameText;
+
 
         [SerializeField] private PlayerData _playerData;
 
         public void Start()
         {
+            _playAndExitButton.onClick.AddListener(() => ConfirmName());
+            if (_playerData.IsNewPlayer)
+                PlayerPrefs.DeleteAll();
 
             // Here we need to check whether TitleId property is configured in settings or not
             if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
@@ -44,7 +49,6 @@ namespace Victorina
             {
                 CustomId = id,
                 CreateAccount = !needCreation,
-
             }, success =>
             {
                 PlayerPrefs.SetString(AuthGuidKey, id);
@@ -53,9 +57,14 @@ namespace Victorina
                 _loadText.text = "Загружено";
                 _playAndExitButton.gameObject.SetActive(true);
 
-                _playAndExitButton.onClick.AddListener(() => SceneManager.LoadScene("Victorina"));
             }, OnFailure);
 
+        }
+
+        private void ConfirmName()
+        {
+            _playerData.Name = _nameText.text;
+            SceneManager.LoadScene("Victorina");
         }
 
         private void OnFailure(PlayFabError error)
