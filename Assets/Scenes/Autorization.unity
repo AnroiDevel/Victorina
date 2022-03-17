@@ -270,10 +270,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u0414\u043E\u0431\u0440\u043E \n\u043F\u043E\u0436\u0430\u043B\u043E\u0432\u0430\u0442\u044C
-    \u0432\nVictorina C#\n\n<size=\"10\">\u041A\u0430\u043A \u0442\u0435\u0431\u044F
-    \u0437\u043E\u0432\u0443\u0442?</size>"
---- !u!222 &116619245
+
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
