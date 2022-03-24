@@ -17,7 +17,7 @@ namespace Victorina
             {
                 _slider.direction = (Slider.Direction)PlayerPrefs.GetInt(_slider.name);
             }
-            else _slider.direction = 0;
+            else _slider.direction = (Slider.Direction)1;
             _imageFill.color = _slider.direction > 0 ? Color.green : Color.red;
         }
         public void SwithSliderDir()

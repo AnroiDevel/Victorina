@@ -159,7 +159,7 @@ PlayerSettings:
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
-  AndroidBundleVersionCode: 15032022
+  AndroidBundleVersionCode: 20032022
   AndroidMinSdkVersion: 19
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 0
@@ -270,7 +270,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: a7dc2a14208bb1c43b219f380eae11f6, type: 3}
+      m_Icon: {fileID: 2800000, guid: 0ce7e7b74a8aaad47b033d81169bcfb9, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

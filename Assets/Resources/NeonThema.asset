@@ -47,3 +47,5 @@ MonoBehaviour:
   LotShopColor: {r: 0.7843138, g: 0.5686275, b: 0.7960785, a: 1}
   WinPanel: {fileID: 21300000, guid: 84801f93044db96488ee669f71e482bb, type: 3}
   WinPanelBtn: {fileID: 21300000, guid: 86014b7f49478444086d97719b98d8f9, type: 3}
+  RegulationPanel: {fileID: 21300000, guid: 55e9ddbb3c62d0c418b85225bce0e75c, type: 3}
+  CommentPanelColor: {r: 0.24705884, g: 0.41960788, b: 0.5411765, a: 1}

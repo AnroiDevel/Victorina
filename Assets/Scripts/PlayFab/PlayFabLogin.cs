@@ -61,7 +61,7 @@ namespace Victorina
 
         }
 
-        private void ConfirmName()
+        public void ConfirmName()
         {
             _playerData.Name = _nameText.text;
             SceneManager.LoadScene("Victorina");

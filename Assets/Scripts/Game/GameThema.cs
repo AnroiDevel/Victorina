@@ -15,6 +15,9 @@ namespace Victorina
         [SerializeField] private Image _gameExitPanel;
         [SerializeField] private Image _winPanel;
         [SerializeField] private AudioSource _audioSource;
+        [SerializeField] private Image _regulationPanel;
+        [SerializeField] private Image _commentPanel;
+        [SerializeField] private Image _continueBtn;
 
         private void Start()
         {
@@ -23,6 +26,9 @@ namespace Victorina
             _gamePanel.sprite = ThemaConrtoller.ActiveThema?.GamePanel;
             _gameExitPanel.sprite = ThemaConrtoller.ActiveThema?.GameExitPanel;
             _winPanel.sprite = ThemaConrtoller.ActiveThema?.WinPanel;
+            _regulationPanel.sprite = ThemaConrtoller.ActiveThema?.RegulationPanel;
+            _commentPanel.color = ThemaConrtoller.ActiveThema.CommentPanelColor;
+            _continueBtn.color = ThemaConrtoller.ActiveThema.LotShopColor;
 
             foreach(var img in _welcomeBtns)
                 img.sprite = ThemaConrtoller.ActiveThema?.WinPanelBtn;
