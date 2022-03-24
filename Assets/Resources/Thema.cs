@@ -55,5 +55,7 @@ namespace Victorina
         public Color LotShopColor;
         public Sprite WinPanel;
         public Sprite WinPanelBtn;
+        public Sprite RegulationPanel;
+        public Color CommentPanelColor;
     }
 }

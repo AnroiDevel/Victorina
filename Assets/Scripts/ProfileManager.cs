@@ -11,10 +11,6 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
 
-        [SerializeField] private Button _createAkkBtn;
-        [SerializeField] private Button _signInAkkBtn;
-        [SerializeField] private Button _signOutAkkBtn;
-
         [SerializeField] private Text _workedInfoLabel;
 
         private string _username;
@@ -22,10 +18,12 @@ namespace Victorina
         private string _pass;
 
         [SerializeField] private Text _moneyText;
+        [SerializeField] private Text _usernameText;
 
         private void Start()
         {
             _moneyText.text = _playerData.Bit.ToString();
+            _usernameText.text = _playerData.Name;
         }
 
         private void OnEnable()

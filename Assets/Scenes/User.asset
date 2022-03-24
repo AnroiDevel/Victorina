@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
-  m_Name: ghfjghj
+  m_Name: User
   m_EditorClassIdentifier: 
   IsNewPlayer: 1
-  IsNewVersionApp: 0
-  CreatedDateTimePlayfabProfile: 24.01.2022 10:50:04
+  IsNewVersionApp: 1
+  CreatedDateTimePlayfabProfile: 21.03.2022 7:47:16
   CustomId: 
-  PlayFabId: 9718216EC7B16B74
-  TitlePlayerAccountId: 50D45910BF589D06
+  PlayFabId: 77E754D5FF747AB3
+  TitlePlayerAccountId: BDE68AA5B8C91D42
   ErrorInformation: 
   Item: 
   GuidID: 
-  Name: AnroiDevel
+  Name: 77E754D5FF747AB3
   Email: 
   Password: 
-  Bit: 840500
+  Bit: 1000
   IsBonusReady: 1
   MaxBonusTimeSeconds: 29
   BonusRechargeSeconds: 29
@@ -37,8 +37,8 @@ MonoBehaviour:
   - PlayToken
   CurrencyVirtual:
   - QB = 0
-  - BT = 840500
+  - BT = 1000
   - BS = 1
-  LastGameTime: 
-  AllQuestionsCount: 2
+  LastGameTime: 0:00:07
+  AllQuestionsCount: 0
   RightAnswersCount: 0
