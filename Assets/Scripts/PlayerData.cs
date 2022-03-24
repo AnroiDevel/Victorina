@@ -55,6 +55,7 @@ namespace Victorina
 
         public int AllQuestionsCount;
         public int RightAnswersCount;
+        public bool RightError;
 
         public int GetBonusRechargeSeconds
         {
