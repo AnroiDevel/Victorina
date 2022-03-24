@@ -49,6 +49,8 @@ namespace Victorina
         [SerializeField] private GameObject _commentPanel;
         [SerializeField] private Text _comment;
 
+        private HelpController _helpController;
+
         private string _commentText;
 
         private Queue<int> _questionIndexes = new Queue<int>();
@@ -75,7 +77,13 @@ namespace Victorina
 
         private void Start()
         {
+            _helpController = GetComponent<HelpController>();
             SetCurrentStep();
+        }
+
+        private void OnLoadNewQuestion()
+        {
+            _helpController.Activator();
         }
 
         private void PreviousCellMark()
@@ -149,11 +157,14 @@ namespace Victorina
                 _commentPanel.SetActive(true);
                 _playerData.AddRightAnswersCount();
             }
-            else
+            else if (_playerData.RightError)
             {
-                //_answers[index].color = Color.red;
-                Loose();
+                _answers[index].color = Color.red;
+                _playerData.RightError = false;
             }
+            else
+                Loose();
+
         }
 
         private void Loose()
@@ -197,7 +208,28 @@ namespace Victorina
                         }
                     }
                 }
+            _helpController.IsTwoErrorVarintsComplete = true;
         }
+
+        public void DelOneErrorVariant()
+        {
+            var cnt = 0;
+            if (_answerButtons.Length > 0)
+                while (cnt < 1)
+                {
+                    var rnd = UnityEngine.Random.Range(0, _answers.Length);
+                    if (rnd != _trueIndex)
+                    {
+                        if (_answerButtons[rnd].isActiveAndEnabled)
+                        {
+                            _answerButtons[rnd].gameObject.SetActive(false);
+                            cnt++;
+                        }
+                    }
+                }
+        }
+
+
         public void SendGrade()
         {
             _progressPanel.SetActive(true);
@@ -293,6 +325,8 @@ namespace Victorina
             _commentPanel.SetActive(false);
 
             _playerData.AddQuestionCount();
+
+            OnLoadNewQuestion();
         }
 
         private bool IsNewIndex(int index)
