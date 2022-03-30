@@ -20,6 +20,7 @@ namespace Victorina
             _profilePanel = GameObject.Find("ProfilePanel");
             _renameBtn.onClick.AddListener(Switcher);
             _othersBtns = _profilePanel.GetComponentsInChildren<Button>();
+            _currentName.text = _playerData.Name;
         }
 
         private void OnEnable()

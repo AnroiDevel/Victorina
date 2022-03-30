@@ -8,7 +8,6 @@ namespace Victorina
     public class MainPanelController : MonoBehaviour
     {
         private const string Avatar = "/photo.png";
-        [SerializeField] Text _nameUser;
         [SerializeField] RawImage _userImage;
 
         private string _pathForUserImage;
@@ -18,8 +17,6 @@ namespace Victorina
         {
             _pathForUserImage = Application.persistentDataPath + Avatar;
 
-            if (PlayerPrefs.HasKey("Name"))
-                _nameUser.text = PlayerPrefs.GetString("Name");
 
             if (File.Exists(_pathForUserImage))
             {

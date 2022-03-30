@@ -26,40 +26,58 @@ namespace Victorina
 
         [SerializeField] private PlayerData _playerData;
 
-        public void Start()
-        {
-            _playAndExitButton.onClick.AddListener(() => ConfirmName());
-            if (_playerData.IsNewPlayer)
-                PlayerPrefs.DeleteAll();
+        //public void Start()
+        //{
+        //    _playAndExitButton.onClick.AddListener(() => ConfirmName());
+        //    if (_playerData.IsNewPlayer)
+        //        PlayerPrefs.DeleteAll();
 
-            // Here we need to check whether TitleId property is configured in settings or not
-            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
-            {
-                /*
-                * If not we need to assign it to the appropriate variable manually
-                * Otherwise we can just remove this if statement at all
-                */
-                PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            }
+        //    // Here we need to check whether TitleId property is configured in settings or not
+        //    if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+        //    {
+        //        /*
+        //        * If not we need to assign it to the appropriate variable manually
+        //        * Otherwise we can just remove this if statement at all
+        //        */
+        //        PlayFabSettings.staticSettings.TitleId = "D2AD8";
+        //    }
 
-            var needCreation = PlayerPrefs.HasKey(AuthGuidKey);
-            var id = PlayerPrefs.GetString(AuthGuidKey, Guid.NewGuid().ToString());
+        //    var needCreation = PlayerPrefs.HasKey(AuthGuidKey);
+        //    var id = PlayerPrefs.GetString(AuthGuidKey, Guid.NewGuid().ToString());
 
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
-            {
-                CustomId = id,
-                CreateAccount = !needCreation,
-            }, success =>
-            {
-                PlayerPrefs.SetString(AuthGuidKey, id);
-                Login?.Invoke(true);
+        //    PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+        //    {
+        //        CustomId = id,
+        //        CreateAccount = !needCreation,
+        //    }, success =>
+        //    {
+        //        PlayerPrefs.SetString(AuthGuidKey, id);
+        //        Login?.Invoke(true);
 
-                _loadText.text = "Загружено";
-                _playAndExitButton.gameObject.SetActive(true);
+        //        _loadText.text = "Загружено";
+        //        _playAndExitButton.gameObject.SetActive(true);
 
-            }, OnFailure);
+        //    }, OnFailure);
 
-        }
+        //}
+
+        //private void CreateNewPlayer()
+        //{
+        //    PlayFabSettings.staticSettings.TitleId = "D2AD8";
+        //    var id = Guid.NewGuid().ToString();
+
+        //    PlayFabClientAPI.LoginWithCustomID(
+        //        new LoginWithCustomIDRequest()
+        //        {
+        //            CustomId = id,
+        //            CreateAccount = true,
+        //        },
+        //        sucsess =>
+        //        {
+        //            PlayerPrefs.SetString(AuthGuidKey, id);
+        //        },
+        //        OnFailure);
+        //}
 
         public void ConfirmName()
         {

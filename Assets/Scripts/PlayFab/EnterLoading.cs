@@ -15,41 +15,46 @@ namespace Victorina
         [Header("Для разработчика")]
         [SerializeField] private Toggle _setNewPlayerToogle;
 
-        private void Start()
-        {
-            _playerData.IsNewVersionApp = IsNewVersionApp();
-            SetIsNewPlayerOption();
-            if (!_playerData.IsNewPlayer)
-                PlayFabAutorization(_playerData);
-        }
+        //private void Start()
+        //{
+        //    _playerData.IsNewVersionApp = IsNewVersionApp();
+        //    SetIsNewPlayerOption();
+        //    PlayFabAutorization(_playerData);
+        //}
 
-        private void PlayFabAutorization(PlayerData playerData)
-        {
-            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
-            {
-                PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            }
+        //private void PlayFabAutorization(PlayerData playerData)
+        //{
+        //    if (_playerData.IsNewPlayer)
+        //        playerData.Reset();
+        //    if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+        //    {
+        //        PlayFabSettings.staticSettings.TitleId = "D2AD8";
+        //    }
 
-            var needCreation = PlayerPrefs.HasKey(AuthGuidKey);
-            var id = PlayerPrefs.GetString(AuthGuidKey, Guid.NewGuid().ToString());
+        //    var needCreation = _playerData.GuidID != string.Empty;
 
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
-            {
-                CustomId = id,
-                CreateAccount = !needCreation,
+        //    var id = _playerData.GuidID;
+        //    if (id == string.Empty)
+        //        id = Guid.NewGuid().ToString();
+        //    _playerData.GuidID = id;
 
-            }, success =>
-            {
-                PlayerPrefs.SetString(AuthGuidKey, id);
-                playerData.Init();
+        //    PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+        //    {
+        //        CustomId = id,
+        //        CreateAccount = !needCreation,
 
-            }, Debug.Log);
-        }
+        //    }, success =>
+        //    {
+        //        PlayerPrefs.SetString(AuthGuidKey, id);
+        //        playerData.Init();
+        //    }, Debug.Log);
+        //}
 
-        public void SetIsNewPlayerOption()
-        {
-            _playerData.IsNewPlayer = _setNewPlayerToogle.isOn;
-        }
+        //public void SetIsNewPlayerOption()
+        //{
+        //    _playerData.IsNewPlayer = _setNewPlayerToogle.isOn;
+        //    PlayFabAutorization(_playerData);
+        //}
 
         private bool IsNewVersionApp()
         {

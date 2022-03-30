@@ -132,8 +132,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 98403658}
-  - component: {fileID: 98403657}
-  - component: {fileID: 98403656}
   - component: {fileID: 98403659}
   m_Layer: 0
   m_Name: PlayFab
@@ -142,38 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &98403656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98403655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 187f03062b1c797459677265ac3a3408, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _workedInfoLabel: {fileID: 1396751092}
-  _loadText: {fileID: 1750362685}
-  _playAndExitButton: {fileID: 1603768402}
-  _nameText: {fileID: 1095117215}
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
---- !u!114 &98403657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 98403655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73c2aff044b4bf146863309a3d67eb15, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _titleLabel: {fileID: 0}
-  _workedInfoLabel: {fileID: 1396751092}
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!4 &98403658
 Transform:
   m_ObjectHideFlags: 0
@@ -356,6 +322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 423192925}
   - component: {fileID: 423192926}
+  - component: {fileID: 423192927}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -391,6 +358,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: {fileID: 1095117215}
   _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
+--- !u!114 &423192927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423192924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc6a074525eea54e84d7511814fb9c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &616739352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,7 +1155,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 98403656}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Victorina.PlayFabLogin, Assembly-CSharp
         m_MethodName: ResetProgress
         m_Mode: 1
@@ -1429,8 +1408,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 423192926}
-        m_TargetAssemblyTypeName: Victorina.NameCreator, Assembly-CSharp
-        m_MethodName: CreateName
+        m_TargetAssemblyTypeName: Victorina.PlayerCreator, Assembly-CSharp
+        m_MethodName: CreateNewPlayer
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

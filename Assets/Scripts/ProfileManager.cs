@@ -41,22 +41,22 @@ namespace Victorina
             _moneyText.text = _playerData.Bit.ToString();
         }
 
-        public void VerificationAccount()
-        {
-            var newUserReq = new AddUsernamePasswordRequest
-            {
-                Username = _username,
-                Password = _pass,
-                Email = _mail
-            };
+        //public void VerificationAccount()
+        //{
+        //    var newUserReq = new AddUsernamePasswordRequest
+        //    {
+        //        Username = _username,
+        //        Password = _pass,
+        //        Email = _mail
+        //    };
 
-            PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
+        //    PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
 
-            _playerData.Name = _username;
-            _playerData.Email = _mail;
-            _playerData.Password = _pass;
+        //    _playerData.Name = _username;
+        //    _playerData.Email = _mail;
+        //    _playerData.Password = _pass;
 
-        }
+        //}
 
         private void OnCreateSuccess(AddUsernamePasswordResult result)
         {
@@ -79,14 +79,14 @@ namespace Victorina
             _pass = pass;
         }
 
-        public void SignIn()
-        {
-            PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
-            {
-                Username = _username,
-                Password = _pass
-            }, OnSignInSuccess, OnFailure);
-        }
+        //public void SignIn()
+        //{
+        //    PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
+        //    {
+        //        Username = _username,
+        //        Password = _pass
+        //    }, OnSignInSuccess, OnFailure);
+        //}
 
         private void OnSignInSuccess(LoginResult result)
         {

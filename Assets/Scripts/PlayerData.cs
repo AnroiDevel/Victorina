@@ -15,10 +15,11 @@ namespace Victorina
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
 
-        public string CreatedDateTimePlayfabProfile;
         public string CustomId;
         public string PlayFabId;
         public string TitlePlayerAccountId;
+        public string CreatedDateTimePlayfabProfile;
+
         public string ErrorInformation;
         public string Item;
         public string GuidID;
@@ -57,6 +58,43 @@ namespace Victorina
         public int RightAnswersCount;
         public bool RightError;
 
+        public Action NewPlayerComplete;
+        public Action LoginComplete;
+
+        public void CreateNewPlayer()
+        {
+            PlayFabSettings.staticSettings.TitleId = "D2AD8";
+            var id = Guid.NewGuid().ToString();
+
+            PlayFabClientAPI.LoginWithCustomID(
+                new LoginWithCustomIDRequest()
+                {
+                    CustomId = id,
+                    CreateAccount = true,
+                },
+                sucsess =>
+                {
+                    SetDisplayName(Name);
+                },
+                error => Debug.Log("sss"));
+        }
+
+        public void Login()
+        {
+            PlayFabSettings.staticSettings.TitleId = "D2AD8";
+
+            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            {
+                CustomId = CustomId,
+                CreateAccount = false,
+            }, success =>
+            {
+                Init();
+                LoginComplete?.Invoke();
+
+            }, OnFailure);
+
+        }
         public int GetBonusRechargeSeconds
         {
             get
@@ -125,6 +163,23 @@ namespace Victorina
             GetRightAnswersCount();
         }
 
+        public void Reset()
+        {
+            IsNewPlayer = true;
+            IsNewVersionApp = true;
+
+            CustomId = string.Empty;
+            PlayFabId = string.Empty;
+            TitlePlayerAccountId = string.Empty;
+            CreatedDateTimePlayfabProfile = string.Empty;
+
+            GuidID = string.Empty;
+            Name = string.Empty;
+            Email = string.Empty;
+            Password = string.Empty;
+            Bit = 0;
+        }
+
         private void TimerInit()
         {
             _bonusTimer = new Timer(1000);
@@ -158,14 +213,6 @@ namespace Victorina
 
         }
 
-        public void Reset()
-        {
-            GuidID = string.Empty;
-            Name = string.Empty;
-            Email = string.Empty;
-            Password = string.Empty;
-            Bit = 0;
-        }
 
         private void GetAccauntUserInfo()
         {
@@ -178,14 +225,11 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            //CustomId = info.AccountInfo.CustomIdInfo.CustomId;
+            CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
             Name = info.AccountInfo.TitleInfo.DisplayName;
-
-            if (Name == null || Name == string.Empty)
-                SetDisplayName(PlayFabId);
 
             Debug.Log("Информация об аккаунте Playfab получена");
         }
@@ -200,8 +244,11 @@ namespace Victorina
 
         private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
         {
-            Name = obj.DisplayName;
+            IsNewPlayer = false;
+            NewPlayerComplete?.Invoke();
+            Init();
         }
+
         private void OnStatisticsUpdated(UpdatePlayerStatisticsResult updateResult)
         {
             Debug.Log("Successfully submitted high score");

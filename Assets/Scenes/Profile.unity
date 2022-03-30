@@ -1998,7 +1998,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 540960818}
         m_TargetAssemblyTypeName: Victorina.LoadAvatar, Assembly-CSharp
-        m_MethodName: LoadSprite
+        m_MethodName: LoadImageFromDir
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6895,11 +6895,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
-  _createAkkBtn: {fileID: 28985065}
-  _signInAkkBtn: {fileID: 1562800380}
-  _signOutAkkBtn: {fileID: 1058122311}
   _workedInfoLabel: {fileID: 771436977}
   _moneyText: {fileID: 1984421447}
+  _usernameText: {fileID: 495838891}
 --- !u!114 &2133994179
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -124,7 +124,8 @@ namespace Victorina
             SetDefaultRateImage();
             StopAllCoroutines();
             StartCoroutine(PrevRaundPause(_currentStepProgress++));
-            StartCoroutine(GetQuestion(_currentStepProgress / 5 + 1));
+            var nextLevel = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
+            StartCoroutine(GetQuestion(nextLevel));
         }
 
         public void Win()
