@@ -3,6 +3,7 @@ using PlayFab.ClientModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Timers;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
+        private string UrlAvatar = "AvatarUrl";
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
 
@@ -21,6 +23,10 @@ namespace Victorina
         public string CreatedDateTimePlayfabProfile;
 
         public string ErrorInformation;
+
+        public Sprite Avatar;
+        public string PathFileAvatar;
+
         public string Item;
         public string GuidID;
         public string Name;
@@ -51,6 +57,7 @@ namespace Victorina
         public Action InitComplete;
         public Action<string> ConsumeComplete;
         public Action BitInfoUpdate;
+        public Action ReloadAvatar;
 
         public string LastGameTime;
 
@@ -81,7 +88,9 @@ namespace Victorina
 
         public void Login()
         {
+
             PlayFabSettings.staticSettings.TitleId = "D2AD8";
+            PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
 
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
@@ -95,6 +104,20 @@ namespace Victorina
             }, OnFailure);
 
         }
+
+        public void SetAvatar()
+        {
+            PathFileAvatar = PlayerPrefs.GetString("AvatarUrl");
+            if (!File.Exists(PathFileAvatar)) return;
+            WWW www = new WWW("file://" + PathFileAvatar);
+            Texture2D texture2D = www.texture;
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+            Avatar = sprite;
+
+            //ReloadAvatar?.Invoke();
+        }
+
+
         public int GetBonusRechargeSeconds
         {
             get
@@ -165,6 +188,7 @@ namespace Victorina
 
         public void Reset()
         {
+            PlayerPrefs.DeleteAll();
             IsNewPlayer = true;
             IsNewVersionApp = true;
 

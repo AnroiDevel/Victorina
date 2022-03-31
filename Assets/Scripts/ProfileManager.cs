@@ -10,6 +10,8 @@ namespace Victorina
     public class ProfileManager : MonoBehaviour
     {
         [SerializeField] private PlayerData _playerData;
+        [SerializeField] private Image _imageAvatar;
+        [SerializeField] private Image _testImageAvatar;
 
         [SerializeField] private Text _workedInfoLabel;
 
@@ -24,10 +26,25 @@ namespace Victorina
         {
             _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
+            //_playerData.ReloadAvatar += OnReloadAvatar;
+        }
+
+        private void OnReloadAvatar()
+        {
+            if (gameObject.activeSelf)
+                StartCoroutine(NewAvatarComplete());
+        }
+
+        private IEnumerator NewAvatarComplete()
+        {
+            yield return new WaitForSeconds(1);
+            _imageAvatar.sprite = _playerData.Avatar;
         }
 
         private void OnEnable()
         {
+            OnReloadAvatar();
+            _imageAvatar.sprite = _playerData.Avatar;
             _playerData.BitInfoUpdate += MoneyUpdate;
         }
 

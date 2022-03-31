@@ -11,6 +11,8 @@ namespace Victorina
 
         private void Start()
         {
+            _playerData.SetAvatar();
+
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);
 

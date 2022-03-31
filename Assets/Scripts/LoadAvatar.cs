@@ -1,5 +1,7 @@
+using System.Collections;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -9,6 +11,11 @@ namespace Victorina
 {
     public class LoadAvatar : MonoBehaviour
     {
+        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private GameObject _fileList;
+        [SerializeField] private RawImage _cameraImg;
+
+
         public RawImage _image;
         // Device cameras
         WebCamDevice _frontCameraDevice;
@@ -28,8 +35,9 @@ namespace Victorina
 
         private void Start()
         {
-            //_avatar = GetComponentInParent<RawImage>();
-            LoadImageAvatar();
+            Debug.Log(Application.persistentDataPath + "/photo.png");
+
+            //_image.texture = _playerData.Avatar.texture;
 
             if (WebCamTexture.devices.Length == 0)
             {
@@ -68,7 +76,7 @@ namespace Victorina
 
         private void LoadImageAvatar()
         {
-            var _pathForUserImage = Application.persistentDataPath + "/photo.png";
+            var _pathForUserImage = "/mnt/sdcard/Download" + "/foto.png";
             if (File.Exists(_pathForUserImage))
             {
                 var imageBytes = File.ReadAllBytes(_pathForUserImage);
@@ -101,10 +109,11 @@ namespace Victorina
             _activeCameraDevice = WebCamTexture.devices.FirstOrDefault(device =>
                 device.name == cameraToUse.deviceName);
 
-            _image.texture = _activeCameraTexture;
-            _image.material.mainTexture = _activeCameraTexture;
+            _cameraImg.texture = _activeCameraTexture;
+            //_cameraImg.material.mainTexture = _activeCameraTexture;
 
-            _activeCameraTexture.Play();
+            if (_activeCameraTexture != null)
+                _activeCameraTexture.Play();
         }
 
         public void LoadImageFromDir()
@@ -115,35 +124,100 @@ namespace Victorina
         }
 
 
+        public void SetAvatarFromCamera()
+        {
+            StartCoroutine(TakeSnapshot());
+
+        }
+
+        WaitForSeconds waitTime = new WaitForSeconds(0.1F);
+        WaitForEndOfFrame frameEnd = new WaitForEndOfFrame();
+
+        public IEnumerator TakeSnapshot()
+        {
+            yield return waitTime;
+            yield return frameEnd;
+
+            var width = (int)_cameraImg.rectTransform.rect.width;
+            var height = (int)_cameraImg.rectTransform.rect.height;
+
+            Texture2D texture = new Texture2D(width, height, TextureFormat.RGB24, true);
+            texture.ReadPixels(new Rect((Screen.width - width) / 2, Screen.height - height, width, height), 0, 0);
+            texture.LoadRawTextureData(texture.GetRawTextureData());
+            texture.Apply();
+            SendTexture(texture);
+
+            // gameObject.renderer.material.mainTexture = TakeSnapshot;
+        }
+
+        private void SendTexture(Texture2D texture)
+        {
+            WriteFoto(texture);
+            _cameraImg.transform.Rotate(new Vector3(0, 0, -90));
+            _cameraImg.gameObject.SetActive(false);
+            _activeCameraTexture.Stop();
+
+
+        }
+
+        private void WriteFoto(Texture2D texture)
+        {
+            byte[] bytes = texture.EncodeToPNG();
+            string path = "/mnt/sdcard/Download" + "/foto.png";
+            //path = Application.persistentDataPath + "/foto.png";
+            File.WriteAllBytes(path, bytes);
+            PlayerPrefs.SetString("AvatarUrl", path);
+            _playerData.PathFileAvatar = path;
+            _playerData.SetAvatar();
+            AvatarManager.Instance.SelectAvatar(path);
+            StartCoroutine(DeactiveFileList());
+        }
+
+        private IEnumerator DeactiveFileList()
+        {
+            yield return new WaitForSeconds(1);
+            _fileList.SetActive(false);
+        }
+
         public void FotoFromCamera()
         {
 
-            _isActiveCamera = !_isActiveCamera;
-            _image.gameObject.SetActive(_isActiveCamera);
+            //_isActiveCamera = true;
 
-#if !UNITY_EDITOR
-            if (_isActiveCamera)
-            {
-                SetActiveCamera(_frontCameraTexture);
-            }
-            else
-            {
-                if (_activeCameraTexture.isPlaying)
-                {
-                    Texture2D photo = new Texture2D(_frontCameraTexture.width, _frontCameraTexture.height);
-                    photo.SetPixels(_frontCameraTexture.GetPixels());
-                    photo.Apply();
-                    _avatar.texture = photo;
+            //if (_isActiveCamera)
+            //{
 
-                    _activeCameraTexture.Stop();
 
-                    byte[] bytes = photo.EncodeToPNG();
-                    var path = Application.persistentDataPath;
+            _cameraImg.gameObject.SetActive(true);
 
-                    File.WriteAllBytes(path + "/photo.png", bytes);
-                }
-            }
-#endif
+            SetActiveCamera(_frontCameraTexture);
+
+            _cameraImg.transform.Rotate(new Vector3(0, 0, 90));
+
+            //}
+            //else
+            //{
+            //    if (_activeCameraTexture.isPlaying)
+            //    {
+            //        Texture2D photo = new Texture2D(_frontCameraTexture.width, _frontCameraTexture.height);
+            //        photo.SetPixels(_frontCameraTexture.GetPixels());
+            //        photo.Apply();
+            //        _avatar.texture = photo;
+
+            //        _activeCameraTexture.Stop();
+
+            //        byte[] bytes = photo.EncodeToPNG();
+            //        var path = Application.persistentDataPath;
+
+            //        _playerData.PathFileAvatar = path;
+            //        Sprite sprite = Sprite.Create(photo, new Rect(0.0f, 0.0f, photo.width, photo.height), new Vector2(0.5f, 0.5f));
+            //        _playerData.Avatar = sprite;
+            //        File.WriteAllBytes(path + "/photo.png", bytes);
+
+            //    }
+            //}
+
+            //_isActiveCamera = false;
         }
     }
 }
