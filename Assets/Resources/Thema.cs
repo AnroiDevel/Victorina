@@ -58,5 +58,6 @@ namespace Victorina
         public Sprite WinPanelBtn;
         public Sprite RegulationPanel;
         public Color CommentPanelColor;
+        public Sprite LoosePanel;
     }
 }
