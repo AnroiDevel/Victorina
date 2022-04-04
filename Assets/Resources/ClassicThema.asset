@@ -50,3 +50,4 @@ MonoBehaviour:
   WinPanelBtn: {fileID: 21300000, guid: f219b663f98203d4eb9929416c689888, type: 3}
   RegulationPanel: {fileID: 21300000, guid: 0214e6be6c47a6a49b3c7bcf5135e079, type: 3}
   CommentPanelColor: {r: 0.5764706, g: 0.36078432, b: 0.23529413, a: 1}
+  LoosePanel: {fileID: 21300000, guid: 28b0e81db79a3d54292f46a5a2c78446, type: 3}
