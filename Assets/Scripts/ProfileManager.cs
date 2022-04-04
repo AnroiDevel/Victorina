@@ -27,7 +27,8 @@ namespace Victorina
         {
             _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
-            _ticketText.text = _playerData.TicketsBit.ToString();
+            if (_ticketText)
+                _ticketText.text = _playerData.TicketsBit.ToString();
             //_playerData.ReloadAvatar += OnReloadAvatar;
         }
 
