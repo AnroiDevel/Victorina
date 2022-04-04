@@ -19,13 +19,15 @@ namespace Victorina
         private string _mail;
         private string _pass;
 
-        [SerializeField] private Text _moneyText;
         [SerializeField] private Text _usernameText;
+        [SerializeField] private Text _moneyText;
+        [SerializeField] private Text _ticketText;
 
         private void Start()
         {
             _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
+            _ticketText.text = _playerData.TicketsBit.ToString();
             //_playerData.ReloadAvatar += OnReloadAvatar;
         }
 
@@ -46,6 +48,9 @@ namespace Victorina
             OnReloadAvatar();
             _imageAvatar.sprite = _playerData.Avatar;
             _playerData.BitInfoUpdate += MoneyUpdate;
+
+            var coef = _playerData.ScaleImageAvatarCoef;
+            _imageAvatar.transform.localScale = Vector3.one * coef;
         }
 
         private void OnDisable()

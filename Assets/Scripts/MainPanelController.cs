@@ -41,6 +41,13 @@ namespace Victorina
 
 
         }
+
+        private void OnEnable()
+        {
+            var coef = _playerData.ScaleImageAvatarCoef;
+            _userImage.transform.localScale = Vector3.one * coef;
+
+        }
     }
 
 }

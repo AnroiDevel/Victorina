@@ -110,5 +110,8 @@ namespace Victorina
             PlayerPrefs.DeleteAll();
             SceneManager.LoadScene("Autorization");
         }
+
+
+
     }
 }

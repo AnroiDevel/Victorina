@@ -27,6 +27,7 @@ MonoBehaviour:
   QuestionRedactorBack: {fileID: 21300000, guid: bbfe7b79b46fc254685bd68bc0198ee9, type: 3}
   BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
   OptionIcon: {fileID: 3334585890235954068, guid: af059d018c600be4daacf05b3fab7621, type: 3}
+  ReportedBtn: {fileID: 21300000, guid: be43c6e58b855054aad10b209a8dd410, type: 3}
   ReitingIcon: {fileID: -5765054506968938745, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   MainIcon: {fileID: -8690396945167788949, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   ShopIcon: {fileID: 7084346585972752456, guid: af059d018c600be4daacf05b3fab7621, type: 3}

@@ -26,6 +26,7 @@ namespace Victorina
 
         public Sprite Avatar;
         public string PathFileAvatar;
+        public float ScaleImageAvatarCoef = 1.0f;
 
         public string Item;
         public string GuidID;
@@ -113,6 +114,9 @@ namespace Victorina
             Texture2D texture2D = www.texture;
             Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
             Avatar = sprite;
+
+            if (texture2D != null)
+                ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
 
             //ReloadAvatar?.Invoke();
         }
@@ -359,8 +363,9 @@ namespace Victorina
             {
                 ItemCatalog.SetValue(item.ItemId, cnt++);
                 _catalog.Add(item.ItemId, item);
-                if (item.DisplayName.Equals("BitTicket"))
-                    PriceBitTicket = item.VirtualCurrencyPrices["BT"];
+                if (item.DisplayName != null)
+                    if (item.DisplayName.Equals("BitTicket"))
+                        PriceBitTicket = item.VirtualCurrencyPrices["BT"];
             }
         }
         private void OnFailure(PlayFabError obj)
@@ -399,6 +404,9 @@ namespace Victorina
             PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
             RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
         }
+
+
+
 
         private void OnBonusComplete()
         {

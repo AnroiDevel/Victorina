@@ -14,6 +14,8 @@ namespace Victorina
         private void Start()
         {
             _avatar = GetComponent<Image>();
+            var coef = _playerData.ScaleImageAvatarCoef;
+            _avatar.transform.localScale = Vector3.one * coef;
         }
 
         //private void OnEnable()

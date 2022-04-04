@@ -8,11 +8,12 @@ namespace Victorina
     {
         [SerializeField] private Image _backgroundMainMenu;
         [SerializeField] private Image _backgroundShopMenu;
-        [SerializeField] private Image _backgroundOptionMenu;
         [SerializeField] private Image _statisticsPanel;
         [SerializeField] private Image _achivPanel;
 
-
+        [Header("Настройки")]
+        [SerializeField] private Image _backgroundOptionMenu;
+        [SerializeField] private Image _reportedBtn;
 
         [Header("Меню")]
         [SerializeField] private Image _bottomAnimMenuBack;
@@ -36,7 +37,10 @@ namespace Victorina
         {
             _backgroundMainMenu.sprite = ThemaConrtoller.ActiveThema?.MainMenuBack;
             _backgroundShopMenu.sprite = ThemaConrtoller.ActiveThema?.ShopMenuBack;
+
             _backgroundOptionMenu.sprite = ThemaConrtoller.ActiveThema?.OptionMenuBack;
+            _reportedBtn.sprite = ThemaConrtoller.ActiveThema?.ReportedBtn;
+
             _statisticsPanel.sprite = ThemaConrtoller.ActiveThema?.StatisticsPanelBack;
             _achivPanel.sprite = ThemaConrtoller.ActiveThema?.AchivPanelBack;
 

@@ -43,6 +43,7 @@ namespace Victorina
         {
             if (_enterBtn && !_isStartBtnListenerComplete)
                 CreateClikEvent(_enterBtn);
+
         }
 
         private void CreateClikEvent(Button button)
