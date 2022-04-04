@@ -16,14 +16,14 @@ namespace Victorina
 
         [SerializeField] private PlayerData _playerData;
 
-        private void Start()
-        {
-            _playFabLogin = FindObjectOfType<PlayFabLogin>();
+        //private void Start()
+        //{
+        //    _playFabLogin = FindObjectOfType<PlayFabLogin>();
 
-            if (_playFabLogin != null)
-                _playFabLogin.Login += OnLogin;
+        //    if (_playFabLogin != null)
+        //        _playFabLogin.Login += OnLogin;
 
-        }
+        //}
 
         private void OnGetAccountSuccess(GetAccountInfoResult result)
         {

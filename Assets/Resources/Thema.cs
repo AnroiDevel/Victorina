@@ -25,6 +25,7 @@ namespace Victorina
         [Header("Меню")]
         public Sprite BottomAnimMenuBack;
         public Sprite OptionIcon;
+        public Sprite ReportedBtn;
         public Sprite ReitingIcon;
         public Sprite MainIcon;
         public Sprite ShopIcon;

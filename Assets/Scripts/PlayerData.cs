@@ -3,6 +3,7 @@ using PlayFab.ClientModels;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Timers;
 using UnityEngine;
 
@@ -12,14 +13,21 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
+        private string UrlAvatar = "AvatarUrl";
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
 
-        public string CreatedDateTimePlayfabProfile;
         public string CustomId;
         public string PlayFabId;
         public string TitlePlayerAccountId;
+        public string CreatedDateTimePlayfabProfile;
+
         public string ErrorInformation;
+
+        public Sprite Avatar;
+        public string PathFileAvatar;
+        public float ScaleImageAvatarCoef = 1.0f;
+
         public string Item;
         public string GuidID;
         public string Name;
@@ -50,12 +58,69 @@ namespace Victorina
         public Action InitComplete;
         public Action<string> ConsumeComplete;
         public Action BitInfoUpdate;
+        public Action ReloadAvatar;
 
         public string LastGameTime;
 
         public int AllQuestionsCount;
         public int RightAnswersCount;
         public bool RightError;
+
+        public Action NewPlayerComplete;
+        public Action LoginComplete;
+
+        public void CreateNewPlayer()
+        {
+            PlayFabSettings.staticSettings.TitleId = "D2AD8";
+            var id = Guid.NewGuid().ToString();
+
+            PlayFabClientAPI.LoginWithCustomID(
+                new LoginWithCustomIDRequest()
+                {
+                    CustomId = id,
+                    CreateAccount = true,
+                },
+                sucsess =>
+                {
+                    SetDisplayName(Name);
+                },
+                error => Debug.Log("sss"));
+        }
+
+        public void Login()
+        {
+
+            PlayFabSettings.staticSettings.TitleId = "D2AD8";
+            PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
+
+            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            {
+                CustomId = CustomId,
+                CreateAccount = false,
+            }, success =>
+            {
+                Init();
+                LoginComplete?.Invoke();
+
+            }, OnFailure);
+
+        }
+
+        public void SetAvatar()
+        {
+            PathFileAvatar = PlayerPrefs.GetString("AvatarUrl");
+            if (!File.Exists(PathFileAvatar)) return;
+            WWW www = new WWW("file://" + PathFileAvatar);
+            Texture2D texture2D = www.texture;
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+            Avatar = sprite;
+
+            if (texture2D != null)
+                ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
+
+            //ReloadAvatar?.Invoke();
+        }
+
 
         public int GetBonusRechargeSeconds
         {
@@ -125,6 +190,24 @@ namespace Victorina
             GetRightAnswersCount();
         }
 
+        public void Reset()
+        {
+            PlayerPrefs.DeleteAll();
+            IsNewPlayer = true;
+            IsNewVersionApp = true;
+
+            CustomId = string.Empty;
+            PlayFabId = string.Empty;
+            TitlePlayerAccountId = string.Empty;
+            CreatedDateTimePlayfabProfile = string.Empty;
+
+            GuidID = string.Empty;
+            Name = string.Empty;
+            Email = string.Empty;
+            Password = string.Empty;
+            Bit = 0;
+        }
+
         private void TimerInit()
         {
             _bonusTimer = new Timer(1000);
@@ -158,14 +241,6 @@ namespace Victorina
 
         }
 
-        public void Reset()
-        {
-            GuidID = string.Empty;
-            Name = string.Empty;
-            Email = string.Empty;
-            Password = string.Empty;
-            Bit = 0;
-        }
 
         private void GetAccauntUserInfo()
         {
@@ -178,14 +253,11 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            //CustomId = info.AccountInfo.CustomIdInfo.CustomId;
+            CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
             Name = info.AccountInfo.TitleInfo.DisplayName;
-
-            if (Name == null || Name == string.Empty)
-                SetDisplayName(PlayFabId);
 
             Debug.Log("Информация об аккаунте Playfab получена");
         }
@@ -200,8 +272,11 @@ namespace Victorina
 
         private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
         {
-            Name = obj.DisplayName;
+            IsNewPlayer = false;
+            NewPlayerComplete?.Invoke();
+            Init();
         }
+
         private void OnStatisticsUpdated(UpdatePlayerStatisticsResult updateResult)
         {
             Debug.Log("Successfully submitted high score");
@@ -288,8 +363,9 @@ namespace Victorina
             {
                 ItemCatalog.SetValue(item.ItemId, cnt++);
                 _catalog.Add(item.ItemId, item);
-                if (item.DisplayName.Equals("BitTicket"))
-                    PriceBitTicket = item.VirtualCurrencyPrices["BT"];
+                if (item.DisplayName != null)
+                    if (item.DisplayName.Equals("BitTicket"))
+                        PriceBitTicket = item.VirtualCurrencyPrices["BT"];
             }
         }
         private void OnFailure(PlayFabError obj)
@@ -328,6 +404,9 @@ namespace Victorina
             PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
             RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
         }
+
+
+
 
         private void OnBonusComplete()
         {

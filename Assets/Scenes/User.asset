@@ -12,19 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
   m_Name: User
   m_EditorClassIdentifier: 
-  IsNewPlayer: 1
-  IsNewVersionApp: 1
-  CreatedDateTimePlayfabProfile: 21.03.2022 7:47:16
+  IsNewPlayer: 0
+  IsNewVersionApp: 0
   CustomId: 
-  PlayFabId: 77E754D5FF747AB3
-  TitlePlayerAccountId: BDE68AA5B8C91D42
+  PlayFabId: 
+  TitlePlayerAccountId: 
+  CreatedDateTimePlayfabProfile: 
   ErrorInformation: 
+  Avatar: {fileID: 21300000, guid: 6c3065ad07f753f408aef283f552ff80, type: 3}
+  PathFileAvatar: 
   Item: 
   GuidID: 
-  Name: 77E754D5FF747AB3
+  Name: 
   Email: 
   Password: 
-  Bit: 1000
+  Bit: 0
   IsBonusReady: 1
   MaxBonusTimeSeconds: 29
   BonusRechargeSeconds: 29
@@ -42,3 +44,4 @@ MonoBehaviour:
   LastGameTime: 0:00:07
   AllQuestionsCount: 0
   RightAnswersCount: 0
+  RightError: 0

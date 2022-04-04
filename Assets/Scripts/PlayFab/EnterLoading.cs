@@ -14,24 +14,35 @@ namespace Victorina
 
         [Header("Для разработчика")]
         [SerializeField] private Toggle _setNewPlayerToogle;
+        [SerializeField] private Sprite _defaultAvatar;
+
 
         private void Start()
         {
             _playerData.IsNewVersionApp = IsNewVersionApp();
             SetIsNewPlayerOption();
-            if (!_playerData.IsNewPlayer)
-                PlayFabAutorization(_playerData);
+            PlayFabAutorization(_playerData);
         }
 
         private void PlayFabAutorization(PlayerData playerData)
         {
+            if (_playerData.IsNewPlayer)
+            {
+                playerData.Reset();
+                _playerData.Avatar = _defaultAvatar;
+            }
+
             if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
             {
                 PlayFabSettings.staticSettings.TitleId = "D2AD8";
             }
 
-            var needCreation = PlayerPrefs.HasKey(AuthGuidKey);
-            var id = PlayerPrefs.GetString(AuthGuidKey, Guid.NewGuid().ToString());
+            var needCreation = _playerData.GuidID != string.Empty;
+
+            var id = _playerData.GuidID;
+            if (id == string.Empty)
+                id = Guid.NewGuid().ToString();
+            _playerData.GuidID = id;
 
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
@@ -42,13 +53,13 @@ namespace Victorina
             {
                 PlayerPrefs.SetString(AuthGuidKey, id);
                 playerData.Init();
-
             }, Debug.Log);
         }
 
         public void SetIsNewPlayerOption()
         {
             _playerData.IsNewPlayer = _setNewPlayerToogle.isOn;
+            PlayFabAutorization(_playerData);
         }
 
         private bool IsNewVersionApp()

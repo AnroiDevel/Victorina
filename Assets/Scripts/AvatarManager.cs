@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -16,12 +14,18 @@ namespace Victorina
     {
         public static AvatarManager Instance;
 
+        [SerializeField] private PlayerData _playerData;
+
         [SerializeField] private GameObject _fileListPan;
         [SerializeField] private GameObject _filesContent;
         [SerializeField] private GameObject _filePrefab;
 
-        [SerializeField] private RawImage _avatarImg;
+        [SerializeField] private Image _avatarImg;
+        [SerializeField] private Image _avatarImgTest;
+
+
         [SerializeField] private Text _errorInfo;
+        [SerializeField] private Image _testImage;
 
         private string _pathToUserAvatar;
 
@@ -36,17 +40,68 @@ namespace Victorina
 
         private void Start()
         {
-            if (PlayerPrefs.HasKey("AvatarUrl"))
-                _pathToUserAvatar = PlayerPrefs.GetString("AvatarUrl");
-            WWW www = new WWW(_pathToUserAvatar);
-            _avatarImg.texture = www.texture;
+            //SetAvatar();
         }
 
         private void OnEnable()
         {
-            LoadAvatarList();
+            //LoadAvatarList();
         }
 
+        public void PickImage(int maxSize)
+        {
+            NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
+            {
+                Debug.Log("Image path: " + path);
+                if (path != null)
+                {
+                    // Create Texture from selected image
+                    Texture2D texture = NativeGallery.LoadImageAtPath(path, maxSize);
+                    if (texture == null)
+                    {
+                        Debug.Log("Couldn't load texture from " + path);
+                        return;
+                    }
+
+                    // Assign texture to a temporary quad and destroy it after 5 seconds
+                    GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    quad.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 10002.5f;
+                    quad.transform.forward = Camera.main.transform.forward;
+                    quad.transform.localScale = new Vector3(1f, texture.height / (float)texture.width, 1f);
+
+                    Material material = quad.GetComponent<Renderer>().material;
+                    if (!material.shader.isSupported) // happens when Standard shader is not included in the build
+                        material.shader = Shader.Find("Legacy Shaders/Diffuse");
+
+                    material.mainTexture = texture;
+
+                    Destroy(quad, 5.0f);
+
+                    // If a procedural texture is not destroyed manually, 
+                    // it will only be freed after a scene change
+                    Destroy(texture, 5.0f);
+                }
+                _playerData.PathFileAvatar = path;
+                PlayerPrefs.SetString("AvatarUrl", path);
+
+            });
+
+            Debug.Log("Permission result: " + permission);
+            StartCoroutine(SetNewAvatar());
+            _playerData.SetAvatar();
+            _avatarImg.sprite = _playerData.Avatar;
+        }
+
+        private IEnumerator SetNewAvatar()
+        {
+            yield return new WaitForEndOfFrame();
+            _playerData.SetAvatar();
+            _avatarImg.sprite = _playerData.Avatar;
+
+            yield return new WaitForEndOfFrame();
+            _playerData.SetAvatar();
+            _avatarImg.sprite = _playerData.Avatar;
+        }
 
         public async void LoadAvatarList()
         {
@@ -141,13 +196,53 @@ namespace Victorina
         public void SelectAvatar(int index)
         {
             WWW www = new WWW("file://" + _files[index].FullName);
-            _avatarImg.texture = www.texture;
             _fileListPan.SetActive(false);
 
-            _pathToUserAvatar = www.url;
+            Texture2D texture2D = www.texture;
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+
+
+
+            _playerData.Avatar = sprite;
+            _avatarImg.sprite = _playerData.Avatar;
+            _pathToUserAvatar = _files[index].FullName;
+            _playerData.PathFileAvatar = _pathToUserAvatar;
             PlayerPrefs.SetString("AvatarUrl", _pathToUserAvatar);
 
             DestroyTempFiles();
+        }
+
+        public void SelectAvatar(string pathFile)
+        {
+            _errorInfo.text += "Установка аватара из " + pathFile;
+            StartCoroutine(UpdateAvatar(pathFile));
+        }
+
+        private IEnumerator UpdateAvatar(string pathFile)
+        {
+            yield return new WaitForSeconds(0.1f);
+
+            WWW www = new WWW("file://" + pathFile);
+            Texture2D texture2D = www.texture;
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+            _playerData.Avatar = sprite;
+            _avatarImg.sprite = sprite;
+            _pathToUserAvatar = pathFile;
+            _playerData.PathFileAvatar = _pathToUserAvatar;
+            PlayerPrefs.SetString("AvatarUrl", _pathToUserAvatar);
+
+            _errorInfo.text += "Аватар установлен ";
+            //_avatarImgTest.sprite = sprite;
+        }
+
+        public void SetAvatar()
+        {
+            _playerData.PathFileAvatar = PlayerPrefs.GetString("AvatarUrl");
+            WWW www = new WWW("file://" + _playerData.PathFileAvatar);
+            Texture2D texture2D = www.texture;
+            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+            _playerData.Avatar = sprite;
+            _avatarImg.sprite = sprite;
         }
 
         public void DestroyTempFiles()
@@ -156,6 +251,8 @@ namespace Victorina
                 foreach (var obj in _placeToImage)
                     obj.gameObject.SetActive(false);
         }
+
+
     }
 
 }

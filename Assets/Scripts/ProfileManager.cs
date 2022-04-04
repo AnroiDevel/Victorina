@@ -10,6 +10,8 @@ namespace Victorina
     public class ProfileManager : MonoBehaviour
     {
         [SerializeField] private PlayerData _playerData;
+        [SerializeField] private Image _imageAvatar;
+        [SerializeField] private Image _testImageAvatar;
 
         [SerializeField] private Text _workedInfoLabel;
 
@@ -17,18 +19,39 @@ namespace Victorina
         private string _mail;
         private string _pass;
 
-        [SerializeField] private Text _moneyText;
         [SerializeField] private Text _usernameText;
+        [SerializeField] private Text _moneyText;
+        [SerializeField] private Text _ticketText;
 
         private void Start()
         {
             _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
+            if (_ticketText)
+                _ticketText.text = _playerData.TicketsBit.ToString();
+            //_playerData.ReloadAvatar += OnReloadAvatar;
+        }
+
+        private void OnReloadAvatar()
+        {
+            if (gameObject.activeSelf)
+                StartCoroutine(NewAvatarComplete());
+        }
+
+        private IEnumerator NewAvatarComplete()
+        {
+            yield return new WaitForSeconds(1);
+            _imageAvatar.sprite = _playerData.Avatar;
         }
 
         private void OnEnable()
         {
+            OnReloadAvatar();
+            _imageAvatar.sprite = _playerData.Avatar;
             _playerData.BitInfoUpdate += MoneyUpdate;
+
+            var coef = _playerData.ScaleImageAvatarCoef;
+            _imageAvatar.transform.localScale = Vector3.one * coef;
         }
 
         private void OnDisable()
@@ -41,22 +64,22 @@ namespace Victorina
             _moneyText.text = _playerData.Bit.ToString();
         }
 
-        public void VerificationAccount()
-        {
-            var newUserReq = new AddUsernamePasswordRequest
-            {
-                Username = _username,
-                Password = _pass,
-                Email = _mail
-            };
+        //public void VerificationAccount()
+        //{
+        //    var newUserReq = new AddUsernamePasswordRequest
+        //    {
+        //        Username = _username,
+        //        Password = _pass,
+        //        Email = _mail
+        //    };
 
-            PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
+        //    PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
 
-            _playerData.Name = _username;
-            _playerData.Email = _mail;
-            _playerData.Password = _pass;
+        //    _playerData.Name = _username;
+        //    _playerData.Email = _mail;
+        //    _playerData.Password = _pass;
 
-        }
+        //}
 
         private void OnCreateSuccess(AddUsernamePasswordResult result)
         {
@@ -79,14 +102,14 @@ namespace Victorina
             _pass = pass;
         }
 
-        public void SignIn()
-        {
-            PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
-            {
-                Username = _username,
-                Password = _pass
-            }, OnSignInSuccess, OnFailure);
-        }
+        //public void SignIn()
+        //{
+        //    PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
+        //    {
+        //        Username = _username,
+        //        Password = _pass
+        //    }, OnSignInSuccess, OnFailure);
+        //}
 
         private void OnSignInSuccess(LoginResult result)
         {

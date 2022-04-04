@@ -19,7 +19,8 @@ namespace Victorina
         private const string LoadingQuestion = "загрузка вопроса";
         private const string GradeInfo = "Оцените сложность";
         private const string Next = "Продолжить";
-
+        private const string RightResult = "Верно";
+        private const string ErrorResult = "Ошибка";
         [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private Text _question;
@@ -40,6 +41,7 @@ namespace Victorina
         [SerializeField] private AudioSource _winAudio;
         [SerializeField] private AudioSource _looseAudio;
         [SerializeField] private GameObject _resultPanel;
+
         [SerializeField] private GameObject _victory;
         [SerializeField] private GameObject _loose;
 
@@ -47,7 +49,9 @@ namespace Victorina
         [SerializeField] private Color _activeColor;
         [SerializeField] private TMP_ColorGradient _colorGradient;
         [SerializeField] private GameObject _commentPanel;
+
         [SerializeField] private Text _comment;
+        [SerializeField] private Text _result;
 
         private HelpController _helpController;
 
@@ -66,6 +70,7 @@ namespace Victorina
         private Image _prevImgSignal;
 
         public bool IsLoadComplete { get; private set; }
+        private bool _isLoose;
 
         public Toggle _endQuestion;
 
@@ -115,6 +120,8 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
+            if (_isLoose) Loose();
+
             if (_currentStepProgress >= _progressCells.Length)
             {
                 Win();
@@ -124,7 +131,8 @@ namespace Victorina
             SetDefaultRateImage();
             StopAllCoroutines();
             StartCoroutine(PrevRaundPause(_currentStepProgress++));
-            StartCoroutine(GetQuestion(_currentStepProgress / 5 + 1));
+            var nextLevel = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
+            StartCoroutine(GetQuestion(nextLevel));
         }
 
         public void Win()
@@ -154,8 +162,12 @@ namespace Victorina
                 //_ratePanel.SetActive(true);
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
-                _commentPanel.SetActive(true);
                 _playerData.AddRightAnswersCount();
+
+                _result.color = Color.green;
+                _result.text = RightResult;
+                _commentPanel.SetActive(true);
+
             }
             else if (_playerData.RightError)
             {
@@ -163,7 +175,17 @@ namespace Victorina
                 _playerData.RightError = false;
             }
             else
-                Loose();
+                CommentLoose();
+
+        }
+
+        private void CommentLoose()
+        {
+            _result.color = Color.red;
+            _result.text = ErrorResult;
+            _commentPanel.SetActive(true);
+            _isLoose = true;
+            GetComponent<ButtleBitController>().GameOver();
 
         }
 
@@ -177,7 +199,8 @@ namespace Victorina
             _backAudio.Stop();
             _looseAudio.Play();
             PlayerPrefs.SetInt("CurrentStep", 0);
-            GetComponent<ButtleBitController>().GameOver();
+
+            _isLoose = false;
         }
 
         public void SetUserGrade(int value)

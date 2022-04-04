@@ -11,10 +11,13 @@ namespace Victorina
 
         private void Start()
         {
+            _playerData.SetAvatar();
+
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
+            _playerData.LoginComplete += LoadGame;
         }
 
         private IEnumerator LogoPlay()
@@ -27,11 +30,17 @@ namespace Victorina
         private void LoadNextScena()
         {
             var sceneLoader = GetComponent<SceneLoader>();
-
             if (_playerData.IsNewVersionApp || _playerData.IsNewPlayer)
                 sceneLoader.LoadGameScene("Confidencial");
             else
-                sceneLoader.LoadGameScene("Victorina");
+                _playerData.Login();
+        }
+
+        private void LoadGame()
+        {
+            var sceneLoader = GetComponent<SceneLoader>();
+            sceneLoader.LoadGameScene("Victorina");
+
         }
     }
 
