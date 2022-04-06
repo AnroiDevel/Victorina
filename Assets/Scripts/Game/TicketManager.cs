@@ -85,7 +85,7 @@ namespace Victorina
             _enterBtn.gameObject.SetActive(false);
 
             _playerData.ConsumeItem("BitTicket");
-            BuyingPlayTocken();
+            BuyingPlayTocken("TI", 1);
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
 
@@ -95,7 +95,7 @@ namespace Victorina
         private void EnterOnVip()
         {
             _enterBtn.gameObject.SetActive(false);
-            BuyingPlayTocken();
+            BuyingPlayTocken("BT", 0);
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
             _isStartBtnListenerComplete = true;
@@ -105,7 +105,7 @@ namespace Victorina
         {
             _animator.enabled = true;
             _animator.Play("TicketTrash");
-            _animTicket.Play();
+            //_animTicket.Play();
         }
 
         public void BuyingTicket()
@@ -135,14 +135,14 @@ namespace Victorina
             PlayFabClientAPI.PurchaseItem(request, result => OnBuyingTicketComplete(), error => Debug.Log(error));
         }
 
-        private void BuyingPlayTocken()
+        private void BuyingPlayTocken(string vc, int price)
         {
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Tickets",
                 ItemId = "PlayToken",
-                VirtualCurrency = "BT",
-                Price = 0,
+                VirtualCurrency = vc,
+                Price = price,
 
             };
             PlayFabClientAPI.PurchaseItem(request, PlayTockenComplete, error => Debug.Log(error));
@@ -157,7 +157,7 @@ namespace Victorina
 
         private void OnBuyingTicketComplete()
         {
-            BuyingPlayTocken();
+            BuyingPlayTocken("BT", 0);
             _isStartBtnListenerComplete = true;
             Debug.Log("Билет куплен");
         }

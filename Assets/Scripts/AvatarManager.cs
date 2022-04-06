@@ -101,6 +101,9 @@ namespace Victorina
             yield return new WaitForEndOfFrame();
             _playerData.SetAvatar();
             _avatarImg.sprite = _playerData.Avatar;
+
+            _avatarImg.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+
         }
 
         public async void LoadAvatarList()

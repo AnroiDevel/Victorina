@@ -14,22 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsNewPlayer: 0
   IsNewVersionApp: 0
-  CustomId: 
-  PlayFabId: 
-  TitlePlayerAccountId: 
-  CreatedDateTimePlayfabProfile: 
+  CustomId: 33d8deca-0ecd-4c86-8635-6507513ecb61
+  PlayFabId: B91BDEF0EADD2BA
+  TitlePlayerAccountId: E34709D022DB766F
+  CreatedDateTimePlayfabProfile: 06.04.2022 22:54:47
   ErrorInformation: 
-  Avatar: {fileID: 21300000, guid: 6c3065ad07f753f408aef283f552ff80, type: 3}
-  PathFileAvatar: 
+  Avatar: {fileID: 0}
+  PathFileAvatar: D:/Victorina/1024MainLogo.png
+  ScaleImageAvatarCoef: 2.048
   Item: 
-  GuidID: 
-  Name: 
+  GuidID: 33d8deca-0ecd-4c86-8635-6507513ecb61
+  Name: 9808990
   Email: 
   Password: 
-  Bit: 0
+  Bit: 1000
   IsBonusReady: 1
   MaxBonusTimeSeconds: 29
-  BonusRechargeSeconds: 29
+  BonusRechargeSeconds: 0
+  IsTrain: 1
   IsPlayed: 0
   IsVip: 0
   TicketsBit: 0
@@ -37,11 +39,18 @@ MonoBehaviour:
   ItemCatalog:
   - BitTicket
   - PlayToken
+  - RightError
+  - MinusOne
+  - MinusTwo
+  - Two-Item Drop
   CurrencyVirtual:
   - QB = 0
   - BT = 1000
-  - BS = 1
-  LastGameTime: 0:00:07
-  AllQuestionsCount: 0
-  RightAnswersCount: 0
+  - BS = 0
+  - R2 = 1
+  - RE = 1
+  - TI = 0
+  LastGameTime: 0:00:15
+  AllQuestionsCount: 10
+  RightAnswersCount: 2
   RightError: 0

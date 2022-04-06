@@ -15,7 +15,7 @@ MonoBehaviour:
   Confidential: {fileID: 21300000, guid: 394228a6324eee74b8cd4a9ce990ce99, type: 3}
   ProfileBackground: {fileID: 21300000, guid: ea38662f0dee16340af7b8f6ed67eb13, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: 624027e73800e71469124391ab046b7f, type: 3}
-  GameWelcomePanel: {fileID: 21300000, guid: 41653ab433e3fa940a3fee8c5d920ae4, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: 96201f6fb3098004ba6605ad06a7b51a, type: 3}
   GameProgressPanel: {fileID: 21300000, guid: 903bf4e1d1a2fd144b96cda6d711711b, type: 3}
   GamePanel: {fileID: 21300000, guid: 3dde3bd4bb9a2ae40b58e504bbe8cc08, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 29ba1c3b5ae4c884cbd7a9a4d9b6919f, type: 3}

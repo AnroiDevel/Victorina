@@ -17,14 +17,14 @@ namespace Victorina
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
-            _playerData.LoginComplete += LoadGame;
+            //_playerData.LoginComplete += LoadGame;
         }
 
         private IEnumerator LogoPlay()
         {
             yield return new WaitForSeconds(_time);
 
-            LoadNextScena();
+            LoadGame();
         }
 
         private void LoadNextScena()

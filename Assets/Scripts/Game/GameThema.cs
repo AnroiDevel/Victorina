@@ -26,7 +26,8 @@ namespace Victorina
         private void Start()
         {
             _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;
-            _gameProgressPanel.sprite = ThemaConrtoller.ActiveThema?.GameProgressPanel;
+            if (_gameProgressPanel)
+                _gameProgressPanel.sprite = ThemaConrtoller.ActiveThema?.GameProgressPanel;
             _gamePanel.sprite = ThemaConrtoller.ActiveThema?.GamePanel;
             _gameExitPanel.sprite = ThemaConrtoller.ActiveThema?.GameExitPanel;
             _regulationPanel.sprite = ThemaConrtoller.ActiveThema?.RegulationPanel;
@@ -36,7 +37,7 @@ namespace Victorina
             _winPanel.sprite = ThemaConrtoller.ActiveThema?.WinPanel;
             _loosePanel.sprite = ThemaConrtoller.ActiveThema?.LoosePanel;
 
-            foreach(var img in _resultPanelBtns)
+            foreach (var img in _resultPanelBtns)
                 img.sprite = ThemaConrtoller.ActiveThema?.WinPanelBtn;
 
             foreach (var img in _welcomeBtns)
