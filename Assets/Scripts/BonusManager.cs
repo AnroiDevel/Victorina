@@ -11,6 +11,10 @@ namespace Victorina
         [SerializeField] private Text _timeToNext;
         [SerializeField] private Text _bit;
 
+        [SerializeField] private GameObject[] _bonusesPlaces;
+        [SerializeField] private Sprite _rightErrImg;
+        [SerializeField] private Sprite _twoVarRemoveImg;
+
         private Button _bonusButton;
 
         private bool _isBonusComplete;
@@ -26,6 +30,39 @@ namespace Victorina
         {
             if (_isBonusComplete)
                 OnBonusComplete(true);
+            _playerData.GetNumberBonus += OnGetNumberBonus;
+        }
+
+        private void OnGetNumberBonus(int numberBonus)
+        {
+            foreach (var go in _bonusesPlaces)
+            {
+                if (go == null) return;
+                go.SetActive(false);
+            }
+
+            if (numberBonus == 1)
+            {
+                _bonusesPlaces[0].SetActive(true);
+                _bonusesPlaces[2].SetActive(true);
+            }
+            else if (numberBonus == 2)
+            {
+                _bonusesPlaces[3].SetActive(true);
+                _bonusesPlaces[4].SetActive(true);
+            }
+            else if (numberBonus == 3)
+            {
+                _bonusesPlaces[0].SetActive(true);
+                _bonusesPlaces[5].SetActive(true);
+                _bonusesPlaces[5].GetComponent<Image>().sprite = _rightErrImg;
+            }
+            else if (numberBonus == 4)
+            {
+                _bonusesPlaces[0].SetActive(true);
+                _bonusesPlaces[5].SetActive(true);
+                _bonusesPlaces[5].GetComponent<Image>().sprite = _twoVarRemoveImg;
+            }
         }
 
         private void OnBonusComplete(bool val = false)
@@ -38,7 +75,7 @@ namespace Victorina
         {
             if (_playerData.IsBonusReady)
                 OnBonusComplete(true);
-            else 
+            else
                 _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
         }
 

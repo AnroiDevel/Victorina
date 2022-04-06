@@ -20,8 +20,9 @@ namespace Victorina
         private void Start()
         {
             _playerData.IsNewVersionApp = IsNewVersionApp();
-            SetIsNewPlayerOption();
-            PlayFabAutorization(_playerData);
+            if (!_playerData.IsNewPlayer)
+                _playerData.Login();
+            //SetIsNewPlayerOption();
         }
 
         private void PlayFabAutorization(PlayerData playerData)
@@ -37,7 +38,7 @@ namespace Victorina
                 PlayFabSettings.staticSettings.TitleId = "D2AD8";
             }
 
-            var needCreation = _playerData.GuidID != string.Empty;
+            var needCreation = _playerData.GuidID == string.Empty;
 
             var id = _playerData.GuidID;
             if (id == string.Empty)
@@ -47,7 +48,7 @@ namespace Victorina
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
                 CustomId = id,
-                CreateAccount = !needCreation,
+                CreateAccount = needCreation,
 
             }, success =>
             {
@@ -59,7 +60,7 @@ namespace Victorina
         public void SetIsNewPlayerOption()
         {
             _playerData.IsNewPlayer = _setNewPlayerToogle.isOn;
-            PlayFabAutorization(_playerData);
+            GetComponent<SceneLoader>().LoadGameScene("Autorization");
         }
 
         private bool IsNewVersionApp()

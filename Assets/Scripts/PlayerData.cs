@@ -42,6 +42,7 @@ namespace Victorina
         public int BonusRechargeSeconds;
         public Action<bool> BonusComplete;
 
+        public bool IsTrain;
         public bool IsPlayed;
         public bool IsVip;
         public int TicketsBit;
@@ -58,6 +59,7 @@ namespace Victorina
         public Action InitComplete;
         public Action<string> ConsumeComplete;
         public Action BitInfoUpdate;
+        public Action TicketInfoUpdate;
         public Action ReloadAvatar;
 
         public string LastGameTime;
@@ -83,6 +85,7 @@ namespace Victorina
                 sucsess =>
                 {
                     SetDisplayName(Name);
+                    GuidID = id;
                 },
                 error => Debug.Log("sss"));
         }
@@ -253,7 +256,8 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            CustomId = info.AccountInfo.CustomIdInfo.CustomId;
+            if (info.AccountInfo.CustomIdInfo.CustomId != null)
+                CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
@@ -317,7 +321,19 @@ namespace Victorina
             int bitValue;
             var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
             if (isGetBit)
+            {
                 Bit = bitValue;
+                BitInfoUpdate?.Invoke();
+            }
+
+            int ticketValue;
+            var isGetTicket = _virtualCurrency.TryGetValue("TI", out ticketValue);
+            if (isGetTicket)
+            {
+                TicketsBit = ticketValue;
+                TicketInfoUpdate?.Invoke();
+            }
+
             int bonus;
             var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
             if (isGetBonus)
@@ -389,14 +405,23 @@ namespace Victorina
             PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
         }
 
+
+        public Action<int> GetNumberBonus;
+
         public void GetBonus()
         {
-            Bit += 100;
+            // Bit += 100;
             IsBonusReady = false;
+
+            var rnd = UnityEngine.Random.Range(1, 5);
+            var itId = "Bonus" + rnd;
+
+            GetNumberBonus?.Invoke(rnd);
+
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Bonuses",
-                ItemId = "bonusBundels",
+                ItemId = itId,
                 VirtualCurrency = "BS",
                 Price = 1,
 
@@ -480,8 +505,12 @@ namespace Victorina
             {
                 Init();
                 PlayerPrefs.SetInt("CurrentStep", 0);
-                BitInfoUpdate?.Invoke();
             }, error => Debug.Log(error));
+        }
+
+        public void SetPlayMode(bool isMode)
+        {
+            IsTrain = isMode;
         }
 
         public void GetQuestionsCount()

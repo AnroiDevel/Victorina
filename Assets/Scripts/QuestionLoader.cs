@@ -83,12 +83,14 @@ namespace Victorina
         private void Start()
         {
             _helpController = GetComponent<HelpController>();
-            SetCurrentStep();
+
+            if (!_playerData.IsTrain)
+                SetCurrentStep();
         }
 
         private void OnLoadNewQuestion()
         {
-            _helpController.Activator();
+            _helpController?.Activator();
         }
 
         private void PreviousCellMark()
@@ -120,31 +122,48 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
-            if (_isLoose) Loose();
+            if (!_playerData.IsTrain)
+                if (_isLoose) Loose();
 
-            if (_currentStepProgress >= _progressCells.Length)
-            {
-                Win();
-                return;
-            }
+            if (!_playerData.IsTrain)
+                if (_currentStepProgress >= _progressCells.Length)
+                {
+                    Win();
+                    return;
+                }
             _question.text = LoadingQuestion;
-            SetDefaultRateImage();
+
+            if (!_playerData.IsTrain)
+                SetDefaultRateImage();
             StopAllCoroutines();
-            StartCoroutine(PrevRaundPause(_currentStepProgress++));
+
             var nextLevel = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
+
+            if (!_playerData.IsTrain)
+            {
+                StartCoroutine(PrevRaundPause(_currentStepProgress++));
+            }
+            else
+                nextLevel = UnityEngine.Random.Range(0, 5);
+
             StartCoroutine(GetQuestion(nextLevel));
         }
 
         public void Win()
         {
+
             _resultPanel.SetActive(true);
             _loose.SetActive(false);
             _victory.SetActive(true);
             _backAudio.Stop();
             _winAudio.Play();
-            GetComponent<ButtleBitController>().GetWinAndGameOver();
-            _playerData.GetQuestionsCount();
-            _playerData.GetRightAnswersCount();
+
+            if (!_playerData.IsTrain)
+            {
+                GetComponent<ButtleBitController>().GetWinAndGameOver();
+                _playerData.GetQuestionsCount();
+                _playerData.GetRightAnswersCount();
+            }
         }
 
         public void StartingTimer()
@@ -162,17 +181,21 @@ namespace Victorina
                 //_ratePanel.SetActive(true);
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
-                _playerData.AddRightAnswersCount();
+
+                if (!_playerData.IsTrain)
+                    _playerData.AddRightAnswersCount();
 
                 _result.color = Color.green;
                 _result.text = RightResult;
                 _commentPanel.SetActive(true);
 
+                if (!_playerData.IsTrain)
+                    _playerData.RightError = false;
             }
             else if (_playerData.RightError)
             {
                 _answers[index].color = Color.red;
-                _playerData.RightError = false;
+                //_playerData.RightError = false;
             }
             else
                 CommentLoose();
@@ -185,7 +208,9 @@ namespace Victorina
             _result.text = ErrorResult;
             _commentPanel.SetActive(true);
             _isLoose = true;
-            GetComponent<ButtleBitController>().GameOver();
+
+            if (!_playerData.IsTrain)
+                GetComponent<ButtleBitController>().GameOver();
 
         }
 
@@ -199,7 +224,6 @@ namespace Victorina
             _backAudio.Stop();
             _looseAudio.Play();
             PlayerPrefs.SetInt("CurrentStep", 0);
-
             _isLoose = false;
         }
 
@@ -255,7 +279,8 @@ namespace Victorina
 
         public void SendGrade()
         {
-            _progressPanel.SetActive(true);
+            if (_progressPanel)
+                _progressPanel?.SetActive(true);
             StartCoroutine(SendUserGrade(URLSetGrade));
         }
 
@@ -266,7 +291,7 @@ namespace Victorina
 
         private IEnumerator GetQuestion(int level = 0)
         {
-            _animatorReload.SetBool("IsLoading", true);
+            //_animatorReload.SetBool("IsLoading", true);
             _trueIndex = -1;
             var lvl = level;
 
@@ -337,7 +362,7 @@ namespace Victorina
                     _trueIndex = textsList.Count;
             }
 
-            _animatorReload.SetBool("IsLoading", false);
+            //_animatorReload.SetBool("IsLoading", false);
 
             SetDefaultColorAnswersText();
 
@@ -347,7 +372,8 @@ namespace Victorina
             _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
-            _playerData.AddQuestionCount();
+            if (!_playerData.IsTrain)
+                _playerData.AddQuestionCount();
 
             OnLoadNewQuestion();
         }
@@ -437,14 +463,15 @@ namespace Victorina
 
             _progressCells[currentStep].GetComponentInChildren<TMP_Text>().colorGradientPreset = _colorGradient;
 
-            while (clip > 0)
-            {
-                _progressCells[currentStep].color = Color.green;
-                yield return new WaitForSeconds(0.5f);
-                _progressCells[currentStep].color = Color.yellow;
-                yield return new WaitForSeconds(0.5f);
-                clip--;
-            }
+            if (!_playerData.IsTrain)
+                while (clip > 0)
+                {
+                    _progressCells[currentStep].color = Color.green;
+                    yield return new WaitForSeconds(0.5f);
+                    _progressCells[currentStep].color = Color.yellow;
+                    yield return new WaitForSeconds(0.5f);
+                    clip--;
+                }
             _progressPanel.SetActive(false);
             StartingTimer();
 
