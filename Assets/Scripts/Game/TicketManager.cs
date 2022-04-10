@@ -15,7 +15,10 @@ namespace Victorina
         [SerializeField] private Text _priceBitTicket;
         [SerializeField] private Text _money;
         [SerializeField] private GameObject _ticketPricePanel;
+
         [SerializeField] private Button _enterBtn;
+        [SerializeField] private Button _exitBtn;
+
         [SerializeField] private GameObject _welcomePanel;
         [SerializeField] private GameObject _progressPanel;
         [SerializeField] private Animator _animator;
@@ -30,13 +33,20 @@ namespace Victorina
         {
             _playerData.InitComplete += InitComplete;
 
+
             _playerData.Init();
 
             _questionLoader = gameObject.GetComponent<QuestionLoader>();
             _money.text = _playerData.Bit.ToString();
-            SetPriceTicket(_playerData.PriceBitTicket.ToString());
             if (_playerData.TicketsBit > 0)
                 _ticketPricePanel.SetActive(false);
+        }
+
+        private void OnEnable()
+        {
+            _ticketPricePanel.gameObject.SetActive(false);
+            _exitBtn.interactable = true;
+            _enterBtn.interactable = true;
         }
 
         private void InitComplete()
@@ -58,7 +68,11 @@ namespace Victorina
                 button.onClick.AddListener(EnterOnVip);
             }
             else if (!_playerData.IsPlayed && _playerData.TicketsBit <= 0)
+            {
+                _ticketPricePanel?.SetActive(true);
+                SetPriceTicket(_playerData.PriceBitTicket.ToString());
                 button.onClick.AddListener(BuyingTicket);
+            }
             else if (!_playerData.IsPlayed && _playerData.TicketsBit > 0)
             {
                 button.GetComponentInChildren<Text>().text = TicketEnter;
@@ -74,7 +88,7 @@ namespace Victorina
 
         private void ContinuePlay()
         {
-            _enterBtn.gameObject.SetActive(false);
+            _enterBtn.interactable = false;
             StartCoroutine(WaitLoadFirstQuestion(false));
 
             _isStartBtnListenerComplete = true;
@@ -82,7 +96,7 @@ namespace Victorina
 
         private void EnterOnTicket()
         {
-            _enterBtn.gameObject.SetActive(false);
+            _enterBtn.interactable = false;
 
             _playerData.ConsumeItem("BitTicket");
             BuyingPlayTocken("TI", 1);
@@ -94,7 +108,7 @@ namespace Victorina
 
         private void EnterOnVip()
         {
-            _enterBtn.gameObject.SetActive(false);
+            _enterBtn.interactable = false;
             BuyingPlayTocken("BT", 0);
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
@@ -110,7 +124,7 @@ namespace Victorina
 
         public void BuyingTicket()
         {
-            _enterBtn.gameObject.SetActive(false);
+            _enterBtn.interactable = false;
 
             if (_playerData.Bit < _playerData.PriceBitTicket)
             {
@@ -164,6 +178,7 @@ namespace Victorina
 
         private void SetPriceTicket(string price)
         {
+            _ticketPricePanel.gameObject.SetActive(true);
             _priceBitTicket.text = price;
         }
 

@@ -8,6 +8,8 @@ namespace Victorina
     {
         private const string Key = "Music";
 
+        [SerializeField] private GameObject _welcomePanel;
+
         [SerializeField] private Image _backgroundWelcomeGameImg;
         [SerializeField] private Image[] _welcomeBtns;
         [SerializeField] private Image _gameProgressPanel;
@@ -25,6 +27,8 @@ namespace Victorina
 
         private void Start()
         {
+            _welcomePanel.SetActive(true);
+
             _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;
             if (_gameProgressPanel)
                 _gameProgressPanel.sprite = ThemaConrtoller.ActiveThema?.GameProgressPanel;

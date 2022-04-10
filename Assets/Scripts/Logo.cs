@@ -39,8 +39,11 @@ namespace Victorina
         private void LoadGame()
         {
             var sceneLoader = GetComponent<SceneLoader>();
-            sceneLoader.LoadGameScene("Victorina");
 
+            if (_playerData.IsNewPlayer || _playerData.IsNewVersionApp)
+                sceneLoader.LoadGameScene("Confidencial");
+            else
+                sceneLoader.LoadGameScene("Victorina");
         }
     }
 

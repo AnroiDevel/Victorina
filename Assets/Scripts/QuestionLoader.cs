@@ -164,6 +164,7 @@ namespace Victorina
                 _playerData.GetQuestionsCount();
                 _playerData.GetRightAnswersCount();
             }
+            PlayerPrefs.SetInt("CurrentStep", 0);
         }
 
         public void StartingTimer()
@@ -376,6 +377,39 @@ namespace Victorina
                 _playerData.AddQuestionCount();
 
             OnLoadNewQuestion();
+
+            EquipMinFontSizeAllAnswers();
+        }
+
+        private void EquipMinFontSizeAllAnswers()
+        {
+
+            var maxLength = 0;
+            var longerstText = _answers[0];
+
+
+            foreach (var t in _answers)
+            {
+                t.resizeTextMaxSize = 100;
+
+
+
+                Debug.Log(t.preferredHeight);
+
+                if (t.text.Length > maxLength)
+                {
+                    maxLength = t.text.Length;
+                    longerstText = t;
+                }
+            }
+
+            var fontSize = longerstText.cachedTextGenerator.fontSizeUsedForBestFit;
+
+            foreach (var t in _answers)
+            {
+                t.resizeTextMaxSize = fontSize;
+            }
+
         }
 
         private bool IsNewIndex(int index)

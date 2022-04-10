@@ -98,7 +98,7 @@ namespace Victorina
 
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
-                CustomId = CustomId,
+                CustomId = GuidID,
                 CreateAccount = false,
             }, success =>
             {
