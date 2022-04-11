@@ -10,6 +10,8 @@ namespace Victorina
         [SerializeField] Button _mainButton;
         [SerializeField] AudioSource _audioSource;
 
+        [SerializeField] private QuitApp _quitApp;
+
         private void Start()
         {
             _buttons = GetComponentsInChildren<Button>();
@@ -17,6 +19,8 @@ namespace Victorina
                 button.onClick.AddListener(() => AnimationSelected(button));
 
             _mainButton.onClick.Invoke();
+
+            _quitApp.ActivateMainWindow += ReturnToMainWindow;
         }
 
         private void OnEnable()
@@ -24,7 +28,15 @@ namespace Victorina
             _mainButton.onClick.Invoke();
         }
 
-        private void AnimationSelected(Button btn)
+
+        private void ReturnToMainWindow()
+        {
+            AnimationSelected(_mainButton);
+        }
+
+        
+
+        public void AnimationSelected(Button btn)
         {
             foreach (var button in _buttons)
             {

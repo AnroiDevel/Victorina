@@ -14,6 +14,7 @@ namespace Victorina
         [SerializeField] private GameObject[] _bonusesPlaces;
         [SerializeField] private Sprite _rightErrImg;
         [SerializeField] private Sprite _twoVarRemoveImg;
+        [SerializeField] private RewardedAdsButton _rewardedAds;
 
         private Button _bonusButton;
 
@@ -79,8 +80,12 @@ namespace Victorina
                 _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
         }
 
+
+
+
         public void GetBonus()
         {
+            if (_rewardedAds.IsShowAdButtonReady) return;
             _playerData.GetBonus();
             _isBonusComplete = false;
             _bonusButton.interactable = false;

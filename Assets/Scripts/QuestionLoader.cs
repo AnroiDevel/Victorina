@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
@@ -14,6 +13,8 @@ namespace Victorina
     {
         #region Fields
 
+        public Toggle _endQuestion;
+
         private const string URLGetQuestion = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/GetterQuestion.php";
         private const string URLSetGrade = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/SetGrade.php";
         private const string LoadingQuestion = "загрузка вопроса";
@@ -21,37 +22,36 @@ namespace Victorina
         private const string Next = "Продолжить";
         private const string RightResult = "Верно";
         private const string ErrorResult = "Ошибка";
-        [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private Text _question;
-        [SerializeField] private Button _startBtn;
         [SerializeField] private Text _timeText;
-        [SerializeField] private Button[] _answerButtons;
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _status;
-        [SerializeField] private Animator _animatorReload;
         [SerializeField] private Text _gradeText;
-        [SerializeField] private Image[] _gradeImages;
-        [SerializeField] private GameObject _ratePanel;
+        [SerializeField] private Text _comment;
+        [SerializeField] private Text _result;
+        [SerializeField] private Button _startBtn;
+        [SerializeField] private Button[] _answerButtons;
         [SerializeField] private Button _nextBtn;
+        [SerializeField] private Image[] _gradeImages;
         [SerializeField] private Image[] _progressCells;
+        [SerializeField] private Color _defaultColor;
+        [SerializeField] private Color _activeColor;
+        [SerializeField] private TMP_ColorGradient _colorGradient;
+
+        [SerializeField] private GameObject _ratePanel;
         [SerializeField] private GameObject _progressPanel;
+        [SerializeField] private GameObject _resultPanel;
+        [SerializeField] private GameObject _victory;
+        [SerializeField] private GameObject _loose;
+        [SerializeField] private GameObject _commentPanel;
 
         [SerializeField] private AudioSource _backAudio;
         [SerializeField] private AudioSource _winAudio;
         [SerializeField] private AudioSource _looseAudio;
-        [SerializeField] private GameObject _resultPanel;
+        [SerializeField] private Animator _animatorReload;
 
-        [SerializeField] private GameObject _victory;
-        [SerializeField] private GameObject _loose;
-
-        [SerializeField] private Color _defaultColor;
-        [SerializeField] private Color _activeColor;
-        [SerializeField] private TMP_ColorGradient _colorGradient;
-        [SerializeField] private GameObject _commentPanel;
-
-        [SerializeField] private Text _comment;
-        [SerializeField] private Text _result;
+        [SerializeField] private PlayerData _playerData;
 
         private HelpController _helpController;
 
@@ -72,7 +72,6 @@ namespace Victorina
         public bool IsLoadComplete { get; private set; }
         private bool _isLoose;
 
-        public Toggle _endQuestion;
 
 
         #endregion
@@ -156,7 +155,9 @@ namespace Victorina
             _loose.SetActive(false);
             _victory.SetActive(true);
             _backAudio.Stop();
-            _winAudio.Play();
+
+            if (PlayerPrefs.GetInt("Music").Equals(1))
+                _winAudio.Play();
 
             if (!_playerData.IsTrain)
             {
@@ -223,7 +224,8 @@ namespace Victorina
             _resultPanel.SetActive(true);
             _loose.SetActive(true);
             _backAudio.Stop();
-            _looseAudio.Play();
+            if (PlayerPrefs.GetInt("Music").Equals(1))
+                _looseAudio.Play();
             PlayerPrefs.SetInt("CurrentStep", 0);
             _isLoose = false;
         }
@@ -383,18 +385,12 @@ namespace Victorina
 
         private void EquipMinFontSizeAllAnswers()
         {
-
             var maxLength = 0;
             var longerstText = _answers[0];
-
 
             foreach (var t in _answers)
             {
                 t.resizeTextMaxSize = 100;
-
-
-
-                Debug.Log(t.preferredHeight);
 
                 if (t.text.Length > maxLength)
                 {
@@ -409,7 +405,6 @@ namespace Victorina
             {
                 t.resizeTextMaxSize = fontSize;
             }
-
         }
 
         private bool IsNewIndex(int index)

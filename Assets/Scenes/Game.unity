@@ -5061,16 +5061,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98b5e6ec5332ee247a8fbf3918d71f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
+  _endQuestion: {fileID: 1330341103}
   _question: {fileID: 111489289}
-  _startBtn: {fileID: 101829957}
   _timeText: {fileID: 1352868715}
-  _answerButtons:
-  - {fileID: 1612515107}
-  - {fileID: 521001315}
-  - {fileID: 992276123}
-  - {fileID: 568176359}
-  - {fileID: 1654672384}
   _answers:
   - {fileID: 521712240}
   - {fileID: 1644322090}
@@ -5078,16 +5071,23 @@ MonoBehaviour:
   - {fileID: 1449134330}
   - {fileID: 419515915}
   _status: {fileID: 162105921}
-  _animatorReload: {fileID: 1020485588}
   _gradeText: {fileID: 1511589492}
+  _comment: {fileID: 907070424}
+  _result: {fileID: 208768135}
+  _startBtn: {fileID: 101829957}
+  _answerButtons:
+  - {fileID: 1612515107}
+  - {fileID: 521001315}
+  - {fileID: 992276123}
+  - {fileID: 568176359}
+  - {fileID: 1654672384}
+  _nextBtn: {fileID: 1129678388}
   _gradeImages:
   - {fileID: 1151668067}
   - {fileID: 1546733460}
   - {fileID: 1769888677}
   - {fileID: 1163835984}
   - {fileID: 1440035856}
-  _ratePanel: {fileID: 2035783483}
-  _nextBtn: {fileID: 1129678388}
   _progressCells:
   - {fileID: 1966298453}
   - {fileID: 355929947}
@@ -5109,20 +5109,20 @@ MonoBehaviour:
   - {fileID: 1000773791}
   - {fileID: 1669790187}
   - {fileID: 988346835}
-  _progressPanel: {fileID: 1481714190}
-  _backAudio: {fileID: 667378320}
-  _winAudio: {fileID: 293594671}
-  _looseAudio: {fileID: 2098358382}
-  _resultPanel: {fileID: 445747655}
-  _victory: {fileID: 293594667}
-  _loose: {fileID: 1044905962}
   _defaultColor: {r: 1, g: 1, b: 1, a: 0}
   _activeColor: {r: 1, g: 1, b: 1, a: 1}
   _colorGradient: {fileID: 11400000, guid: 259b2b7f36762164e98a5c89a19fe31d, type: 2}
+  _ratePanel: {fileID: 2035783483}
+  _progressPanel: {fileID: 1481714190}
+  _resultPanel: {fileID: 445747655}
+  _victory: {fileID: 293594667}
+  _loose: {fileID: 1044905962}
   _commentPanel: {fileID: 824114366}
-  _comment: {fileID: 907070424}
-  _result: {fileID: 208768135}
-  _endQuestion: {fileID: 1330341103}
+  _backAudio: {fileID: 667378320}
+  _winAudio: {fileID: 293594671}
+  _looseAudio: {fileID: 2098358382}
+  _animatorReload: {fileID: 1020485588}
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!114 &667378319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5152,6 +5152,7 @@ MonoBehaviour:
   _resultPanelBtns:
   - {fileID: 52897105}
   - {fileID: 1555285962}
+  _crownTuk: {fileID: 667378320}
 --- !u!82 &667378320
 AudioSource:
   m_ObjectHideFlags: 0

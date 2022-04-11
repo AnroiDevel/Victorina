@@ -31,7 +31,7 @@ namespace Victorina
             }
         }
 
-        private void Switcher()
+        public void Switcher()
         {
             if (!_inputField.isActiveAndEnabled)
             {

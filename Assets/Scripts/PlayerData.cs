@@ -256,8 +256,6 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            if (info.AccountInfo.CustomIdInfo.CustomId != null)
-                CustomId = info.AccountInfo.CustomIdInfo.CustomId;
             PlayFabId = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;

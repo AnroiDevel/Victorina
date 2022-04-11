@@ -48,8 +48,8 @@ namespace Victorina
         {
             OnReloadAvatar();
             _imageAvatar.sprite = _playerData.Avatar;
-            _playerData.BitInfoUpdate += MoneyUpdate;
-            _playerData.TicketInfoUpdate += TicketUpdate;
+            //_playerData.BitInfoUpdate += MoneyUpdate;
+            //_playerData.TicketInfoUpdate += TicketUpdate;
 
             var coef = _playerData.ScaleImageAvatarCoef;
             _imageAvatar.transform.localScale = Vector3.one * coef;

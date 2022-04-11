@@ -2388,6 +2388,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160082728}
   m_CullTransparentMesh: 1
+--- !u!1 &203964375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 203964377}
+  - component: {fileID: 203964376}
+  m_Layer: 0
+  m_Name: AdsController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &203964376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203964375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7311a6d941ba8c240a6093397fb339e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _showAdButton: {fileID: 1964408293}
+  _androidAdUnitId: Rewarded_Android
+  _iOSAdUnitId: Rewarded_iOS
+  _bonusOpenPanel: {fileID: 1445160971}
+  _bonusManager: {fileID: 1964408296}
+  IsShowAdButtonReady: 0
+--- !u!4 &203964377
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 203964375}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.570785, y: -4.370607, z: 118.03194}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &210625900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3679,6 +3728,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _exitWindow: {fileID: 147733097}
   _mainMenuWindow: {fileID: 1948265671}
+  _otherPanels:
+  - {fileID: 1120176286}
+  - {fileID: 80422928}
+  - {fileID: 1076965964}
 --- !u!114 &340828145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10091,10 +10144,10 @@ RectTransform:
   m_Father: {fileID: 1830145690}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -866.4}
-  m_SizeDelta: {x: -634.3, y: 144.7}
+  m_AnchorMin: {x: 0.2906296, y: 0.048120234}
+  m_AnchorMax: {x: 0.70900005, y: 0.120120235}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1090598007
 MonoBehaviour:
@@ -10437,7 +10490,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1120176287
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11184,6 +11237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainButton: {fileID: 210625902}
   _audioSource: {fileID: 1217494309}
+  _quitApp: {fileID: 340828144}
 --- !u!114 &1217494308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22458,18 +22512,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1964408296}
-        m_TargetAssemblyTypeName: Victorina.BonusManager, Assembly-CSharp
-        m_MethodName: GetBonus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1964408297}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
@@ -22482,17 +22524,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1445160971}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 203964376}
+        m_TargetAssemblyTypeName: RewardedAdsButton, Assembly-CSharp
+        m_MethodName: ShowAd
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 1
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1964408294
 MonoBehaviour:
@@ -22556,6 +22598,7 @@ MonoBehaviour:
   - {fileID: 116709278}
   _rightErrImg: {fileID: 436917453310502784, guid: a89114da2872a2a408e71a71607d8ac4, type: 3}
   _twoVarRemoveImg: {fileID: 1009892541433267271, guid: a89114da2872a2a408e71a71607d8ac4, type: 3}
+  _rewardedAds: {fileID: 203964376}
 --- !u!82 &1964408297
 AudioSource:
   m_ObjectHideFlags: 0

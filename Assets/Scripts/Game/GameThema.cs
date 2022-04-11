@@ -25,8 +25,12 @@ namespace Victorina
         [SerializeField] private Image _loosePanel;
         [SerializeField] private Image[] _resultPanelBtns;
 
+        [SerializeField] private AudioSource _crownTuk;
+
         private void Start()
         {
+            _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
+
             _welcomePanel.SetActive(true);
 
             _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;
