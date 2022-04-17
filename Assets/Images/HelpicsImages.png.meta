@@ -14,6 +14,9 @@ TextureImporter:
   - first:
       213: -1022162680688522710
     second: HelpicsImages_3
+  - first:
+      213: 314345416173698379
+    second: HelpicsImages_4
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -113,7 +116,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 1024
     resizeAlgorithm: 0
     textureFormat: 53
     textureCompression: 1
@@ -130,10 +133,10 @@ TextureImporter:
       name: HelpicsImages_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1
-        width: 140
-        height: 148
+        x: 6
+        y: 6
+        width: 170
+        height: 170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,34 +151,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: HelpicsImages_1
-      rect:
-        serializedVersion: 2
-        x: 176
-        y: 1
-        width: 140
-        height: 148
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 087adb0eb1e301600800000000000000
-      internalID: 436917453310502784
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: HelpicsImages_2
       rect:
         serializedVersion: 2
-        x: 350
-        y: 3
-        width: 140
-        height: 148
+        x: 202
+        y: 6
+        width: 170
+        height: 170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -193,10 +175,10 @@ TextureImporter:
       name: HelpicsImages_3
       rect:
         serializedVersion: 2
-        x: 520
-        y: 1
-        width: 140
-        height: 148
+        x: 398
+        y: 6
+        width: 170
+        height: 170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,6 +188,27 @@ TextureImporter:
       bones: []
       spriteID: a2a46e2257c80d1f0800000000000000
       internalID: -1022162680688522710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HelpicsImages_4
+      rect:
+        serializedVersion: 2
+        x: 594
+        y: 6
+        width: 170
+        height: 170
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4d3ec39d77cc5400800000000000000
+      internalID: 314345416173698379
       vertices: []
       indices: 
       edges: []

@@ -19,6 +19,10 @@ namespace Victorina
         [SerializeField] private Text _questionsCnt;
         [SerializeField] private Text _rightAnswersCnt;
 
+        [SerializeField] private Text _averageTimeAnswers;
+        [SerializeField] private Text _allTimeGame;
+
+
         private void Start()
         {
             GetLeaderBoardMonthRank();
@@ -33,6 +37,10 @@ namespace Victorina
             _pointsLable.text = _playerData.Bit.ToString();
             _questionsCnt.text = _playerData.AllQuestionsCount.ToString();
             _rightAnswersCnt.text = _playerData.RightAnswersCount.ToString();
+
+            _averageTimeAnswers.text = _playerData.AverageTimeAnswers;
+            _allTimeGame.text = _playerData.AllGameTime;
+
         }
 
         private void GetLeaderBoardMonthRank()
@@ -40,7 +48,7 @@ namespace Victorina
             var request = new GetLeaderboardAroundPlayerRequest()
             {
                 StatisticName = "MonthRank",
-                PlayFabId = _playerData.PlayFabId,
+                PlayFabId = _playerData.PlayFabIdCurrentPlayer,
                 MaxResultsCount = 1,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetMonthRangValue, error => Debug.LogError(error));
@@ -52,7 +60,7 @@ namespace Victorina
             {
                 StatisticName = "WeeklyRank",
                 MaxResultsCount = 1,
-                PlayFabId = _playerData.PlayFabId,
+                PlayFabId = _playerData.PlayFabIdCurrentPlayer,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetWeeklyRangValue, error => Debug.LogError(error));
         }
@@ -62,13 +70,16 @@ namespace Victorina
         {
             var rang = obj.Leaderboard[0].Position;
             _weekReiting.text = (++rang).ToString();
+            _playerData.WeeklyRank = rang;
         }
 
         private void SetMonthRangValue(GetLeaderboardAroundPlayerResult obj)
         {
             var rang = obj.Leaderboard[0].Position;
             _monthReiting.text = (++rang).ToString();
+            _playerData.MonthRank = rang;
         }
+
 
 
     }

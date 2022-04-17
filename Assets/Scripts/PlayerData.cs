@@ -18,7 +18,7 @@ namespace Victorina
         public bool IsNewVersionApp;
 
         public string CustomId;
-        public string PlayFabId;
+        public string PlayFabIdCurrentPlayer;
         public string TitlePlayerAccountId;
         public string CreatedDateTimePlayfabProfile;
 
@@ -63,6 +63,8 @@ namespace Victorina
         public Action ReloadAvatar;
 
         public string LastGameTime;
+        public string AllGameTime;
+        public string AverageTimeAnswers;
 
         public int AllQuestionsCount;
         public int RightAnswersCount;
@@ -75,6 +77,7 @@ namespace Victorina
         {
             PlayFabSettings.staticSettings.TitleId = "D2AD8";
             var id = Guid.NewGuid().ToString();
+            PlayerPrefs.SetString("Id", id);
 
             PlayFabClientAPI.LoginWithCustomID(
                 new LoginWithCustomIDRequest()
@@ -94,7 +97,8 @@ namespace Victorina
         {
 
             PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
+
+            GuidID = PlayerPrefs.GetString("Id");
 
             PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
             {
@@ -111,16 +115,28 @@ namespace Victorina
 
         public void SetAvatar()
         {
-            PathFileAvatar = PlayerPrefs.GetString("AvatarUrl");
-            if (!File.Exists(PathFileAvatar)) return;
-            WWW www = new WWW("file://" + PathFileAvatar);
-            Texture2D texture2D = www.texture;
-            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
-            Avatar = sprite;
+            if (PlayerPrefs.HasKey(UrlAvatar))
+            {
+                PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
+                if (PathFileAvatar == string.Empty)
+                    PathFileAvatar = Application.dataPath + "/logo.png";
+            }
+            else
+            {
+                Sprite spr = Resources.Load("photo", typeof(Sprite)) as Sprite;
+                Avatar = spr;
+            }
 
-            if (texture2D != null)
-                ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
+            if (File.Exists(PathFileAvatar))
+            {
+                WWW www = new WWW("file://" + PathFileAvatar);
+                Texture2D texture2D = www.texture;
+                Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+                Avatar = sprite;
 
+                if (texture2D != null)
+                    ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
+            }
             //ReloadAvatar?.Invoke();
         }
 
@@ -185,22 +201,29 @@ namespace Victorina
             IsBonusReady = false;
             CustomId = string.Empty;
 
+            if (PlayerPrefs.HasKey("Id"))
+            {
+                GuidID = PlayerPrefs.GetString("Id");
+                IsNewPlayer = false;
+            }
+            else
+                IsNewPlayer = true;
+
             GetAccauntUserInfo();
             if (_bonusTimer == null)
                 TimerInit();
 
-            GetQuestionsCount();
-            GetRightAnswersCount();
+            SetAvatar();
         }
 
         public void Reset()
         {
-            PlayerPrefs.DeleteAll();
+            //PlayerPrefs.DeleteAll();
             IsNewPlayer = true;
             IsNewVersionApp = true;
 
             CustomId = string.Empty;
-            PlayFabId = string.Empty;
+            PlayFabIdCurrentPlayer = string.Empty;
             TitlePlayerAccountId = string.Empty;
             CreatedDateTimePlayfabProfile = string.Empty;
 
@@ -256,16 +279,24 @@ namespace Victorina
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
         {
             CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            PlayFabId = info.AccountInfo.PlayFabId;
+            PlayFabIdCurrentPlayer = info.AccountInfo.PlayFabId;
             TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
             Email = info.AccountInfo.PrivateInfo.Email;
             Name = info.AccountInfo.TitleInfo.DisplayName;
+
+
+            GetLeaderBoardWeeklyRank();
+            GetLeaderBoardMonthRank();
+            //GetQuestionsCount();
+            GetRightAnswersCount();
 
             Debug.Log("Информация об аккаунте Playfab получена");
         }
 
         public void SetDisplayName(string name)
         {
+            Name = name;
+
             PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
             {
                 DisplayName = name
@@ -299,6 +330,10 @@ namespace Victorina
             {
                 CurrencyVirtual[cnt++] = pair.Key + " = " + pair.Value;
                 _virtualCurrency.Add(pair.Key, pair.Value);
+                if (pair.Key == "R2")
+                    R2 = pair.Value;
+                if (pair.Key == "RE")
+                    RE = pair.Value;
             }
 
             var ticketBit = 0;
@@ -405,6 +440,10 @@ namespace Victorina
 
 
         public Action<int> GetNumberBonus;
+        [SerializeField] internal int R2;
+        [SerializeField] internal int RE;
+        [SerializeField] internal int WeeklyRank;
+        [SerializeField] internal int MonthRank;
 
         public void GetBonus()
         {
@@ -469,7 +508,10 @@ namespace Victorina
                             var a = item.PurchaseDate.Value;
                             var nowDate = DateTime.UtcNow;
                             var sec = (nowDate - createDate).Value.TotalSeconds;
-                            LastGameTime = DateTime.MinValue.AddSeconds(sec).ToLongTimeString();
+
+                            DateTime last = DateTime.MinValue.AddSeconds(sec);
+                            LastGameTime = last.ToLongTimeString();
+
                         }
                     }
                 if (iii != string.Empty)
@@ -517,9 +559,39 @@ namespace Victorina
             {
                 StatisticName = "QuestionCount",
                 MaxResultsCount = 1,
-                PlayFabId = PlayFabId,
+                PlayFabId = PlayFabIdCurrentPlayer,
             };
-            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => AllQuestionsCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result =>
+            {
+                AllQuestionsCount = result.Leaderboard[0].StatValue;
+
+                var sec = 100;
+                if (PlayerPrefs.HasKey("AllGameTime"))
+                {
+                    var prevTime = PlayerPrefs.GetInt("AllGameTime");
+                    var allSec = prevTime + sec;
+                    PlayerPrefs.SetInt("AllGameTime", (int)allSec);
+
+                    var average = allSec / AllQuestionsCount;
+                    DateTime averageTime = DateTime.MinValue.AddSeconds(average);
+                    AverageTimeAnswers = averageTime.ToLongTimeString();
+
+                    DateTime allTime = DateTime.MinValue.AddSeconds(allSec);
+                    AllGameTime = allTime.ToLongTimeString();
+                }
+                else
+                {
+                    AllGameTime = LastGameTime;
+
+                    var average = sec / AllQuestionsCount;
+                    DateTime averageTime = DateTime.MinValue.AddSeconds(average);
+                    AverageTimeAnswers = averageTime.ToLongTimeString();
+
+                    PlayerPrefs.SetInt("AllGameTime", sec);
+                }
+
+
+            }, error => Debug.LogError(error));
         }
 
         public void GetRightAnswersCount()
@@ -528,10 +600,47 @@ namespace Victorina
             {
                 StatisticName = "RightAnswersCount",
                 MaxResultsCount = 1,
-                PlayFabId = PlayFabId,
+                PlayFabId = PlayFabIdCurrentPlayer,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => RightAnswersCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
         }
+
+
+        private void GetLeaderBoardMonthRank()
+        {
+            var request = new GetLeaderboardAroundPlayerRequest()
+            {
+                StatisticName = "MonthRank",
+                PlayFabId = PlayFabIdCurrentPlayer,
+                MaxResultsCount = 1,
+            };
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetMonthRangValue, error => Debug.LogError(error));
+        }
+
+        private void GetLeaderBoardWeeklyRank()
+        {
+            var request = new GetLeaderboardAroundPlayerRequest()
+            {
+                StatisticName = "WeeklyRank",
+                MaxResultsCount = 1,
+                PlayFabId = PlayFabIdCurrentPlayer,
+            };
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, SetWeeklyRangValue, error => Debug.LogError(error));
+        }
+
+
+        private void SetWeeklyRangValue(GetLeaderboardAroundPlayerResult obj)
+        {
+            var rang = obj.Leaderboard[0].Position;
+            WeeklyRank = rang;
+        }
+
+        private void SetMonthRangValue(GetLeaderboardAroundPlayerResult obj)
+        {
+            var rang = obj.Leaderboard[0].Position;
+            MonthRank = rang;
+        }
+
 
     }
 }

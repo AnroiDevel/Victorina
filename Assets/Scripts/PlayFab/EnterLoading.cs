@@ -25,37 +25,37 @@ namespace Victorina
             //SetIsNewPlayerOption();
         }
 
-        private void PlayFabAutorization(PlayerData playerData)
-        {
-            if (_playerData.IsNewPlayer)
-            {
-                playerData.Reset();
-                _playerData.Avatar = _defaultAvatar;
-            }
+        //private void PlayFabAutorization(PlayerData playerData)
+        //{
+        //    if (_playerData.IsNewPlayer)
+        //    {
+        //        playerData.Reset();
+        //        _playerData.Avatar = _defaultAvatar;
+        //    }
 
-            if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
-            {
-                PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            }
+        //    if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
+        //    {
+        //        PlayFabSettings.staticSettings.TitleId = "D2AD8";
+        //    }
 
-            var needCreation = _playerData.GuidID == string.Empty;
+        //    var needCreation = _playerData.GuidID == string.Empty;
 
-            var id = _playerData.GuidID;
-            if (id == string.Empty)
-                id = Guid.NewGuid().ToString();
-            _playerData.GuidID = id;
+        //    var id = _playerData.GuidID;
+        //    if (id == string.Empty)
+        //        id = Guid.NewGuid().ToString();
+        //    _playerData.GuidID = id;
 
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
-            {
-                CustomId = id,
-                CreateAccount = needCreation,
+        //    PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+        //    {
+        //        CustomId = id,
+        //        CreateAccount = needCreation,
 
-            }, success =>
-            {
-                PlayerPrefs.SetString(AuthGuidKey, id);
-                playerData.Init();
-            }, Debug.Log);
-        }
+        //    }, success =>
+        //    {
+        //        PlayerPrefs.SetString(AuthGuidKey, id);
+        //        playerData.Init();
+        //    }, Debug.Log);
+        //}
 
         public void SetIsNewPlayerOption()
         {

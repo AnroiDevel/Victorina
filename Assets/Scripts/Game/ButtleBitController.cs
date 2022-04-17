@@ -11,6 +11,7 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _timeGame;
+        
 
         private LeaderBoardsController _boardsController;
 

@@ -18,16 +18,17 @@ namespace Victorina
             _avatar.transform.localScale = Vector3.one * coef;
         }
 
-        //private void OnEnable()
-        //{
-        //    StartCoroutine(AvatarUpdate());
-        //}
+        private void OnEnable()
+        {
+            StartCoroutine(AvatarUpdate());
+        }
 
-        //private IEnumerator AvatarUpdate()
-        //{
-        //    yield return new WaitForSeconds(2);
-        //    _avatar.sprite = _playerData.Avatar;
-        //}
+        private IEnumerator AvatarUpdate()
+        {
+            _playerData.SetAvatar();
+            yield return new WaitForSeconds(2);
+            _avatar.sprite = _playerData.Avatar;
+        }
     }
 
 }

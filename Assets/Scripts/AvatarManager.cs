@@ -96,12 +96,17 @@ namespace Victorina
         {
             yield return new WaitForEndOfFrame();
             _playerData.SetAvatar();
+
+            yield return new WaitForEndOfFrame();
             _avatarImg.sprite = _playerData.Avatar;
 
             yield return new WaitForEndOfFrame();
             _playerData.SetAvatar();
+
+            yield return new WaitForEndOfFrame();
             _avatarImg.sprite = _playerData.Avatar;
 
+            yield return new WaitForEndOfFrame();
             _avatarImg.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
 
         }
@@ -217,6 +222,7 @@ namespace Victorina
 
         public void SelectAvatar(string pathFile)
         {
+            PlayerPrefs.SetString("AvatarUrl", pathFile);
             _errorInfo.text += "Установка аватара из " + pathFile;
             StartCoroutine(UpdateAvatar(pathFile));
         }

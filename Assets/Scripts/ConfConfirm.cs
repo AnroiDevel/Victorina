@@ -9,6 +9,7 @@ namespace Victorina
         public void Confirm()
         {
             _playerData.IsNewVersionApp = false;
+            PlayerPrefs.SetString("Version", Application.version);
         }
     }
 

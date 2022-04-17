@@ -9,9 +9,7 @@ namespace Victorina
         public Sprite Confidential;
         public Sprite ProfileBackground;
         public Sprite WelcomeBackground;
-        public Sprite GameWelcomePanel;
-        public Sprite GameProgressPanel;
-        public Sprite GamePanel;
+
         public Sprite GameExitPanel;
         public Sprite OptionMenuBack;
 
@@ -21,6 +19,13 @@ namespace Victorina
         public Sprite AchivPanelBack;
 
         public Sprite QuestionRedactorBack;
+
+        [Header("Режим игры")]
+        public Sprite GameWelcomePanel;
+        public Sprite GameProgressPanel;
+        public Sprite GamePanel;
+        public Sprite QuestPanel;
+        public Sprite AnswerBtn;
 
         [Header("Меню")]
         public Sprite BottomAnimMenuBack;

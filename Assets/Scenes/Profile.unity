@@ -1274,6 +1274,7 @@ GameObject:
   - component: {fileID: 235438607}
   - component: {fileID: 235438606}
   - component: {fileID: 235438608}
+  - component: {fileID: 235438609}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -1325,6 +1326,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _profileThema: {fileID: 235438606}
+--- !u!114 &235438609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235438605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac221f30cd99dc44d942923efcf851c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
+  _reitImage: {fileID: 381022103}
+  _junior: {fileID: 5409873317304019141, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
+  _pro: {fileID: -9111252987980234702, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
+  _master: {fileID: -286389992427371828, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
+  _champion: {fileID: -5962563423865868873, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
+  _grandChampion: {fileID: 606229079121657774, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
 --- !u!1 &239427404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1861,7 +1881,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.14114814, y: 0}
-  m_AnchorMax: {x: 0.8597778, y: 1}
+  m_AnchorMax: {x: 0.8598519, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1885,7 +1905,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: aeaf7fe6848a961439ce31a1774fcea7, type: 3}
+  m_Sprite: {fileID: 5409873317304019141, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

@@ -15,9 +15,6 @@ MonoBehaviour:
   Confidential: {fileID: 21300000, guid: 394228a6324eee74b8cd4a9ce990ce99, type: 3}
   ProfileBackground: {fileID: 21300000, guid: ea38662f0dee16340af7b8f6ed67eb13, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: 624027e73800e71469124391ab046b7f, type: 3}
-  GameWelcomePanel: {fileID: 21300000, guid: 96201f6fb3098004ba6605ad06a7b51a, type: 3}
-  GameProgressPanel: {fileID: 21300000, guid: 903bf4e1d1a2fd144b96cda6d711711b, type: 3}
-  GamePanel: {fileID: 21300000, guid: 3dde3bd4bb9a2ae40b58e504bbe8cc08, type: 3}
   GameExitPanel: {fileID: 21300000, guid: 29ba1c3b5ae4c884cbd7a9a4d9b6919f, type: 3}
   OptionMenuBack: {fileID: 21300000, guid: 96b5e734f60473942900e2a460f68b38, type: 3}
   MainMenuBack: {fileID: 21300000, guid: 5e341f7f582aced45b6e2b82c2f2b062, type: 3}
@@ -25,6 +22,11 @@ MonoBehaviour:
   StatisticsPanelBack: {fileID: 21300000, guid: 576e0e0b8dcc4f046b7413d7df6eb6dc, type: 3}
   AchivPanelBack: {fileID: 21300000, guid: 34728b09712d51e448585c6df6f9d859, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: 94d62be28c0c842499081601f4f21d2f, type: 3}
+  GameWelcomePanel: {fileID: 21300000, guid: 96201f6fb3098004ba6605ad06a7b51a, type: 3}
+  GameProgressPanel: {fileID: 21300000, guid: 903bf4e1d1a2fd144b96cda6d711711b, type: 3}
+  GamePanel: {fileID: 21300000, guid: 3dde3bd4bb9a2ae40b58e504bbe8cc08, type: 3}
+  QuestPanel: {fileID: 21300000, guid: d18d477ce9a151748b0bdcd436a3d651, type: 3}
+  AnswerBtn: {fileID: 21300000, guid: b96704d562d2eee479c72499e571c3f2, type: 3}
   BottomAnimMenuBack: {fileID: -2626224823857740691, guid: 344bdf7669bd6d74dbc78112ac382eaf, type: 3}
   OptionIcon: {fileID: 3439132153937509602, guid: d14c284a59a74eb45a0d6001270cbf52, type: 3}
   ReportedBtn: {fileID: 21300000, guid: e05ad40f9c9fba245b724c6286febe05, type: 3}

@@ -19,11 +19,21 @@ namespace Victorina
             _sceneLoader = GetComponent<SceneLoader>();
         }
 
+        private void OnEnable()
+        {
+            _playerData.NewPlayerComplete += LoadNextScene;
+        }
+
+        private void OnDisable()
+        {
+            _playerData.NewPlayerComplete -= LoadNextScene;
+        }
+
         public void CreateNewPlayer()
         {
             _playerData.Name = _name.text;
             _playerData.CreateNewPlayer();
-            _playerData.NewPlayerComplete += LoadNextScene;
+            _playerData.IsNewPlayer = false;
 
         }
 

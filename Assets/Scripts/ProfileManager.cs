@@ -25,6 +25,7 @@ namespace Victorina
 
         private void Start()
         {
+            _playerData.Login();
             _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
             if (_ticketText)
@@ -40,7 +41,8 @@ namespace Victorina
 
         private IEnumerator NewAvatarComplete()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForEndOfFrame();
+            yield return new WaitForSeconds(2);
             _imageAvatar.sprite = _playerData.Avatar;
         }
 
@@ -48,8 +50,8 @@ namespace Victorina
         {
             OnReloadAvatar();
             _imageAvatar.sprite = _playerData.Avatar;
-            //_playerData.BitInfoUpdate += MoneyUpdate;
-            //_playerData.TicketInfoUpdate += TicketUpdate;
+            _playerData.BitInfoUpdate += MoneyUpdate;
+            _playerData.TicketInfoUpdate += TicketUpdate;
 
             var coef = _playerData.ScaleImageAvatarCoef;
             _imageAvatar.transform.localScale = Vector3.one * coef;
@@ -57,7 +59,8 @@ namespace Victorina
 
         private void TicketUpdate()
         {
-            _ticketText.text = _playerData.TicketsBit.ToString();
+            if (_ticketText)
+                _ticketText.text = _playerData.TicketsBit.ToString();
         }
 
         private void OnDisable()

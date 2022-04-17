@@ -242,13 +242,16 @@ namespace Victorina
             _nextBtn.GetComponentInChildren<Text>().text = Next;
             _nextBtn.interactable = true;
         }
+
+
         public void FiftyFifty()
         {
             var cnt = 0;
             if (_answerButtons.Length > 0)
+            {
                 while (cnt < 2)
                 {
-                    var rnd = UnityEngine.Random.Range(0, _answers.Length);
+                    var rnd = Random.Range(0, _answers.Length);
                     if (rnd != _trueIndex)
                     {
                         if (_answerButtons[rnd].isActiveAndEnabled)
@@ -258,7 +261,30 @@ namespace Victorina
                         }
                     }
                 }
-            _helpController.IsTwoErrorVarintsComplete = true;
+            }
+            cnt = 0;
+            foreach (var btn in _answerButtons)
+                if (btn.isActiveAndEnabled)
+                    cnt++;
+
+            if (_helpController.IsTwoErrorVarintsComplete)
+            {
+                if (cnt >= 3)
+                {
+                    _helpController.PurchaseR2();
+                    _helpController.SetInteractibleR2Btn(true);
+                }
+                else if (cnt <= 1)
+                {
+                    _helpController.PurchaseR2();
+                    _helpController.SetNotInteracttibleAllHelpBtns();
+                }
+            }
+            else
+            {
+                _helpController.IsTwoErrorVarintsComplete = true;
+                _helpController.SetInteractibleR2Btn(true);
+            }
         }
 
         public void DelOneErrorVariant()
@@ -267,7 +293,7 @@ namespace Victorina
             if (_answerButtons.Length > 0)
                 while (cnt < 1)
                 {
-                    var rnd = UnityEngine.Random.Range(0, _answers.Length);
+                    var rnd = Random.Range(0, _answers.Length);
                     if (rnd != _trueIndex)
                     {
                         if (_answerButtons[rnd].isActiveAndEnabled)

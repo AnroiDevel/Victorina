@@ -14,6 +14,8 @@ namespace Victorina
         [SerializeField] private Image[] _welcomeBtns;
         [SerializeField] private Image _gameProgressPanel;
         [SerializeField] private Image _gamePanel;
+        [SerializeField] private Image _questionPanel;
+        [SerializeField] private Image[] _answerBtns;
         [SerializeField] private Image _gameExitPanel;
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private Image _regulationPanel;
@@ -27,16 +29,25 @@ namespace Victorina
 
         [SerializeField] private AudioSource _crownTuk;
 
+
         private void Start()
         {
-            _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
+            if (_crownTuk != null)
+                _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
 
             _welcomePanel.SetActive(true);
 
             _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;
+
             if (_gameProgressPanel)
                 _gameProgressPanel.sprite = ThemaConrtoller.ActiveThema?.GameProgressPanel;
+
             _gamePanel.sprite = ThemaConrtoller.ActiveThema?.GamePanel;
+            _questionPanel.sprite = ThemaConrtoller.ActiveThema?.QuestPanel;
+
+            foreach (var answer in _answerBtns)
+                answer.sprite = ThemaConrtoller.ActiveThema?.AnswerBtn;
+
             _gameExitPanel.sprite = ThemaConrtoller.ActiveThema?.GameExitPanel;
             _regulationPanel.sprite = ThemaConrtoller.ActiveThema?.RegulationPanel;
             _commentPanel.color = ThemaConrtoller.ActiveThema.CommentPanelColor;

@@ -82,6 +82,7 @@ namespace Victorina
                 // Load another ad:
                 Advertisement.Load(_adUnitId, this);
 
+                IsShowAdButtonReady = false;
                 _bonusOpenPanel.SetActive(true);
                 _bonusManager.GetBonus();
             }
@@ -92,6 +93,8 @@ namespace Victorina
         {
             Debug.Log($"Error loading Ad Unit {adUnitId}: {error.ToString()} - {message}");
             // Use the error details to determine whether to try to load another ad.
+            IsShowAdButtonReady = true;
+
         }
 
         public void OnUnityAdsShowFailure(string adUnitId, UnityAdsShowError error, string message)

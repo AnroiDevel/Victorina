@@ -21,14 +21,12 @@ namespace Victorina
         private bool _isBonusComplete;
         private DateTime _startTime;
 
-        private void Awake()
-        {
-            _bonusButton = GetComponent<Button>();
-            _isBonusComplete = _playerData.IsBonusReady;
-        }
 
         private void Start()
         {
+            _isBonusComplete = _playerData.IsBonusReady;
+
+            _bonusButton = GetComponent<Button>();
             if (_isBonusComplete)
                 OnBonusComplete(true);
             _playerData.GetNumberBonus += OnGetNumberBonus;
@@ -74,10 +72,12 @@ namespace Victorina
 
         private void FixedUpdate()
         {
-            if (_playerData.IsBonusReady)
-                OnBonusComplete(true);
-            else
-                _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
+            if (!_bonusButton.interactable)
+                if (_playerData.IsBonusReady)
+
+                    OnBonusComplete(true);
+                else
+                    _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
         }
 
 
@@ -85,7 +85,7 @@ namespace Victorina
 
         public void GetBonus()
         {
-            if (_rewardedAds.IsShowAdButtonReady) return;
+            //if (_rewardedAds.IsShowAdButtonReady) return;
             _playerData.GetBonus();
             _isBonusComplete = false;
             _bonusButton.interactable = false;

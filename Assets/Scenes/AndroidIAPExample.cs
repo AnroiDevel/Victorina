@@ -24,7 +24,7 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
     public void Start()
     {
         // Make PlayFab log in
-        Login();
+        RefreshIAPItems();
         _loadShopPanel.SetActive(true);
     }
 

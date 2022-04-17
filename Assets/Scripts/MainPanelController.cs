@@ -18,9 +18,17 @@ namespace Victorina
 
         private void Start()
         {
-            _userImage.sprite = _playerData.Avatar;
-            _debugTest.text = _playerData.PathFileAvatar;
-            //_pathForUserImage = Application.persistentDataPath + Avatar;
+            if (_playerData.Avatar != null)
+                _userImage.sprite = _playerData.Avatar;
+            else if (_playerData.PathFileAvatar != string.Empty)
+            {
+                //_debugTest.text = _playerData.PathFileAvatar;
+                _pathForUserImage = Application.persistentDataPath + Avatar;
+                _playerData.PathFileAvatar = _pathForUserImage;
+                _playerData.SetAvatar();
+            }
+            else _playerData.SetAvatar();
+
 
 
             //if (File.Exists(_pathForUserImage))

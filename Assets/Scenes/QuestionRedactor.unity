@@ -845,7 +845,6 @@ GameObject:
   - component: {fileID: 519969174}
   - component: {fileID: 519969173}
   - component: {fileID: 519969176}
-  - component: {fileID: 519969177}
   m_Layer: 5
   m_Name: SendButton
   m_TagString: Untagged
@@ -994,31 +993,6 @@ MonoBehaviour:
   - {fileID: 779387793}
   _errorSendText: {fileID: 974934687}
   _minLengthQuestion: 5
---- !u!114 &519969177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519969171}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84e8fb8f53832dc4f98e15f4649fabde, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _nextBtn: {fileID: 0}
-  _answersPanel: {fileID: 0}
-  _reloadGameBtn: {fileID: 0}
-  _startBtn: {fileID: 0}
-  _razrabBtn: {fileID: 0}
-  _loadingImg: {fileID: 0}
-  _scorePanel: {fileID: 0}
-  _exitPanel: {fileID: 0}
-  _logoUnity: {fileID: 0}
-  _commentText: {fileID: 0}
-  _questionText: {fileID: 0}
-  _answers: []
-  _scoreText: {fileID: 0}
 --- !u!1 &540384628
 GameObject:
   m_ObjectHideFlags: 0
