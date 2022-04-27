@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,7 +7,7 @@ namespace Victorina
     {
         [SerializeField] PlayerData _playerData;
 
-        private void Start()
+        private void Awake()
         {
             _playerData.IsTrain = true;
         }

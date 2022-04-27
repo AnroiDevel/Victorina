@@ -7,6 +7,7 @@ namespace Victorina
     public class GameThema : MonoBehaviour
     {
         private const string Key = "Music";
+        [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private GameObject _welcomePanel;
 
@@ -35,6 +36,7 @@ namespace Victorina
             if (_crownTuk != null)
                 _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
 
+            if(!_playerData.IsTrain)
             _welcomePanel.SetActive(true);
 
             _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;

@@ -1,9 +1,9 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using System.Timers;
 using UnityEngine;
 
@@ -13,6 +13,10 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
+        [SerializeField] internal int R2;
+        [SerializeField] internal int RE;
+        [SerializeField] internal int WeeklyRank;
+        [SerializeField] internal int MonthRank;
         private string UrlAvatar = "AvatarUrl";
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
@@ -61,6 +65,7 @@ namespace Victorina
         public Action BitInfoUpdate;
         public Action TicketInfoUpdate;
         public Action ReloadAvatar;
+        public Action<int> GetNumberBonus;
 
         public string LastGameTime;
         public string AllGameTime;
@@ -72,6 +77,9 @@ namespace Victorina
 
         public Action NewPlayerComplete;
         public Action LoginComplete;
+        [SerializeField] internal bool NotReclama;
+
+        private int _lastGameTimeSec;
 
         public void CreateNewPlayer()
         {
@@ -113,7 +121,39 @@ namespace Victorina
 
         }
 
-        public void SetAvatar()
+        public void Init()
+        {
+            IsPlayed = false;
+            IsVip = false;
+            IsBonusReady = false;
+            NotReclama = false;
+            CustomId = string.Empty;
+
+            if (PlayerPrefs.HasKey("Id"))
+            {
+                GuidID = PlayerPrefs.GetString("Id");
+                IsNewPlayer = false;
+            }
+            else
+                IsNewPlayer = true;
+
+            GetAccauntUserInfo();
+            if (_bonusTimer == null)
+                TimerInit();
+
+        }
+
+        public void SetAvatar() 
+        {
+            LoadAvatarAsync();
+        }
+
+        private async void LoadAvatarAsync()
+        {
+            await SetAvatarAsync();
+        }
+
+        private async Task SetAvatarAsync()
         {
             if (PlayerPrefs.HasKey(UrlAvatar))
             {
@@ -129,7 +169,7 @@ namespace Victorina
 
             if (File.Exists(PathFileAvatar))
             {
-                WWW www = new WWW("file://" + PathFileAvatar);
+                var www = new WWW("file://" + PathFileAvatar);
                 Texture2D texture2D = www.texture;
                 Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
                 Avatar = sprite;
@@ -137,6 +177,8 @@ namespace Victorina
                 if (texture2D != null)
                     ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
             }
+
+            await Task.Run(() => Debug.Log("Асинхронная загрузка аватара завершена"));
             //ReloadAvatar?.Invoke();
         }
 
@@ -194,27 +236,6 @@ namespace Victorina
             }, result => Debug.Log("Количество правильных ответов обновлено"), FailureCallback);
         }
 
-        public void Init()
-        {
-            IsPlayed = false;
-            IsVip = false;
-            IsBonusReady = false;
-            CustomId = string.Empty;
-
-            if (PlayerPrefs.HasKey("Id"))
-            {
-                GuidID = PlayerPrefs.GetString("Id");
-                IsNewPlayer = false;
-            }
-            else
-                IsNewPlayer = true;
-
-            GetAccauntUserInfo();
-            if (_bonusTimer == null)
-                TimerInit();
-
-            SetAvatar();
-        }
 
         public void Reset()
         {
@@ -287,7 +308,7 @@ namespace Victorina
 
             GetLeaderBoardWeeklyRank();
             GetLeaderBoardMonthRank();
-            //GetQuestionsCount();
+            GetQuestionsCount();
             GetRightAnswersCount();
 
             Debug.Log("Информация об аккаунте Playfab получена");
@@ -347,6 +368,8 @@ namespace Victorina
                     IsPlayed = true;
                 else if (item.DisplayName == "Vip Day")
                     IsVip = true;
+                else if (item.DisplayName == "Not reclama")
+                    NotReclama = true;
 
             }
             TicketsBit = ticketBit;
@@ -439,11 +462,6 @@ namespace Victorina
         }
 
 
-        public Action<int> GetNumberBonus;
-        [SerializeField] internal int R2;
-        [SerializeField] internal int RE;
-        [SerializeField] internal int WeeklyRank;
-        [SerializeField] internal int MonthRank;
 
         public void GetBonus()
         {
@@ -507,11 +525,9 @@ namespace Victorina
                             var createDate = item.PurchaseDate;
                             var a = item.PurchaseDate.Value;
                             var nowDate = DateTime.UtcNow;
-                            var sec = (nowDate - createDate).Value.TotalSeconds;
+                           int sec = (int)(nowDate - createDate).Value.TotalSeconds;
 
-                            DateTime last = DateTime.MinValue.AddSeconds(sec);
-                            LastGameTime = last.ToLongTimeString();
-
+                            _lastGameTimeSec = sec;
                         }
                     }
                 if (iii != string.Empty)
@@ -565,29 +581,29 @@ namespace Victorina
             {
                 AllQuestionsCount = result.Leaderboard[0].StatValue;
 
-                var sec = 100;
                 if (PlayerPrefs.HasKey("AllGameTime"))
                 {
                     var prevTime = PlayerPrefs.GetInt("AllGameTime");
-                    var allSec = prevTime + sec;
-                    PlayerPrefs.SetInt("AllGameTime", (int)allSec);
 
-                    var average = allSec / AllQuestionsCount;
+                    var average = prevTime / AllQuestionsCount;
                     DateTime averageTime = DateTime.MinValue.AddSeconds(average);
                     AverageTimeAnswers = averageTime.ToLongTimeString();
 
-                    DateTime allTime = DateTime.MinValue.AddSeconds(allSec);
-                    AllGameTime = allTime.ToLongTimeString();
+
+                    int allTime = _lastGameTimeSec + prevTime;
+                    AllGameTime = DateTime.MinValue.AddSeconds(allTime).ToLongTimeString();
+                    _lastGameTimeSec = 0;
+                    PlayerPrefs.SetInt("AllGameTime", allTime);
                 }
                 else
                 {
                     AllGameTime = LastGameTime;
 
-                    var average = sec / AllQuestionsCount;
+                    var average = 0 / AllQuestionsCount;
                     DateTime averageTime = DateTime.MinValue.AddSeconds(average);
                     AverageTimeAnswers = averageTime.ToLongTimeString();
 
-                    PlayerPrefs.SetInt("AllGameTime", sec);
+                    PlayerPrefs.SetInt("AllGameTime", 0);
                 }
 
 
@@ -632,13 +648,13 @@ namespace Victorina
         private void SetWeeklyRangValue(GetLeaderboardAroundPlayerResult obj)
         {
             var rang = obj.Leaderboard[0].Position;
-            WeeklyRank = rang;
+            WeeklyRank = rang + 1;
         }
 
         private void SetMonthRangValue(GetLeaderboardAroundPlayerResult obj)
         {
             var rang = obj.Leaderboard[0].Position;
-            MonthRank = rang;
+            MonthRank = rang + 1;
         }
 
 

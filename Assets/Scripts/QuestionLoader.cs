@@ -85,6 +85,7 @@ namespace Victorina
 
             if (!_playerData.IsTrain)
                 SetCurrentStep();
+            else LoadOneQuestion();
         }
 
         private void OnLoadNewQuestion()
@@ -247,6 +248,8 @@ namespace Victorina
         public void FiftyFifty()
         {
             var cnt = 0;
+            var errCnt = 0;
+
             if (_answerButtons.Length > 0)
             {
                 while (cnt < 2)
@@ -260,6 +263,10 @@ namespace Victorina
                             cnt++;
                         }
                     }
+
+                    errCnt++;
+                    if (errCnt > 100)
+                        return;
                 }
             }
             cnt = 0;
@@ -267,29 +274,34 @@ namespace Victorina
                 if (btn.isActiveAndEnabled)
                     cnt++;
 
-            if (_helpController.IsTwoErrorVarintsComplete)
-            {
-                if (cnt >= 3)
+            if (cnt >= 3)
+                if (_helpController.IsTwoErrorVarintsComplete)
                 {
-                    _helpController.PurchaseR2();
+                    if (cnt >= 3)
+                    {
+                        _helpController.PurchaseR2();
+                        _helpController.SetInteractibleR2Btn(true);
+                    }
+                    else if (cnt <= 2)
+                    {
+                        _helpController.PurchaseR2();
+                        _helpController.SetNotInteracttibleAllHelpBtns();
+                        _helpController.SetInteractibleR2Btn(false);
+                    }
+                }
+                else
+                {
+                    _helpController.IsTwoErrorVarintsComplete = true;
                     _helpController.SetInteractibleR2Btn(true);
                 }
-                else if (cnt <= 1)
-                {
-                    _helpController.PurchaseR2();
-                    _helpController.SetNotInteracttibleAllHelpBtns();
-                }
-            }
-            else
-            {
-                _helpController.IsTwoErrorVarintsComplete = true;
-                _helpController.SetInteractibleR2Btn(true);
-            }
         }
 
         public void DelOneErrorVariant()
         {
             var cnt = 0;
+
+            var errCnt = 0;
+
             if (_answerButtons.Length > 0)
                 while (cnt < 1)
                 {
@@ -302,7 +314,20 @@ namespace Victorina
                             cnt++;
                         }
                     }
+                    errCnt++;
+                    if (errCnt > 100)
+                        return;
                 }
+
+            cnt = 0;
+            foreach (var btn in _answers)
+            {
+                if (btn.isActiveAndEnabled)
+                    cnt++;
+            }
+
+            if (cnt <= 2)
+                _helpController.SetInteractibleR2Btn(false);
         }
 
 

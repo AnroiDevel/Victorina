@@ -5,17 +5,15 @@ using UnityEngine.Advertisements;
 
 namespace Victorina
 {
-    public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+    public class RewardedAdsHelp : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
     {
         #region Fields
 
         public bool IsShowAdButtonReady;
 
-        [SerializeField] private BonusManager _bonusManager;
         [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private GameObject _adsLable;
-        [SerializeField] private GameObject _bonusOpenPanel;
 
         [SerializeField] private Button _showAdButton;
 
@@ -23,6 +21,8 @@ namespace Victorina
         [SerializeField] private string _iOSAdUnitId = "Rewarded_iOS";
 
         private string _adUnitId = null; // This will remain null for unsupported platforms
+
+        private int _countStepForAds = 3;
 
         #endregion
 
@@ -77,7 +77,6 @@ namespace Victorina
                 //_showAdButton.interactable = true;
                 IsShowAdButtonReady = true;
 
-                _adsLable.SetActive(true);
             }
         }
 
@@ -86,12 +85,15 @@ namespace Victorina
         public void ShowAd()
         {
 
-            if (_playerData.NotReclama)
+            if (_playerData.NotReclama || _countStepForAds-- > 0)
             {
-                _bonusOpenPanel.SetActive(true);
-                _bonusManager.GetBonus();
+                //if (_countStepForAds == 0)
+                //    _adsLable.SetActive(true);
+                //else _adsLable.SetActive(false);
+
                 return;
             }
+            _countStepForAds = 3;
 
             IsShowAdButtonReady = false;
             // Disable the button:
@@ -113,8 +115,6 @@ namespace Victorina
                 Advertisement.Load(_adUnitId, this);
 
                 IsShowAdButtonReady = false;
-                _bonusOpenPanel.SetActive(true);
-                _bonusManager.GetBonus();
             }
         }
 

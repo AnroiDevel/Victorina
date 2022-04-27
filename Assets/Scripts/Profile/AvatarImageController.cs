@@ -23,7 +23,7 @@ namespace Victorina
 
         private void OnEnable()
         {
-            SetReitImage();
+            //SetReitImage();
         }
 
         public void SetReitImage()
