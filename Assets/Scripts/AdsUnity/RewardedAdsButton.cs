@@ -85,6 +85,13 @@ namespace Victorina
         // Implement a method to execute when the user clicks the button:
         public void ShowAd()
         {
+#if UNITY_EDITOR
+            IsShowAdButtonReady = false;
+            _bonusOpenPanel.SetActive(true);
+            _bonusManager.GetBonus();
+            return;
+#endif
+
 
             if (_playerData.NotReclama)
             {
@@ -149,6 +156,6 @@ namespace Victorina
             _showAdButton.onClick.RemoveAllListeners();
         }
 
-        #endregion   
+        #endregion
     }
 }

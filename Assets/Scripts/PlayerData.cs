@@ -143,44 +143,47 @@ namespace Victorina
 
         }
 
-        public void SetAvatar() 
-        {
-            LoadAvatarAsync();
-        }
+        //public void SetAvatar() 
+        //{
+        //    LoadAvatarAsync();
+        //}
 
-        private async void LoadAvatarAsync()
-        {
-            await SetAvatarAsync();
-        }
+        //private async void LoadAvatarAsync()
+        //{
+        //    await SetAvatarAsync();
+        //}
 
-        private async Task SetAvatarAsync()
-        {
-            if (PlayerPrefs.HasKey(UrlAvatar))
-            {
-                PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
-                if (PathFileAvatar == string.Empty)
-                    PathFileAvatar = Application.dataPath + "/logo.png";
-            }
-            else
-            {
-                Sprite spr = Resources.Load("photo", typeof(Sprite)) as Sprite;
-                Avatar = spr;
-            }
+        //private async Task SetAvatarAsync()
+        //{
+        //    if (PlayerPrefs.HasKey(UrlAvatar))
+        //    {
+        //        PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
+        //        if (PathFileAvatar == string.Empty)
+        //            PathFileAvatar = Application.dataPath + "/logo.png";
+        //    }
+        //    else
+        //    {
+        //        Sprite spr = Resources.Load("photo", typeof(Sprite)) as Sprite;
+        //        Avatar = spr;
+        //    }
 
-            if (File.Exists(PathFileAvatar))
-            {
-                var www = new WWW("file://" + PathFileAvatar);
-                Texture2D texture2D = www.texture;
-                Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
-                Avatar = sprite;
+        //    if (File.Exists(PathFileAvatar))
+        //    {
+        //        var www = new WWW("file://" + PathFileAvatar);
+        //        Texture2D texture2D = www.texture;
+        //        Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+        //        Avatar = sprite;
 
-                if (texture2D != null)
-                    ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
-            }
+        //        if (texture2D != null)
+        //            ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
+        //    }
 
-            await Task.Run(() => Debug.Log("Асинхронная загрузка аватара завершена"));
-            //ReloadAvatar?.Invoke();
-        }
+        //    await Task.Run(() => Debug.Log("kk"
+        //        +6324));
+            
+        //}
+
+
 
 
         public int GetBonusRechargeSeconds

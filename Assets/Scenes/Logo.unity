@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 69414122}
   - component: {fileID: 69414123}
   - component: {fileID: 69414124}
+  - component: {fileID: 69414125}
   m_Layer: 0
   m_Name: LogoController
   m_TagString: Untagged
@@ -213,6 +214,20 @@ MonoBehaviour:
   _androidGameId: 4702011
   _iOSGameId: 4702010
   _testMode: 0
+--- !u!114 &69414125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69414119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79a71281ecfe30448d5f1f4bf4889e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
+  _defaultAvatarTexture: {fileID: 21300000, guid: de4fc9565d043a347b5e1353d5156f84, type: 3}
 --- !u!1 &137177757
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.34117648, g: 0.23529413, b: 0.5647059, a: 1}
+  m_Color: {r: 0.20754719, g: 0.044054832, b: 0.17617522, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

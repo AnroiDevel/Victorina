@@ -18,16 +18,20 @@ namespace Victorina
 
         private void Start()
         {
-            if (_playerData.Avatar != null)
-                _userImage.sprite = _playerData.Avatar;
-            else if (_playerData.PathFileAvatar != string.Empty)
-            {
-                //_debugTest.text = _playerData.PathFileAvatar;
-                _pathForUserImage = Application.persistentDataPath + Avatar;
-                _playerData.PathFileAvatar = _pathForUserImage;
-                _playerData.SetAvatar();
-            }
-            else _playerData.SetAvatar();
+            _userImage.sprite=_playerData.Avatar;
+
+            _userImage.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+
+            //if (_playerData.Avatar != null)
+            //    _userImage.sprite = _playerData.Avatar;
+            //else if (_playerData.PathFileAvatar != string.Empty)
+            //{
+            //    //_debugTest.text = _playerData.PathFileAvatar;
+            //    _pathForUserImage = Application.persistentDataPath + Avatar;
+            //    _playerData.PathFileAvatar = _pathForUserImage;
+            //    _playerData.SetAvatar();
+            //}
+            //else _playerData.SetAvatar();
 
 
 
@@ -52,8 +56,8 @@ namespace Victorina
 
         private void OnEnable()
         {
-            var coef = _playerData.ScaleImageAvatarCoef;
-            _userImage.transform.localScale = Vector3.one * coef;
+            //var coef = _playerData.ScaleImageAvatarCoef;
+            //_userImage.transform.localScale = Vector3.one * coef;
 
         }
     }

@@ -26,36 +26,40 @@ namespace Victorina
         private void Start()
         {
             _playerData.Login();
-            _moneyText.text = _playerData.Bit.ToString();
+            if (_moneyText)
+                _moneyText.text = _playerData.Bit.ToString();
             _usernameText.text = _playerData.Name;
             if (_ticketText)
                 _ticketText.text = _playerData.TicketsBit.ToString();
-            //_playerData.ReloadAvatar += OnReloadAvatar;
+
+            _imageAvatar.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+            var textureAvatar = _playerData.Avatar;
+            _imageAvatar.sprite =  textureAvatar;
         }
 
-        private void OnReloadAvatar()
-        {
-            if (gameObject.activeSelf)
-                StartCoroutine(NewAvatarComplete());
-        }
+        //private void OnReloadAvatar()
+        //{
+        //    if (gameObject.activeSelf)
+        //        StartCoroutine(NewAvatarComplete());
+        //}
 
-        private IEnumerator NewAvatarComplete()
-        {
-            yield return new WaitForEndOfFrame();
-            yield return new WaitForSeconds(2);
-            _imageAvatar.sprite = _playerData.Avatar;
-        }
+        //private IEnumerator NewAvatarComplete()
+        //{
+        //    yield return new WaitForEndOfFrame();
+        //    yield return new WaitForSeconds(2);
+        //    _imageAvatar.sprite = _playerData.Avatar;
+        //}
 
-        private void OnEnable()
-        {
-            OnReloadAvatar();
-            _imageAvatar.sprite = _playerData.Avatar;
-            _playerData.BitInfoUpdate += MoneyUpdate;
-            _playerData.TicketInfoUpdate += TicketUpdate;
+        //private void OnEnable()
+        //{
+        //    OnReloadAvatar();
+        //    _imageAvatar.sprite = _playerData.Avatar;
+        //    _playerData.BitInfoUpdate += MoneyUpdate;
+        //    _playerData.TicketInfoUpdate += TicketUpdate;
 
-            var coef = _playerData.ScaleImageAvatarCoef;
-            _imageAvatar.transform.localScale = Vector3.one * coef;
-        }
+        //    var coef = _playerData.ScaleImageAvatarCoef;
+        //    _imageAvatar.transform.localScale = Vector3.one * coef;
+        //}
 
         private void TicketUpdate()
         {

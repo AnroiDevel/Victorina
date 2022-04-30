@@ -15,7 +15,7 @@ namespace Victorina
 
             //PlayerPrefs.DeleteAll();
 
-            _playerData.SetAvatar();
+            //_playerData.SetAvatar();
 
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);

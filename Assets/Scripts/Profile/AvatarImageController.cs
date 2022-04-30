@@ -8,6 +8,7 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Image _reitImage;
+        [SerializeField] private Image _reitImage2;
 
         [SerializeField] private Sprite _junior;
         [SerializeField] private Sprite _pro;
@@ -23,7 +24,7 @@ namespace Victorina
 
         private void OnEnable()
         {
-            //SetReitImage();
+            SetReitImage();
         }
 
         public void SetReitImage()
@@ -42,6 +43,9 @@ namespace Victorina
                 _reitImage.sprite = _grandChampion;
             else
                 _reitImage.sprite = _junior;
+
+            if (_reitImage2)
+                _reitImage2.sprite = _reitImage.sprite;
         }
     }
 
