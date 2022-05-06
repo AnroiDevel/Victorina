@@ -8,8 +8,14 @@ namespace Victorina
     {
         [SerializeField] private Image _backgroundMainMenu;
         [SerializeField] private Image _backgroundShopMenu;
-        [SerializeField] private Image _statisticsPanel;
         [SerializeField] private Image _achivPanel;
+
+        [Header("Кнопки главного экрана")]
+        [SerializeField] private Image _bonusBtn;
+        [SerializeField] private Image _bonusTimerBack;
+        [SerializeField] private Image _trainBtn;
+        [SerializeField] private Image _questionRedactorBtn;
+        [SerializeField] private Image _playBtn;
 
         [Header("Настройки")]
         [SerializeField] private Image _backgroundOptionMenu;
@@ -32,36 +38,57 @@ namespace Victorina
         [SerializeField] private Image _exitBtn;
         [SerializeField] private Image _noExitBtn;
 
+        [Header("Статистика")]
+        [SerializeField] private Image _statisticsPanel;
+        [SerializeField] private Image _topLineStatic;
+        [SerializeField] private Image _topLineMoveble;
+        [SerializeField] private Image[] _cellsStatistic;
+
 
         private void Start()
         {
-            _backgroundMainMenu.sprite = ThemaConrtoller.ActiveThema?.MainMenuBack;
-            _backgroundShopMenu.sprite = ThemaConrtoller.ActiveThema?.ShopMenuBack;
+            var activeThema = ThemaConrtoller.ActiveThema;
 
-            _backgroundOptionMenu.sprite = ThemaConrtoller.ActiveThema?.OptionMenuBack;
-            _reportedBtn.sprite = ThemaConrtoller.ActiveThema?.ReportedBtn;
+            if (activeThema == null) return;
 
-            _statisticsPanel.sprite = ThemaConrtoller.ActiveThema?.StatisticsPanelBack;
-            _achivPanel.sprite = ThemaConrtoller.ActiveThema?.AchivPanelBack;
+            _bonusBtn.sprite = activeThema.BonusBtnBack;
+            _bonusTimerBack.sprite = activeThema.BonusTimerBack;
+            _trainBtn.sprite = activeThema.TrainBtnBack;
+            _questionRedactorBtn.sprite = activeThema.QuestionRedactorBtn;
+            _playBtn.sprite = activeThema.PlayBtnBack;
+
+            _backgroundMainMenu.sprite = activeThema.MainMenuBack;
+            _backgroundShopMenu.sprite = activeThema.ShopMenuBack;
+
+            _backgroundOptionMenu.sprite = activeThema.OptionMenuBack;
+            _reportedBtn.sprite = activeThema.ReportedBtn;
+
+            _statisticsPanel.sprite = activeThema.StatisticsPanelBack;
+            _topLineStatic.sprite = activeThema.TopLineStatic;
+            _topLineMoveble.sprite = activeThema.TopLineMoveble;
+            foreach (var cell in _cellsStatistic)
+                cell.sprite = activeThema.CellStatistic;
+
+            _achivPanel.sprite = activeThema.AchivPanelBack;
 
 
-            _bottomAnimMenuBack.sprite = ThemaConrtoller.ActiveThema?.BottomAnimMenuBack;
-            _optionIcon.sprite = ThemaConrtoller.ActiveThema?.OptionIcon;
-            _reitingIcon.sprite = ThemaConrtoller.ActiveThema?.ReitingIcon;
-            _mainIcon.sprite = ThemaConrtoller.ActiveThema?.MainIcon;
-            _shopIcon.sprite = ThemaConrtoller.ActiveThema?.ShopIcon;
-            _loadShop.sprite = ThemaConrtoller.ActiveThema?.LoadShop;
+            _bottomAnimMenuBack.sprite = activeThema.BottomAnimMenuBack;
+            _optionIcon.sprite = activeThema.OptionIcon;
+            _reitingIcon.sprite = activeThema.ReitingIcon;
+            _mainIcon.sprite = activeThema.MainIcon;
+            _shopIcon.sprite = activeThema.ShopIcon;
+            _loadShop.sprite = activeThema.LoadShop;
 
             for (int i = 0; i < _sendBtns.Length; i++)
             {
                 Image img = _sendBtns[i];
-                img.sprite = ThemaConrtoller.ActiveThema?.ByeBtn;
-                _lots[i].color = ThemaConrtoller.ActiveThema.LotShopColor;
+                img.sprite = activeThema.ByeBtn;
+                _lots[i].color = activeThema.LotShopColor;
             }
 
-            _exitPanel.sprite = ThemaConrtoller.ActiveThema?.ExitWindow;
-            _exitBtn.sprite = ThemaConrtoller.ActiveThema?.ExitBtn;
-            _noExitBtn.sprite = ThemaConrtoller.ActiveThema?.NoExitBtn;
+            _exitPanel.sprite = activeThema.ExitWindow;
+            _exitBtn.sprite = activeThema.ExitBtn;
+            _noExitBtn.sprite = activeThema.NoExitBtn;
         }
     }
 }

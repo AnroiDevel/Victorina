@@ -3395,6 +3395,8 @@ MonoBehaviour:
   _questionPanel: {fileID: 664062529}
   _answerBtns: []
   _gameExitPanel: {fileID: 1758271464}
+  _exitBtnImg: {fileID: 1374754217}
+  _noExitBtnImg: {fileID: 448448040}
   _audioSource: {fileID: 667378320}
   _regulationPanel: {fileID: 252933987}
   _commentPanel: {fileID: 824114368}
@@ -8749,7 +8751,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 29ba1c3b5ae4c884cbd7a9a4d9b6919f, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -15,8 +15,8 @@ namespace Victorina
 
         public Toggle _endQuestion;
 
-        private const string URLGetQuestion = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/GetterQuestion.php";
-        private const string URLSetGrade = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/SetGrade.php";
+        private const string URLGetQuestion = "http://a0669097.xsph.ru/Victorina/Question/GetterQuestion.php";
+        private const string URLSetGrade = "http://a0669097.xsph.ru/Victorina/Question/SetGrade.php";
         private const string LoadingQuestion = "загрузка вопроса";
         private const string GradeInfo = "Оцените сложность";
         private const string Next = "Продолжить";
@@ -72,7 +72,7 @@ namespace Victorina
         public bool IsLoadComplete { get; private set; }
         private bool _isLoose;
 
-
+        int countTry = 5;
 
         #endregion
 
@@ -360,6 +360,14 @@ namespace Victorina
                 {
                     Debug.Log(request.error);
                     _status.text = "Отсутствует связ с сервером";
+
+                    countTry--;
+                    StartCoroutine(GetQuestion(lvl));
+
+                    if(countTry <= 0)
+                        StopAllCoroutines();
+                    _status.text = "Отсутствует связ с сервером";
+
                 }
                 else
                 {
@@ -441,7 +449,7 @@ namespace Victorina
 
             foreach (var t in _answers)
             {
-                t.resizeTextMaxSize = 100;
+                //t.resizeTextMaxSize = 70;
 
                 if (t.text.Length > maxLength)
                 {
@@ -454,6 +462,7 @@ namespace Victorina
 
             foreach (var t in _answers)
             {
+                t.fontSize = fontSize;
                 t.resizeTextMaxSize = fontSize;
             }
         }

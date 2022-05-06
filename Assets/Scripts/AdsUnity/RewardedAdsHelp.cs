@@ -18,7 +18,7 @@ namespace Victorina
         [SerializeField] private Button _showAdButton;
 
         [SerializeField] private string _androidAdUnitId = "Rewarded_Android";
-        [SerializeField] private string _iOSAdUnitId = "Rewarded_iOS";
+        //[SerializeField] private string _iOSAdUnitId = "Rewarded_iOS";
 
         private string _adUnitId = null; // This will remain null for unsupported platforms
 

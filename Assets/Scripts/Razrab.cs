@@ -15,14 +15,14 @@ namespace Victorina
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _errorSendText;
 
-        [SerializeField] private int _minLengthQuestion = 5;
+        //[SerializeField] private int _minLengthQuestion = 5;
 
         private string _questionTxt;
         private string[] _answersTxt;
         
 
         private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
-        private const string UrlTextFile2 = "https://coxcombic-eliminato.000webhostapp.com/Victorina/";
+        private const string UrlTextFile2 = "http://a0669097.xsph.ru/Victorina/";
         private const string EmptyAnswerError = "Ответ не может быть пустым\n";
         private const string EmptyQuestionError = "Слишком короткий вопрос\n";
         private const string EqualsAnswersError = "Одинаковых ответов быть не должно\n";
@@ -112,7 +112,7 @@ namespace Victorina
                         cnt++;
                     }
 
-                    if (cnt >= 2)
+                    if (cnt > 2)
                     {
                         correct = false;
                         _errorSendText.text = EqualsAnswersError;
@@ -120,6 +120,9 @@ namespace Victorina
                     }
                 }
             }
+
+            Debug.Log(correct);
+
             return correct;
         }
 

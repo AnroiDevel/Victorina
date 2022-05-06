@@ -17,7 +17,7 @@ namespace Victorina
         [SerializeField] internal int RE;
         [SerializeField] internal int WeeklyRank;
         [SerializeField] internal int MonthRank;
-        private string UrlAvatar = "AvatarUrl";
+        //private string UrlAvatar = "AvatarUrl";
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
 
@@ -180,7 +180,7 @@ namespace Victorina
 
         //    await Task.Run(() => Debug.Log("kk"
         //        +6324));
-            
+
         //}
 
 
@@ -528,7 +528,7 @@ namespace Victorina
                             var createDate = item.PurchaseDate;
                             var a = item.PurchaseDate.Value;
                             var nowDate = DateTime.UtcNow;
-                           int sec = (int)(nowDate - createDate).Value.TotalSeconds;
+                            int sec = (int)(nowDate - createDate).Value.TotalSeconds;
 
                             _lastGameTimeSec = sec;
                         }
@@ -588,7 +588,7 @@ namespace Victorina
                 {
                     var prevTime = PlayerPrefs.GetInt("AllGameTime");
 
-                    var average = prevTime / AllQuestionsCount;
+                    var average = AllQuestionsCount != 0 ? prevTime / AllQuestionsCount : prevTime;
                     DateTime averageTime = DateTime.MinValue.AddSeconds(average);
                     AverageTimeAnswers = averageTime.ToLongTimeString();
 
@@ -602,8 +602,9 @@ namespace Victorina
                 {
                     AllGameTime = LastGameTime;
 
-                    var average = 0 / AllQuestionsCount;
-                    DateTime averageTime = DateTime.MinValue.AddSeconds(average);
+
+
+                    DateTime averageTime = DateTime.MinValue;
                     AverageTimeAnswers = averageTime.ToLongTimeString();
 
                     PlayerPrefs.SetInt("AllGameTime", 0);

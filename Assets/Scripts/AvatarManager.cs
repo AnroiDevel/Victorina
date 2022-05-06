@@ -95,13 +95,14 @@ namespace Victorina
                         return;
                     }
 
-                    GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                    quad.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
-                    //quad.transform.forward = Camera.main.transform.forward;
-                    quad.transform.localScale = new Vector3(1f, texture.height / (float)texture.width, 1f);
-                    Material material = quad.GetComponent<Renderer>().material;
-                    material.shader = Shader.Find("UI/Default");
-                    material.mainTexture = texture;
+                    //GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    //quad.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2.5f;
+                    ////quad.transform.forward = Camera.main.transform.forward;
+                    //quad.transform.localScale = new Vector3(1f, texture.height / (float)texture.width, 1f);
+                    //Material material = quad.GetComponent<Renderer>().material;
+                    //material.shader = Shader.Find("UI/Default");
+                    //material.mainTexture = texture;
+                    //Destroy(quad, 5.0f);
 
                     var avatar = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                     var scale = texture.width > texture.height ? (float)texture.width / texture.height : texture.height / (float)texture.width;
@@ -114,6 +115,7 @@ namespace Victorina
                     _avatarImg.sprite = _playerData.Avatar;
                     _avatarImg.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
 
+                    PlayerPrefs.SetString("AvatarUrl", path);
 
 
 
@@ -121,9 +123,7 @@ namespace Victorina
                     //    material.shader = Shader.Find("Legacy Shaders/Diffuse");
                     //else
 
-                    Destroy(quad, 5.0f);
                     //Destroy(texture, 5.0f);
-                    PlayerPrefs.SetString("AvatarUrl", path);
 
                     //_loadLable.gameObject.SetActive(true);
                     //StartCoroutine(_spriteCreator.CreateSprite(path));

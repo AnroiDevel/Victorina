@@ -11,7 +11,7 @@ namespace Victorina
 
         private void Start()
         {
-            ThemaConrtoller.SetActiveThema("FuturismThema");
+            ThemaConrtoller.SetActiveThema("GreenThema");
 
             //PlayerPrefs.DeleteAll();
 
@@ -27,7 +27,7 @@ namespace Victorina
             {
                 _playerData.IsNewPlayer = false;
                 _playerData.IsNewPlayer = IsNewVersionApp();
-                _playerData.Login();
+                //_playerData.Login();
             }
 
         }

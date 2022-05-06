@@ -17,7 +17,16 @@ namespace Victorina
         [SerializeField] private Image _gamePanel;
         [SerializeField] private Image _questionPanel;
         [SerializeField] private Image[] _answerBtns;
+
+        [Header("Окно выхода")]
         [SerializeField] private Image _gameExitPanel;
+        [SerializeField] private Image _exitBtnImg;
+        [SerializeField] private Image _noExitBtnImg;
+        [SerializeField] private Text _mainText;
+        [SerializeField] private Text _exitText;
+        [SerializeField] private Text _noExitText;
+
+
         [SerializeField] private AudioSource _audioSource;
         [SerializeField] private Image _regulationPanel;
         [SerializeField] private Image _commentPanel;
@@ -36,33 +45,8 @@ namespace Victorina
             if (_crownTuk != null)
                 _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
 
-            if(!_playerData.IsTrain)
-            _welcomePanel.SetActive(true);
-
-            _backgroundWelcomeGameImg.sprite = ThemaConrtoller.ActiveThema?.GameWelcomePanel;
-
-            if (_gameProgressPanel)
-                _gameProgressPanel.sprite = ThemaConrtoller.ActiveThema?.GameProgressPanel;
-
-            _gamePanel.sprite = ThemaConrtoller.ActiveThema?.GamePanel;
-            _questionPanel.sprite = ThemaConrtoller.ActiveThema?.QuestPanel;
-
-            foreach (var answer in _answerBtns)
-                answer.sprite = ThemaConrtoller.ActiveThema?.AnswerBtn;
-
-            _gameExitPanel.sprite = ThemaConrtoller.ActiveThema?.GameExitPanel;
-            _regulationPanel.sprite = ThemaConrtoller.ActiveThema?.RegulationPanel;
-            _commentPanel.color = ThemaConrtoller.ActiveThema.CommentPanelColor;
-            _continueBtn.color = ThemaConrtoller.ActiveThema.LotShopColor;
-
-            _winPanel.sprite = ThemaConrtoller.ActiveThema?.WinPanel;
-            _loosePanel.sprite = ThemaConrtoller.ActiveThema?.LoosePanel;
-
-            foreach (var img in _resultPanelBtns)
-                img.sprite = ThemaConrtoller.ActiveThema?.WinPanelBtn;
-
-            foreach (var img in _welcomeBtns)
-                img.sprite = ThemaConrtoller.ActiveThema?.WinPanelBtn;
+            if (!_playerData.IsTrain)
+                _welcomePanel.SetActive(true);
 
             if (PlayerPrefs.HasKey(Key))
             {
@@ -72,6 +56,41 @@ namespace Victorina
                     _audioSource.Play();
                 }
             }
+
+            var activeThema = ThemaConrtoller.ActiveThema;
+            if (activeThema == null) return;
+
+            _backgroundWelcomeGameImg.sprite = activeThema.GameWelcomePanel;
+
+            if (_gameProgressPanel)
+                _gameProgressPanel.sprite = activeThema.GameProgressPanel;
+
+            _gamePanel.sprite = activeThema.GamePanel;
+            _questionPanel.sprite = activeThema.QuestPanel;
+
+            foreach (var answer in _answerBtns)
+                answer.sprite = activeThema.AnswerBtn;
+
+            _gameExitPanel.sprite = activeThema.ExitPlayAndGetWinPanelBack;
+            _exitBtnImg.sprite = activeThema.ExitBtn;
+            _noExitBtnImg.sprite = activeThema.NoExitBtn;
+            _mainText.color = activeThema.MainExitPanelFontColor;
+            _exitText.color = activeThema.ExitBtnFontColor;
+            _noExitText.color = activeThema.NoExitBtnFontColor;
+
+            _regulationPanel.sprite = activeThema.RegulationPanel;
+            _commentPanel.color = activeThema.CommentPanelColor;
+            _continueBtn.color = activeThema.LotShopColor;
+
+            _winPanel.sprite = activeThema.WinPanel;
+            _loosePanel.sprite = activeThema.LoosePanel;
+
+            foreach (var img in _resultPanelBtns)
+                img.sprite = activeThema.WinPanelBtn;
+
+            foreach (var img in _welcomeBtns)
+                img.sprite = activeThema.WinPanelBtn;
+
         }
     }
 }
