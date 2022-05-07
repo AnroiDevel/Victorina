@@ -23,9 +23,9 @@ namespace Victorina
 
         private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
         private const string UrlTextFile2 = "http://a0669097.xsph.ru/Victorina/";
-        private const string EmptyAnswerError = "Ответ не может быть пустым\n";
+        private const string EmptyAnswerError = "Ответ не может быть пустым";
         private const string EmptyQuestionError = "Слишком короткий вопрос\n";
-        private const string EqualsAnswersError = "Одинаковых ответов быть не должно\n";
+        private const string EqualsAnswersError = "Одинаковых ответов быть не должно";
 
         private void Start()
         {
@@ -128,8 +128,8 @@ namespace Victorina
 
         private void ClearAllFields()
         {
-            //foreach (InputField inputField in _inputFields)
-            //    inputField.text = string.Empty;
+            foreach (InputField inputField in _inputFields)
+                inputField.text = string.Empty;
         }
     }
 

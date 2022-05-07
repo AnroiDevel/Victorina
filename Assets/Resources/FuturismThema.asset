@@ -32,7 +32,7 @@ MonoBehaviour:
   SendRedactorBtnImg: {fileID: -8502686256669162915, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
   HeaderTopColor: {r: 1, g: 0.854902, b: 0, a: 1}
   HeaderBottomColor: {r: 1, g: 1, b: 1, a: 1}
-  LettersCntColor: {r: 1, g: 1, b: 1, a: 1}
+  LettersCntColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
   QuestionColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
   AnswersColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
   SendBtnColor: {r: 0.97647065, g: 0.7372549, b: 0.058823533, a: 1}

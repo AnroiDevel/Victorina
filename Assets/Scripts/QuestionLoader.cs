@@ -133,7 +133,7 @@ namespace Victorina
                 }
             _question.text = LoadingQuestion;
 
-            if (!_playerData.IsTrain)
+            if (_playerData.IsTrain)
                 SetDefaultRateImage();
             StopAllCoroutines();
 

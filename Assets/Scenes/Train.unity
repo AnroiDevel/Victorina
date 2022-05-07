@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3392,11 +3392,19 @@ MonoBehaviour:
   - {fileID: 101829958}
   _gameProgressPanel: {fileID: 0}
   _gamePanel: {fileID: 1713876869}
-  _questionPanel: {fileID: 664062529}
-  _answerBtns: []
+  _questionPanel: {fileID: 1450981346}
+  _answerBtns:
+  - {fileID: 1612515108}
+  - {fileID: 521001316}
+  - {fileID: 992276124}
+  - {fileID: 568176360}
+  - {fileID: 1654672385}
   _gameExitPanel: {fileID: 1758271464}
   _exitBtnImg: {fileID: 1374754217}
   _noExitBtnImg: {fileID: 448448040}
+  _mainText: {fileID: 0}
+  _exitText: {fileID: 0}
+  _noExitText: {fileID: 0}
   _audioSource: {fileID: 667378320}
   _regulationPanel: {fileID: 252933987}
   _commentPanel: {fileID: 824114368}
