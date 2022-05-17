@@ -12,6 +12,7 @@ namespace Victorina
 
         private void Start()
         {
+            var temp = PlayerData.Instance.Avatar;
             StartCoroutine(SetOptimalFontSize());
         }
 

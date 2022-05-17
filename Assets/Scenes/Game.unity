@@ -5171,10 +5171,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _welcomePanel: {fileID: 1476035996}
-  _backgroundWelcomeGameImg: {fileID: 1476035998}
   _welcomeBtns:
   - {fileID: 572971710}
   - {fileID: 101829958}
+  _moneyInfo: {fileID: 1233344102}
+  _backgroundWelcomeGameImg: {fileID: 1476035998}
   _gameProgressPanel: {fileID: 1481714192}
   _gamePanel: {fileID: 1713876869}
   _questionPanel: {fileID: 1450981346}
@@ -5949,7 +5950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0.34509805}
+  m_Color: {r: 0.735849, g: 0.735849, b: 0.735849, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8832,20 +8833,20 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1233344100}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c7a32a384c1872d48bec8b29a5c03ad9, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

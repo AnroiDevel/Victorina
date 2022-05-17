@@ -10,54 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
-  m_Name: User
+  m_Name: 
   m_EditorClassIdentifier: 
-  R2: 33
-  RE: 33
-  WeeklyRank: 1
-  MonthRank: 1
-  IsNewPlayer: 0
-  IsNewVersionApp: 0
+  R2: 0
+  RE: 0
+  WeeklyRank: 0
+  MonthRank: 0
+  IsNewPlayer: 1
+  IsNewVersionApp: 1
   CustomId: 
-  PlayFabIdCurrentPlayer: 5DAB42E6FDC79F78
-  TitlePlayerAccountId: 10B931D3021FA9BE
-  CreatedDateTimePlayfabProfile: 16.04.2022 6:51:21
-  ErrorInformation: '/Client/ConsumeItem: Item is not consumable.'
+  PlayFabIdCurrentPlayer: 
+  TitlePlayerAccountId: 
+  CreatedDateTimePlayfabProfile: 
+  ErrorInformation: 
   Avatar: {fileID: 0}
   PathFileAvatar: 
-  ScaleImageAvatarCoef: 1.0439122
+  ScaleImageAvatarCoef: 1
   Item: 
-  GuidID: 119a6e44-f85d-47bb-8c1b-7d58047d92fe
-  Name: "\u0440\u043E\u043F\u0440\u043E"
+  GuidID: 
+  Name: 
   Email: 
   Password: 
-  Bit: 423900
-  IsBonusReady: 1
-  MaxBonusTimeSeconds: 29
-  BonusRechargeSeconds: 29
+  Bit: 0
+  IsBonusReady: 0
+  MaxBonusTimeSeconds: 0
+  BonusRechargeSeconds: 0
   IsTrain: 0
-  IsPlayed: 1
+  IsPlayed: 0
   IsVip: 0
   TicketsBit: 0
-  PriceBitTicket: 100
-  ItemCatalog:
-  - BitTicket
-  - PlayToken
-  - RightError
-  - MinusOne
-  - MinusTwo
-  - Two-Item Drop
-  CurrencyVirtual:
-  - QB = 0
-  - BT = 423900
-  - BS = 1
-  - R2 = 33
-  - RE = 33
-  - TI = 0
+  PriceBitTicket: 0
+  ItemCatalog: []
+  CurrencyVirtual: []
   LastGameTime: 
-  AllGameTime: 16:56:51
-  AverageTimeAnswers: 0:48:58
-  AllQuestionsCount: 256
-  RightAnswersCount: 124
+  AllGameTime: 
+  AverageTimeAnswers: 
+  AllQuestionsCount: 0
+  RightAnswersCount: 0
   RightError: 0
   NotReclama: 0

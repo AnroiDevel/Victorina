@@ -43,6 +43,7 @@ namespace Victorina
 
         [Header("Режим игры")]
         public Sprite GameWelcomePanel;
+        public Color MoneyInfoPanelBackColor;
         public Sprite GameProgressPanel;
         public Sprite GamePanel;
         public Sprite QuestPanel;

@@ -37,6 +37,7 @@ MonoBehaviour:
   AnswersColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
   SendBtnColor: {r: 0.9960785, g: 0.98823535, b: 0.6862745, a: 1}
   GameWelcomePanel: {fileID: 21300000, guid: ab14944c430ed6948910ff5e503e8d33, type: 3}
+  MoneyInfoPanelBackColor: {r: 0.8313726, g: 0.50980395, b: 0.2627451, a: 0}
   GameProgressPanel: {fileID: 21300000, guid: 6997b4c038fac3d46a3b0075face3d6a, type: 3}
   GamePanel: {fileID: 21300000, guid: 66ae3355506574441b44f625288b408e, type: 3}
   QuestPanel: {fileID: 21300000, guid: a8cf226fb3a04df4ea525f050cbc05a7, type: 3}
@@ -55,8 +56,8 @@ MonoBehaviour:
   ExitBtn: {fileID: -8171614108281328317, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   NoExitBtn: {fileID: -8171614108281328317, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   MainExitPanelFontColor: {r: 0.9686275, g: 0.909804, b: 0.86274517, a: 1}
-  ExitBtnFontColor: {r: 0.9725491, g: 0.9058824, b: 0.86274517, a: 1}
-  NoExitBtnFontColor: {r: 0.90196085, g: 0.86666673, b: 0.8431373, a: 1}
+  ExitBtnFontColor: {r: 1, g: 1, b: 1, a: 1}
+  NoExitBtnFontColor: {r: 0.97647065, g: 0.7372549, b: 0.058823533, a: 1}
   LoadShop: {fileID: 21300000, guid: f8629d861a78b4a4b83cf974e3089da1, type: 3}
   GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}
   ByeBtn: {fileID: 21300000, guid: 2ed638fbc12813b49879493d25d5f6b4, type: 3}

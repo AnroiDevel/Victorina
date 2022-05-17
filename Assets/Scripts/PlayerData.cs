@@ -13,6 +13,8 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
+        public static PlayerData Instance { get; private set; }
+
         [SerializeField] internal int R2;
         [SerializeField] internal int RE;
         [SerializeField] internal int WeeklyRank;
@@ -106,18 +108,30 @@ namespace Victorina
 
             PlayFabSettings.staticSettings.TitleId = "D2AD8";
 
-            GuidID = PlayerPrefs.GetString("Id");
+            //GuidID = PlayerPrefs.GetString("Id");
 
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            //PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            //{
+            //    CustomId = GuidID,
+            //    CreateAccount = false,
+            //}, success =>
+            //{
+            //    Init();
+            //    LoginComplete?.Invoke();
+
+            //}, OnFailure);
+
+            PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
             {
-                CustomId = GuidID,
-                CreateAccount = false,
-            }, success =>
+                CreateAccount = true,
+                AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
+            }, result =>
             {
+                Debug.Log("Logged in");
                 Init();
                 LoginComplete?.Invoke();
-
-            }, OnFailure);
+                // Refresh available items
+            }, error => Debug.LogError(error.GenerateErrorReport()));
 
         }
 

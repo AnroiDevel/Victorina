@@ -55,8 +55,8 @@ MonoBehaviour:
   ExitBtn: {fileID: 4141424590327419592, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   NoExitBtn: {fileID: -3927299786039512679, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   MainExitPanelFontColor: {r: 0, g: 0, b: 0, a: 1}
-  ExitBtnFontColor: {r: 0, g: 0, b: 0, a: 1}
-  NoExitBtnFontColor: {r: 1, g: 0.882353, b: 0.06666667, a: 1}
+  ExitBtnFontColor: {r: 0.9294118, g: 0.9294118, b: 0.9294118, a: 1}
+  NoExitBtnFontColor: {r: 0.97647065, g: 0.7372549, b: 0.058823533, a: 1}
   LoadShop: {fileID: 21300000, guid: b17e9e190b73bc64a92162f15a7857f6, type: 3}
   GameMusic: {fileID: 8300000, guid: 03a5dca50fb07194c9482d8a3fc945f5, type: 3}
   ByeBtn: {fileID: 21300000, guid: c9812198ae8260d4e89bf512a519d8b5, type: 3}

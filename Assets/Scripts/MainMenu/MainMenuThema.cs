@@ -37,6 +37,8 @@ namespace Victorina
         [SerializeField] private Image _exitPanel;
         [SerializeField] private Image _exitBtn;
         [SerializeField] private Image _noExitBtn;
+        [SerializeField] private Text _exitText;
+        [SerializeField] private Text _noExitText;
 
         [Header("Статистика")]
         [SerializeField] private Image _statisticsPanel;
@@ -89,6 +91,8 @@ namespace Victorina
             _exitPanel.sprite = activeThema.ExitWindow;
             _exitBtn.sprite = activeThema.ExitBtn;
             _noExitBtn.sprite = activeThema.NoExitBtn;
+            _exitText.color = activeThema.ExitBtnFontColor;
+            _noExitText.color = activeThema.NoExitBtnFontColor;
         }
     }
 }

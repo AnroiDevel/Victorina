@@ -3386,10 +3386,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _welcomePanel: {fileID: 1476035996}
-  _backgroundWelcomeGameImg: {fileID: 1476035998}
   _welcomeBtns:
   - {fileID: 572971710}
   - {fileID: 101829958}
+  _moneyInfo: {fileID: 1233344102}
+  _backgroundWelcomeGameImg: {fileID: 1476035998}
   _gameProgressPanel: {fileID: 0}
   _gamePanel: {fileID: 1713876869}
   _questionPanel: {fileID: 1450981346}

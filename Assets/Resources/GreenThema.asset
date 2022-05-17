@@ -37,6 +37,7 @@ MonoBehaviour:
   AnswersColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
   SendBtnColor: {r: 0, g: 0, b: 0, a: 1}
   GameWelcomePanel: {fileID: 21300000, guid: 9e8f4a2583373be49829fe70f7b2ae00, type: 3}
+  MoneyInfoPanelBackColor: {r: 0.654902, g: 0.45882356, b: 0.9058824, a: 1}
   GameProgressPanel: {fileID: 21300000, guid: aeade858ecf308744b13f68d5b041b4a, type: 3}
   GamePanel: {fileID: 21300000, guid: 6d0610b2f8b537848b91791c231441b3, type: 3}
   QuestPanel: {fileID: 21300000, guid: 0f041813c916d614a83b12f58a0ca502, type: 3}
@@ -55,8 +56,8 @@ MonoBehaviour:
   ExitBtn: {fileID: 1713824450844151012, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   NoExitBtn: {fileID: -2179591643724846968, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
   MainExitPanelFontColor: {r: 0.0627451, g: 0.1254902, b: 0.03529412, a: 1}
-  ExitBtnFontColor: {r: 0, g: 0, b: 0, a: 1}
-  NoExitBtnFontColor: {r: 0, g: 0, b: 0, a: 1}
+  ExitBtnFontColor: {r: 0.9568628, g: 0.6313726, b: 0.64705884, a: 1}
+  NoExitBtnFontColor: {r: 0.28235295, g: 0.20392159, b: 0.8313726, a: 1}
   LoadShop: {fileID: 21300000, guid: 7c460a78bf381ef45b4b08b064a70171, type: 3}
   GameMusic: {fileID: 8300000, guid: 4253372906800654fb6e4bed496372be, type: 3}
   ByeBtn: {fileID: -3939298156566381577, guid: d654d44746d422049a30378e62d90f31, type: 3}
@@ -64,7 +65,7 @@ MonoBehaviour:
   WinPanel: {fileID: 21300000, guid: 6e111e2867516fd4c9fc03d7edd6eb80, type: 3}
   WinPanelBtn: {fileID: 21300000, guid: 382b53c94e98beb4da0e59c892cca6a9, type: 3}
   RegulationPanel: {fileID: 21300000, guid: 08ef6ba1fe9301a40905a27971e78ff5, type: 3}
-  CommentPanelColor: {r: 0.24705884, g: 0.41960788, b: 0.5411765, a: 1}
+  CommentPanelColor: {r: 0.41176474, g: 0.3137255, b: 0.6, a: 1}
   LoosePanel: {fileID: 21300000, guid: cfccd2ef80ac9674f9622432c5b8ff1a, type: 3}
   ExitPlayAndGetWinPanelBack: {fileID: -1329650950503714268, guid: e101c0494cf92ab4e89927ae08245991, type: 3}
   StatisticsPanelBack: {fileID: 21300000, guid: 223c2d3b60ce45249a22def2cd4d6258, type: 3}

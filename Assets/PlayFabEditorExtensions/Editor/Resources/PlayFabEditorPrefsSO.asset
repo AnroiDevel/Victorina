@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
-  DevAccountEmail: anroidevel@gmail.com
-  DevAccountToken: 7wyyj4w3yd3rqjmg8jnuhyz1fq9km59ucejtnjmwjsu6b84kg5uygthfh6tqm5g6iuo5qyuo7xdoc57dtnn4c5bsmjcy8mb4gp4qj479zhfpejd7sq5icrazk467zf9mkyc3nib6gwhth1xq17ck1zrx3d88e4pykzu4ua8k55x3o8yu6rehnbikr3qw68n9n1psapx8
-  SelectedStudio: Anroid Devel
-  SdkPath: Assets/PlayFabSDK
+  DevAccountEmail: 
+  DevAccountToken: 
+  SelectedStudio: 
+  SdkPath: 
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0
-  curMainMenuIdx: 1
+  curMainMenuIdx: 0
   curSubMenuIdx: 0

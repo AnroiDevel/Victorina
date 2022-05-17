@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -19,7 +18,7 @@ namespace Victorina
 
         private string _questionTxt;
         private string[] _answersTxt;
-        
+
 
         private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
         private const string UrlTextFile2 = "http://a0669097.xsph.ru/Victorina/";

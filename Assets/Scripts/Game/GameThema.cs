@@ -10,9 +10,10 @@ namespace Victorina
         [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private GameObject _welcomePanel;
+        [SerializeField] private Image[] _welcomeBtns;
+        [SerializeField] private Image _moneyInfo;
 
         [SerializeField] private Image _backgroundWelcomeGameImg;
-        [SerializeField] private Image[] _welcomeBtns;
         [SerializeField] private Image _gameProgressPanel;
         [SerializeField] private Image _gamePanel;
         [SerializeField] private Image _questionPanel;
@@ -45,9 +46,6 @@ namespace Victorina
             if (_crownTuk != null)
                 _crownTuk.volume = PlayerPrefs.GetInt("Sfx");
 
-            if (!_playerData.IsTrain)
-                _welcomePanel.SetActive(true);
-
             if (PlayerPrefs.HasKey(Key))
             {
                 if (PlayerPrefs.GetInt(Key) > 0)
@@ -62,9 +60,6 @@ namespace Victorina
 
             _backgroundWelcomeGameImg.sprite = activeThema.GameWelcomePanel;
 
-            if (_gameProgressPanel)
-                _gameProgressPanel.sprite = activeThema.GameProgressPanel;
-
             _gamePanel.sprite = activeThema.GamePanel;
             _questionPanel.sprite = activeThema.QuestPanel;
 
@@ -74,9 +69,16 @@ namespace Victorina
             _gameExitPanel.sprite = activeThema.ExitPlayAndGetWinPanelBack;
             _exitBtnImg.sprite = activeThema.ExitBtn;
             _noExitBtnImg.sprite = activeThema.NoExitBtn;
-            _mainText.color = activeThema.MainExitPanelFontColor;
-            _exitText.color = activeThema.ExitBtnFontColor;
-            _noExitText.color = activeThema.NoExitBtnFontColor;
+
+            if (!_playerData.IsTrain)
+            {
+                _welcomePanel.SetActive(true);
+                _moneyInfo.color = activeThema.MoneyInfoPanelBackColor;
+                _gameProgressPanel.sprite = activeThema.GameProgressPanel;
+                _mainText.color = activeThema.MainExitPanelFontColor;
+                _exitText.color = activeThema.ExitBtnFontColor;
+                _noExitText.color = activeThema.NoExitBtnFontColor;
+            }
 
             _regulationPanel.sprite = activeThema.RegulationPanel;
             _commentPanel.color = activeThema.CommentPanelColor;
