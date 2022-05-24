@@ -17,6 +17,8 @@ namespace Victorina
         [SerializeField] private Renderer _avatarUIRenderer;
 
         private SpriteCreator _spriteCreator = new SpriteCreator();
+        private Character _player;
+        private GameData _gameData;
 
         #endregion
 
@@ -31,26 +33,24 @@ namespace Victorina
 
         private void Start()
         {
+            _gameData = GameData.GetInstance();
+            _player = _gameData.Player;
             SetProfileAvatar();
         }
 
         private void SetDefaultAvatar()
         {
-            _avatarImg.sprite = _playerData.Avatar;
-            _playerData.Avatar = _defaultAvatarSprite;
+            //_player.Avatar = _defaultAvatarSprite.texture;
         }
 
         private void OnEnable()
         {
             _spriteCreator.SpriteComplete += OnSpriteCompete;
-            //_playerData.ReloadAvatar += OnReloadAvatar;
-
         }
 
         private void OnDisable()
         {
             _spriteCreator.SpriteComplete -= OnSpriteCompete;
-            //_playerData.ReloadAvatar -= OnReloadAvatar;
         }
 
         #endregion
@@ -60,8 +60,7 @@ namespace Victorina
 
         private void OnSpriteCompete()
         {
-            _playerData.Avatar = _spriteCreator.SpriteForAvatar;
-            _playerData.ScaleImageAvatarCoef = _spriteCreator.ScaleCoef;
+            _player.ScaleAvatarCoef = _spriteCreator.ScaleCoef;
 
             _loadLable.gameObject.SetActive(false);
 
@@ -70,15 +69,14 @@ namespace Victorina
 
         private void SetProfileAvatar()
         {
-            _avatarImg.sprite = _playerData.Avatar;
-            _avatarImg.transform.localScale = Vector3.one;
-            _avatarImg.transform.localScale *= _playerData.ScaleImageAvatarCoef;
+            var player = _gameData.Player;
+            _avatarImg.transform.localScale = Vector3.one * player.ScaleAvatarCoef;
         }
 
         private void OnReloadAvatar()
         {
-            _avatarImg.sprite = _playerData.Avatar;
-            _avatarImg.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+            //_avatarImg.texture = _player.Avatar;
+            _avatarImg.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
         }
 
         public void PickImage(int maxSize)
@@ -103,20 +101,20 @@ namespace Victorina
                     //material.shader = Shader.Find("UI/Default");
                     //material.mainTexture = texture;
                     //Destroy(quad, 5.0f);
+                    var player = _gameData.Player;
 
                     var avatar = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f));
                     var scale = texture.width > texture.height ? (float)texture.width / texture.height : texture.height / (float)texture.width;
                     avatar.name = "SpriteForAvatar";
 
-                    _playerData.Avatar = avatar;
-                    _playerData.ScaleImageAvatarCoef = scale;
+                    player.Avatar = avatar;
+                    player.ScaleAvatarCoef = scale;
 
                     //s_avatarImg.GetComponent<CanvasRenderer>().SetTexture(material.mainTexture);
-                    _avatarImg.sprite = _playerData.Avatar;
-                    _avatarImg.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+                    _avatarImg.sprite = avatar;
+                    _avatarImg.transform.localScale = Vector3.one * player.ScaleAvatarCoef;
 
                     PlayerPrefs.SetString("AvatarUrl", path);
-
 
 
                     //if (!material.shader.isSupported) // happens when Standard shader is not included in the build

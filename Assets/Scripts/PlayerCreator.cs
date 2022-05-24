@@ -32,7 +32,7 @@ namespace Victorina
         public void CreateNewPlayer()
         {
             _playerData.Name = _name.text;
-            _playerData.CreateNewPlayer();
+            //_playerData.CreateNewPlayer();
             _playerData.IsNewPlayer = false;
 
         }

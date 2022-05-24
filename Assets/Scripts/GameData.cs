@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -10,6 +9,19 @@ namespace Victorina
     [System.Serializable]
     public class GameData
     {
-        public static GameData Instance { get; private set; }
+        private static GameData _instance;
+
+        public Character Player;
+
+        public static GameData GetInstance()
+        {
+            return _instance ??= new GameData();
+        }
+
+        public GameData()
+        {
+            Player = new Character();
+        }
+
     }
 }

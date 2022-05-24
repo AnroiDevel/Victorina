@@ -18,9 +18,9 @@ namespace Victorina
 
         private void Start()
         {
-            _userImage.sprite=_playerData.Avatar;
+            //_userImage.sprite=_playerData.Avatar;
 
-            _userImage.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+            //_userImage.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
 
             //if (_playerData.Avatar != null)
             //    _userImage.sprite = _playerData.Avatar;

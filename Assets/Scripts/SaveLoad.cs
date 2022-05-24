@@ -13,7 +13,8 @@ namespace Victorina
 
         public static void Save()
         {
-            SavedGames.Add(GameData.Instance);
+            SavedGames.Clear();
+            SavedGames.Add(GameData.GetInstance());
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
             bf.Serialize(file, SavedGames);

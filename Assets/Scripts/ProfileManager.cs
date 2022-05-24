@@ -11,7 +11,7 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Image _imageAvatar;
-        [SerializeField] private Image _testImageAvatar;
+        [SerializeField] private Image _imageAvatarRankPanel;
 
         [SerializeField] private Text _workedInfoLabel;
 
@@ -23,18 +23,34 @@ namespace Victorina
         [SerializeField] private Text _moneyText;
         [SerializeField] private Text _ticketText;
 
+        private Character _player;
+        private GameData _gameData;
+
         private void Start()
         {
-            _playerData.Login();
-            if (_moneyText)
-                _moneyText.text = _playerData.Bit.ToString();
-            _usernameText.text = _playerData.Name;
-            if (_ticketText)
-                _ticketText.text = _playerData.TicketsBit.ToString();
+            _gameData = GameData.GetInstance();
+            _player = _gameData.Player;
 
-            _imageAvatar.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
-            var textureAvatar = _playerData.Avatar;
-            _imageAvatar.sprite =  textureAvatar;
+            if (_moneyText)
+                _moneyText.text = _player.Money.ToString();
+            if (_usernameText)
+                _usernameText.text = _player.Name;
+            if (_ticketText)
+                _ticketText.text = _player.Tickets.ToString();
+
+            //_imageAvatar.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
+            //var textureAvatar = _playerData.Avatar;
+            //_imageAvatar.sprite =  textureAvatar;
+
+
+            _imageAvatar.sprite = _player.Avatar;
+            _imageAvatar.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
+
+            if (_imageAvatarRankPanel)
+            {
+                _imageAvatarRankPanel.sprite = _player.Avatar;
+                _imageAvatarRankPanel.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
+            }
         }
 
         //private void OnReloadAvatar()

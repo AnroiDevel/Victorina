@@ -22,7 +22,7 @@ MonoBehaviour:
   QuestionRedactorBtn: {fileID: -4971501592948626700, guid: 4d5e6bdf067bc324697bee7c97d03d62, type: 3}
   PlayBtnBack: {fileID: 6368531010110478051, guid: 4d5e6bdf067bc324697bee7c97d03d62, type: 3}
   ShopMenuBack: {fileID: 21300000, guid: 8e7b49efe81a1564ab69b2dad5877918, type: 3}
-  AchivPanelBack: {fileID: 21300000, guid: 4d2831c98814c1c4bac6898c2c5494cf, type: 3}
+  AchivPanelBack: {fileID: 21300000, guid: 594fd2bbb6e7da24abf6ef70b7c09aea, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: a370ff867bdd10443ba775f4d7f13443, type: 3}
   HelpBtnImg: {fileID: 5572065735250618158, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
   ExitBtnImg: {fileID: -5926833080284346847, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
@@ -37,6 +37,7 @@ MonoBehaviour:
   AnswersColor: {r: 0.8078432, g: 0.72156864, b: 0.9176471, a: 1}
   SendBtnColor: {r: 0.73333335, g: 0.69411767, b: 0.86274517, a: 1}
   GameWelcomePanel: {fileID: 21300000, guid: 41653ab433e3fa940a3fee8c5d920ae4, type: 3}
+  MoneyInfoPanelBackColor: {r: 0, g: 0, b: 0, a: 0}
   GameProgressPanel: {fileID: 21300000, guid: d94caf212c36f504f9fd2223f5a1ac68, type: 3}
   GamePanel: {fileID: 21300000, guid: 5a6b27cc951c02544bbeea046cb1f669, type: 3}
   QuestPanel: {fileID: 21300000, guid: 2cc4c7122f7c5e54e8a524ee361d08e1, type: 3}

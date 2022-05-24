@@ -22,7 +22,7 @@ MonoBehaviour:
   QuestionRedactorBtn: {fileID: -1984222054483282989, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
   PlayBtnBack: {fileID: -6701414917475068869, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
   ShopMenuBack: {fileID: 21300000, guid: c029a4b2fa61dec47a45fdb4f2111598, type: 3}
-  AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
+  AchivPanelBack: {fileID: 21300000, guid: f5d310c32f79f6a4cb28cc942769d060, type: 3}
   QuestionRedactorBack: {fileID: 21300000, guid: 35e74643fb889b6468b617b520cbb554, type: 3}
   HelpBtnImg: {fileID: 6526042812854992044, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
   ExitBtnImg: {fileID: 6150383807346074404, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}

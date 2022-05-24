@@ -23,11 +23,6 @@ namespace Victorina
             _quitApp.ActivateMainWindow += ReturnToMainWindow;
         }
 
-        private void OnEnable()
-        {
-            _mainButton.onClick.Invoke();
-        }
-
 
         private void ReturnToMainWindow()
         {

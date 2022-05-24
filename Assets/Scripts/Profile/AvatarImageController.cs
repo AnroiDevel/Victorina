@@ -6,7 +6,6 @@ namespace Victorina
 {
     public class AvatarImageController : MonoBehaviour
     {
-        [SerializeField] private PlayerData _playerData;
         [SerializeField] private Image _reitImage;
         [SerializeField] private Image _reitImage2;
 
@@ -16,20 +15,19 @@ namespace Victorina
         [SerializeField] private Sprite _champion;
         [SerializeField] private Sprite _grandChampion;
 
+        private Character _player;
 
         private void Start()
         {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
             SetReitImage();
         }
 
-        private void OnEnable()
-        {
-            SetReitImage();
-        }
 
         public void SetReitImage()
         {
-            var wRank = _playerData.WeeklyRank;
+            var wRank = _player.WeeklyRank;
 
             if (wRank > 5)
                 _reitImage.sprite = _junior;

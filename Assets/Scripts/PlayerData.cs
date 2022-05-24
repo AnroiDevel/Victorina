@@ -83,79 +83,79 @@ namespace Victorina
 
         private int _lastGameTimeSec;
 
-        public void CreateNewPlayer()
-        {
-            PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            var id = Guid.NewGuid().ToString();
-            PlayerPrefs.SetString("Id", id);
+        //public void CreateNewPlayer()
+        //{
+        //    PlayFabSettings.staticSettings.TitleId = "D2AD8";
+        //    var id = Guid.NewGuid().ToString();
+        //    PlayerPrefs.SetString("Id", id);
 
-            PlayFabClientAPI.LoginWithCustomID(
-                new LoginWithCustomIDRequest()
-                {
-                    CustomId = id,
-                    CreateAccount = true,
-                },
-                sucsess =>
-                {
-                    SetDisplayName(Name);
-                    GuidID = id;
-                },
-                error => Debug.Log("sss"));
-        }
+        //    PlayFabClientAPI.LoginWithCustomID(
+        //        new LoginWithCustomIDRequest()
+        //        {
+        //            CustomId = id,
+        //            CreateAccount = true,
+        //        },
+        //        sucsess =>
+        //        {
+        //            SetDisplayName(Name);
+        //            GuidID = id;
+        //        },
+        //        error => Debug.Log("sss"));
+        //}
 
         public void Login()
         {
 
-            PlayFabSettings.staticSettings.TitleId = "D2AD8";
+            //PlayFabSettings.staticSettings.TitleId = "D2AD8";
 
-            //GuidID = PlayerPrefs.GetString("Id");
+            ////GuidID = PlayerPrefs.GetString("Id");
 
-            //PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            ////PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            ////{
+            ////    CustomId = GuidID,
+            ////    CreateAccount = false,
+            ////}, success =>
+            ////{
+            ////    Init();
+            ////    LoginComplete?.Invoke();
+
+            ////}, OnFailure);
+
+            //PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
             //{
-            //    CustomId = GuidID,
-            //    CreateAccount = false,
-            //}, success =>
+            //    CreateAccount = true,
+            //    AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
+            //}, result =>
             //{
+            //    Debug.Log("Logged in");
             //    Init();
             //    LoginComplete?.Invoke();
-
-            //}, OnFailure);
-
-            PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
-            {
-                CreateAccount = true,
-                AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
-            }, result =>
-            {
-                Debug.Log("Logged in");
-                Init();
-                LoginComplete?.Invoke();
-                // Refresh available items
-            }, error => Debug.LogError(error.GenerateErrorReport()));
+            //    // Refresh available items
+            //}, error => Debug.LogError(error.GenerateErrorReport()));
 
         }
 
-        public void Init()
-        {
-            IsPlayed = false;
-            IsVip = false;
-            IsBonusReady = false;
-            NotReclama = false;
-            CustomId = string.Empty;
+        //public void Init()
+        //{
+        //    IsPlayed = false;
+        //    IsVip = false;
+        //    IsBonusReady = false;
+        //    NotReclama = false;
+        //    CustomId = string.Empty;
 
-            if (PlayerPrefs.HasKey("Id"))
-            {
-                GuidID = PlayerPrefs.GetString("Id");
-                IsNewPlayer = false;
-            }
-            else
-                IsNewPlayer = true;
+        //    if (PlayerPrefs.HasKey("Id"))
+        //    {
+        //        GuidID = PlayerPrefs.GetString("Id");
+        //        IsNewPlayer = false;
+        //    }
+        //    else
+        //        IsNewPlayer = true;
 
-            GetAccauntUserInfo();
-            if (_bonusTimer == null)
-                TimerInit();
+        //    GetAccauntUserInfo();
+        //    if (_bonusTimer == null)
+        //        TimerInit();
 
-        }
+        //}
 
         //public void SetAvatar() 
         //{
@@ -200,15 +200,15 @@ namespace Victorina
 
 
 
-        public int GetBonusRechargeSeconds
-        {
-            get
-            {
-                PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-                return BonusRechargeSeconds;
-            }
-            set => BonusRechargeSeconds = value;
-        }
+        //public int GetBonusRechargeSeconds
+        //{
+        //    get
+        //    {
+        //        PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
+        //        return BonusRechargeSeconds;
+        //    }
+        //    set => BonusRechargeSeconds = value;
+        //}
 
         public void SubmitScore(int playerScore)
         {
@@ -272,26 +272,26 @@ namespace Victorina
             Bit = 0;
         }
 
-        private void TimerInit()
-        {
-            _bonusTimer = new Timer(1000);
-            _bonusTimer.Elapsed += TimeUpdate;
-        }
+        //private void TimerInit()
+        //{
+        //    _bonusTimer = new Timer(1000);
+        //    _bonusTimer.Elapsed += TimeUpdate;
+        //}
 
-        private void TimeUpdate(object sender, ElapsedEventArgs e)
-        {
-            BonusRechargeSeconds = BonusRechargeSeconds <= 0 ? 0 : BonusRechargeSeconds - 1;
-            if (BonusRechargeSeconds > 0)
-            {
-                RechargedBonusT = DateTime.MinValue;
-                RechargedBonusT += DateTime.Now.AddSeconds(BonusRechargeSeconds) - DateTime.Now;
-            }
-            else
-            {
-                IsBonusReady = true;
-                _bonusTimer?.Stop();
-            }
-        }
+        //private void TimeUpdate(object sender, ElapsedEventArgs e)
+        //{
+        //    BonusRechargeSeconds = BonusRechargeSeconds <= 0 ? 0 : BonusRechargeSeconds - 1;
+        //    if (BonusRechargeSeconds > 0)
+        //    {
+        //        RechargedBonusT = DateTime.MinValue;
+        //        RechargedBonusT += DateTime.Now.AddSeconds(BonusRechargeSeconds) - DateTime.Now;
+        //    }
+        //    else
+        //    {
+        //        IsBonusReady = true;
+        //        _bonusTimer?.Stop();
+        //    }
+        //}
 
         internal void AddMoney(int val)
         {
@@ -306,12 +306,12 @@ namespace Victorina
         }
 
 
-        private void GetAccauntUserInfo()
-        {
-            PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnCompletePlayFabAccountInfo, OnFailure);
-            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Tickets" }, OnGetCatalogSuccess, OnFailure);
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
+        //private void GetAccauntUserInfo()
+        //{
+        //    PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnCompletePlayFabAccountInfo, OnFailure);
+        //    PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Tickets" }, OnGetCatalogSuccess, OnFailure);
+        //    PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
+        //}
 
 
         private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
@@ -331,22 +331,22 @@ namespace Victorina
             Debug.Log("Информация об аккаунте Playfab получена");
         }
 
-        public void SetDisplayName(string name)
-        {
-            Name = name;
+        //public void SetDisplayName(string name)
+        //{
+        //    Name = name;
 
-            PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
-            {
-                DisplayName = name
-            }, AddedNameComplete, error => Debug.LogError(error.GenerateErrorReport()));
-        }
+        //    PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
+        //    {
+        //        DisplayName = name
+        //    }, AddedNameComplete, error => Debug.LogError(error.GenerateErrorReport()));
+        //}
 
-        private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
-        {
-            IsNewPlayer = false;
-            NewPlayerComplete?.Invoke();
-            Init();
-        }
+        //private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
+        //{
+        //    IsNewPlayer = false;
+        //    NewPlayerComplete?.Invoke();
+        //    Init();
+        //}
 
         private void OnStatisticsUpdated(UpdatePlayerStatisticsResult updateResult)
         {
@@ -359,80 +359,80 @@ namespace Victorina
             Debug.LogError(error.GenerateErrorReport());
         }
 
-        private void GetInventoryComplete(GetUserInventoryResult result)
-        {
-            _virtualCurrency.Clear();
-            CurrencyVirtual = new string[result.VirtualCurrency.Count];
-            var cnt = 0;
-            foreach (var pair in result.VirtualCurrency)
-            {
-                CurrencyVirtual[cnt++] = pair.Key + " = " + pair.Value;
-                _virtualCurrency.Add(pair.Key, pair.Value);
-                if (pair.Key == "R2")
-                    R2 = pair.Value;
-                if (pair.Key == "RE")
-                    RE = pair.Value;
-            }
+        //private void GetInventoryComplete(GetUserInventoryResult result)
+        //{
+        //    _virtualCurrency.Clear();
+        //    CurrencyVirtual = new string[result.VirtualCurrency.Count];
+        //    var cnt = 0;
+        //    foreach (var pair in result.VirtualCurrency)
+        //    {
+        //        CurrencyVirtual[cnt++] = pair.Key + " = " + pair.Value;
+        //        _virtualCurrency.Add(pair.Key, pair.Value);
+        //        if (pair.Key == "R2")
+        //            R2 = pair.Value;
+        //        if (pair.Key == "RE")
+        //            RE = pair.Value;
+        //    }
 
-            var ticketBit = 0;
-            foreach (var item in result.Inventory)
-            {
-                if (item.DisplayName == "BitTicket")
-                {
-                    ticketBit++;
-                }
-                else if (item.DisplayName == "PlayToken")
-                    IsPlayed = true;
-                else if (item.DisplayName == "Vip Day")
-                    IsVip = true;
-                else if (item.DisplayName == "Not reclama")
-                    NotReclama = true;
+        //    var ticketBit = 0;
+        //    foreach (var item in result.Inventory)
+        //    {
+        //        if (item.DisplayName == "BitTicket")
+        //        {
+        //            ticketBit++;
+        //        }
+        //        else if (item.DisplayName == "PlayToken")
+        //            IsPlayed = true;
+        //        else if (item.DisplayName == "Vip Day")
+        //            IsVip = true;
+        //        else if (item.DisplayName == "Not reclama")
+        //            NotReclama = true;
 
-            }
-            TicketsBit = ticketBit;
+        //    }
+        //    TicketsBit = ticketBit;
 
-            int bitValue;
-            var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
-            if (isGetBit)
-            {
-                Bit = bitValue;
-                BitInfoUpdate?.Invoke();
-            }
+        //    int bitValue;
+        //    var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
+        //    if (isGetBit)
+        //    {
+        //        Bit = bitValue;
+        //        BitInfoUpdate?.Invoke();
+        //    }
 
-            int ticketValue;
-            var isGetTicket = _virtualCurrency.TryGetValue("TI", out ticketValue);
-            if (isGetTicket)
-            {
-                TicketsBit = ticketValue;
-                TicketInfoUpdate?.Invoke();
-            }
+        //    int ticketValue;
+        //    var isGetTicket = _virtualCurrency.TryGetValue("TI", out ticketValue);
+        //    if (isGetTicket)
+        //    {
+        //        TicketsBit = ticketValue;
+        //        TicketInfoUpdate?.Invoke();
+        //    }
 
-            int bonus;
-            var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
-            if (isGetBonus)
-            {
-                VirtualCurrencyRechargeTime BSRechargedTimes;
-                var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
-                if (isT)
-                {
-                    BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
-                }
-                if (bonus > 0)
-                {
-                    MaxBonusTimeSeconds = BSRechargedTimes.SecondsToRecharge;
-                    IsBonusReady = true;
-                    _bonusTimer.Stop();
-                }
-                else
-                {
-                    IsBonusReady = false;
-                    _bonusTimer.Start();
-                }
-            }
+        //    int bonus;
+        //    var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
+        //    if (isGetBonus)
+        //    {
+        //        VirtualCurrencyRechargeTime BSRechargedTimes;
+        //        var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
+        //        if (isT)
+        //        {
+        //            BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
+        //        }
+        //        if (bonus > 0)
+        //        {
+        //            MaxBonusTimeSeconds = BSRechargedTimes.SecondsToRecharge;
+        //            IsBonusReady = true;
+        //            _bonusTimer.Stop();
+        //        }
+        //        else
+        //        {
+        //            IsBonusReady = false;
+        //            _bonusTimer.Start();
+        //        }
+        //    }
 
-            InitComplete?.Invoke();
+        //    InitComplete?.Invoke();
 
-        }
+        //}
 
         private void OnGetCatalogSuccess(GetCatalogItemsResult result)
         {
@@ -463,67 +463,67 @@ namespace Victorina
             Debug.Log(ErrorInformation);
         }
 
-        public void GetIsCompletetedBonus()
-        {
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), IsBonusComplete, Debug.Log);
-        }
+        //public void GetIsCompletetedBonus()
+        //{
+        //    PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), IsBonusComplete, Debug.Log);
+        //}
 
-        private void IsBonusComplete(GetUserInventoryResult result)
-        {
-            int bonusValue;
-            if (result.VirtualCurrency.TryGetValue("BS", out bonusValue))
-            {
-                IsBonusReady = bonusValue > 0 ? true : false;
-            }
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
-
-
-
-        public void GetBonus()
-        {
-            // Bit += 100;
-            IsBonusReady = false;
-
-            var rnd = UnityEngine.Random.Range(1, 5);
-            var itId = "Bonus" + rnd;
-
-            GetNumberBonus?.Invoke(rnd);
-
-            PurchaseItemRequest request = new PurchaseItemRequest
-            {
-                CatalogVersion = "Bonuses",
-                ItemId = itId,
-                VirtualCurrency = "BS",
-                Price = 1,
-
-            };
-            PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
-            RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
-        }
+        //private void IsBonusComplete(GetUserInventoryResult result)
+        //{
+        //    int bonusValue;
+        //    if (result.VirtualCurrency.TryGetValue("BS", out bonusValue))
+        //    {
+        //        IsBonusReady = bonusValue > 0 ? true : false;
+        //    }
+        //    PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
+        //}
 
 
 
+        //public void GetBonus()
+        //{
+        //    // Bit += 100;
+        //    IsBonusReady = false;
 
-        private void OnBonusComplete()
-        {
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
+        //    var rnd = UnityEngine.Random.Range(1, 5);
+        //    var itId = "Bonus" + rnd;
+
+        //    GetNumberBonus?.Invoke(rnd);
+
+        //    PurchaseItemRequest request = new PurchaseItemRequest
+        //    {
+        //        CatalogVersion = "Bonuses",
+        //        ItemId = itId,
+        //        VirtualCurrency = "BS",
+        //        Price = 1,
+
+        //    };
+        //    PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
+        //    RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
+        //}
 
 
-        public void GetUserToBonusRechargedTime() =>
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnRechargedTime, OnFailure);
 
-        private void OnRechargedTime(GetUserInventoryResult result)
-        {
-            VirtualCurrencyRechargeTime BSRechargedTimes;
-            var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
-            if (isT)
-            {
-                var tempTime = BSRechargedTimes.SecondsToRecharge;
-                RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
-            }
-        }
+
+        //private void OnBonusComplete()
+        //{
+        //    PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
+        //}
+
+
+        //public void GetUserToBonusRechargedTime() =>
+        //    PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnRechargedTime, OnFailure);
+
+        //private void OnRechargedTime(GetUserInventoryResult result)
+        //{
+        //    VirtualCurrencyRechargeTime BSRechargedTimes;
+        //    var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
+        //    if (isT)
+        //    {
+        //        var tempTime = BSRechargedTimes.SecondsToRecharge;
+        //        RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
+        //    }
+        //}
 
         public void ConsumeItem(string nameItem)
         {
@@ -555,7 +555,7 @@ namespace Victorina
 
                     }, result =>
                     {
-                        Init();
+                        //Init();
                         ConsumeComplete?.Invoke(nameItem);
                     }, OnFailure);
 
@@ -576,7 +576,7 @@ namespace Victorina
             };
             PlayFabClientAPI.PurchaseItem(request, result =>
             {
-                Init();
+                //Init();
                 PlayerPrefs.SetInt("CurrentStep", 0);
             }, error => Debug.Log(error));
         }
@@ -615,16 +615,10 @@ namespace Victorina
                 else
                 {
                     AllGameTime = LastGameTime;
-
-
-
                     DateTime averageTime = DateTime.MinValue;
                     AverageTimeAnswers = averageTime.ToLongTimeString();
-
                     PlayerPrefs.SetInt("AllGameTime", 0);
                 }
-
-
             }, error => Debug.LogError(error));
         }
 

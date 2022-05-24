@@ -11,7 +11,6 @@ namespace Victorina
     public class TicketManager : MonoBehaviour
     {
         private const string TicketEnter = "вход по билету";
-        [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _priceBitTicket;
         [SerializeField] private Text _money;
         [SerializeField] private GameObject _ticketPricePanel;
@@ -28,18 +27,21 @@ namespace Victorina
         private QuestionLoader _questionLoader;
         private bool _isStartBtnListenerComplete;
 
+        private Character _player;
+        private PlayFabAccountManager _accountManager;
 
         private void Start()
         {
-            _playerData.InitComplete += InitComplete;
-
-
-            _playerData.Init();
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+            _accountManager = PlayFabAccountManager.GetInstance();
 
             _questionLoader = gameObject.GetComponent<QuestionLoader>();
-            _money.text = _playerData.Bit.ToString();
-            if (_playerData.TicketsBit > 0)
+            _money.text = _player.Money.ToString();
+            if (_player.Tickets > 0)
                 _ticketPricePanel.SetActive(false);
+
+            InitComplete();
         }
 
         private void OnEnable()
@@ -61,24 +63,24 @@ namespace Victorina
             if (!_isStartBtnListenerComplete)
                 button.gameObject.SetActive(true);
 
-            if (_playerData.IsVip && !_playerData.IsPlayed)
+            if (_player.IsVip && !_player.IsPlay)
             {
                 _ticketPricePanel?.SetActive(false);
                 button.GetComponentInChildren<Text>().text = "VIP вход";
                 button.onClick.AddListener(EnterOnVip);
             }
-            else if (!_playerData.IsPlayed && _playerData.TicketsBit <= 0)
+            else if (!_player.IsPlay && _player.Tickets <= 0)
             {
                 _ticketPricePanel?.SetActive(true);
-                SetPriceTicket(_playerData.PriceBitTicket.ToString());
+                SetPriceTicket(_player.PriceBitTicket.ToString());
                 button.onClick.AddListener(BuyingTicket);
             }
-            else if (!_playerData.IsPlayed && _playerData.TicketsBit > 0)
+            else if (!_player.IsPlay && _player.Tickets > 0)
             {
                 button.GetComponentInChildren<Text>().text = TicketEnter;
                 button.onClick.AddListener(EnterOnTicket);
             }
-            else if (_playerData.IsPlayed)
+            else if (_player.IsPlay)
             {
                 _ticketPricePanel?.SetActive(false);
                 button.GetComponentInChildren<Text>().text = "продолжить игру";
@@ -98,7 +100,7 @@ namespace Victorina
         {
             _enterBtn.interactable = false;
 
-            _playerData.ConsumeItem("BitTicket");
+            //_accountManager.ConsumeItem("BitTicket");
             BuyingPlayTocken("TI", 1);
             AnimateEquipTicket();
             StartCoroutine(WaitLoadFirstQuestion(false));
@@ -119,14 +121,14 @@ namespace Victorina
         {
             _animator.enabled = true;
             _animator.Play("TicketTrash");
-            //_animTicket.Play();
+            _animTicket.Play();
         }
 
         public void BuyingTicket()
         {
             _enterBtn.interactable = false;
 
-            if (_playerData.Bit < _playerData.PriceBitTicket)
+            if (_player.Money < _player.PriceBitTicket)
             {
                 Debug.Log("Недостаточно средств для покупки билета");
                 return;
@@ -136,14 +138,14 @@ namespace Victorina
             if (PlayerPrefs.GetInt("Sfx") > 0)
                 _byeTicket.Play();
 
-            _money.text = (int.Parse(_money.text) - _playerData.PriceBitTicket).ToString();
+            _money.text = (int.Parse(_money.text) - _player.PriceBitTicket).ToString();
 
             PurchaseItemRequest request = new PurchaseItemRequest
             {
                 CatalogVersion = "Tickets",
                 ItemId = "BitTicket",
                 VirtualCurrency = "BT",
-                Price = (int)_playerData.PriceBitTicket,
+                Price = _player.PriceBitTicket,
 
             };
             PlayFabClientAPI.PurchaseItem(request, result => OnBuyingTicketComplete(), error => Debug.Log(error));
@@ -165,7 +167,7 @@ namespace Victorina
         private void PlayTockenComplete(PurchaseItemResult result)
         {
             _byeTicket.enabled = false;
-            _playerData.ConsumeItem("BitTicket");
+            //_accountManager.ConsumeItem("BitTicket");
             StartCoroutine(WaitLoadFirstQuestion(false));
         }
 

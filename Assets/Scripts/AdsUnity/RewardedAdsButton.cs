@@ -45,8 +45,8 @@ namespace Victorina
 
         private void Start()
         {
-            if (!_playerData.NotReclama)
-                LoadAd();
+            //if (!_playerData.NotReclama)
+            //    LoadAd();
         }
 
         #endregion
@@ -77,36 +77,24 @@ namespace Victorina
                 //_showAdButton.interactable = true;
                 IsShowAdButtonReady = true;
 
-                _adsLable.SetActive(true);
+                _adsLable?.SetActive(true);
             }
         }
 
 
         // Implement a method to execute when the user clicks the button:
-        public void ShowAd()
+        private void ShowAd()
         {
-#if UNITY_EDITOR
-            IsShowAdButtonReady = false;
             _bonusOpenPanel.SetActive(true);
-            _bonusManager.GetBonus();
-
-#endif
-
-#if UNITY_ANDROID
 
             if (_playerData.NotReclama)
             {
-                _bonusOpenPanel.SetActive(true);
-                _bonusManager.GetBonus();
                 return;
             }
 
             IsShowAdButtonReady = false;
-            // Disable the button:
             _showAdButton.interactable = false;
-            // Then show the ad:
             Advertisement.Show(_adUnitId, this);
-#endif
         }
 
 
@@ -119,11 +107,10 @@ namespace Victorina
                 // Grant a reward.
 
                 // Load another ad:
-                Advertisement.Load(_adUnitId, this);
+                //Advertisement.Load(_adUnitId, this);
 
                 IsShowAdButtonReady = false;
                 _bonusOpenPanel.SetActive(true);
-                _bonusManager.GetBonus();
             }
         }
 

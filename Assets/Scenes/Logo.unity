@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 69414122}
   - component: {fileID: 69414123}
   - component: {fileID: 69414124}
-  - component: {fileID: 69414125}
+  - component: {fileID: 69414126}
   m_Layer: 0
   m_Name: LogoController
   m_TagString: Untagged
@@ -214,7 +214,7 @@ MonoBehaviour:
   _androidGameId: 4702011
   _iOSGameId: 4702010
   _testMode: 0
---- !u!114 &69414125
+--- !u!114 &69414126
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -223,11 +223,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 69414119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b79a71281ecfe30448d5f1f4bf4889e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 018375d488b5b10409706553dd915897, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
-  _defaultAvatarTexture: {fileID: 21300000, guid: de4fc9565d043a347b5e1353d5156f84, type: 3}
+  _defaultAvatarTexture: {fileID: 2181630300990802806, guid: db59fe1b7b761f544890a03bed022f59, type: 3}
 --- !u!1 &137177757
 GameObject:
   m_ObjectHideFlags: 0

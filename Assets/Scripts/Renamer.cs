@@ -57,7 +57,7 @@ namespace Victorina
                 _renameBtn.GetComponent<Image>().color = Color.white;
                 _profilePanel.GetComponent<Image>().color = Color.white;
                 ActivateButtons(true);
-                _playerData.SetDisplayName(_newName.text);
+                //_playerData.SetDisplayName(_newName.text);
             }
         }
 
