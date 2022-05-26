@@ -15,7 +15,11 @@ namespace Victorina
 
         [SerializeField] private Image _backgroundWelcomeGameImg;
         [SerializeField] private Image _gameProgressPanel;
+
+        [Header("Game")]
         [SerializeField] private Image _gamePanel;
+        [SerializeField] private Image _helpBtn;
+        [SerializeField] private Image _exitBtn;
         [SerializeField] private Image _questionPanel;
         [SerializeField] private Image[] _answerBtns;
 
@@ -61,6 +65,8 @@ namespace Victorina
             _backgroundWelcomeGameImg.sprite = activeThema.GameWelcomePanel;
 
             _gamePanel.sprite = activeThema.GamePanel;
+            _helpBtn.sprite = activeThema.HelpBtnImg;
+            _exitBtn.sprite = activeThema.ExitBtnImg;
             _questionPanel.sprite = activeThema.QuestPanel;
 
             foreach (var answer in _answerBtns)

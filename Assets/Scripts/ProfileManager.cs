@@ -26,8 +26,11 @@ namespace Victorina
         private Character _player;
         private GameData _gameData;
 
+
         private void Start()
         {
+            PlayFabAccountManager.GetInstance().GetPlayerInventory();
+
             _gameData = GameData.GetInstance();
             _player = _gameData.Player;
 
@@ -38,11 +41,6 @@ namespace Victorina
             if (_ticketText)
                 _ticketText.text = _player.Tickets.ToString();
 
-            //_imageAvatar.transform.localScale = Vector3.one * _playerData.ScaleImageAvatarCoef;
-            //var textureAvatar = _playerData.Avatar;
-            //_imageAvatar.sprite =  textureAvatar;
-
-
             _imageAvatar.sprite = _player.Avatar;
             _imageAvatar.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
 
@@ -52,30 +50,6 @@ namespace Victorina
                 _imageAvatarRankPanel.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
             }
         }
-
-        //private void OnReloadAvatar()
-        //{
-        //    if (gameObject.activeSelf)
-        //        StartCoroutine(NewAvatarComplete());
-        //}
-
-        //private IEnumerator NewAvatarComplete()
-        //{
-        //    yield return new WaitForEndOfFrame();
-        //    yield return new WaitForSeconds(2);
-        //    _imageAvatar.sprite = _playerData.Avatar;
-        //}
-
-        //private void OnEnable()
-        //{
-        //    OnReloadAvatar();
-        //    _imageAvatar.sprite = _playerData.Avatar;
-        //    _playerData.BitInfoUpdate += MoneyUpdate;
-        //    _playerData.TicketInfoUpdate += TicketUpdate;
-
-        //    var coef = _playerData.ScaleImageAvatarCoef;
-        //    _imageAvatar.transform.localScale = Vector3.one * coef;
-        //}
 
         private void TicketUpdate()
         {
@@ -169,9 +143,5 @@ namespace Victorina
             Debug.LogWarning("Something went wrong with your API call. Here's some debug information:");
             Debug.LogError(error.GenerateErrorReport());
         }
-
-
-
     }
-
 }

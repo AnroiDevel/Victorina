@@ -134,7 +134,6 @@ GameObject:
   - component: {fileID: 69414121}
   - component: {fileID: 69414120}
   - component: {fileID: 69414122}
-  - component: {fileID: 69414123}
   - component: {fileID: 69414124}
   - component: {fileID: 69414126}
   m_Layer: 0
@@ -184,21 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc6a074525eea54e84d7511814fb9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &69414123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69414119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4680be1b1d2f1b49810ca6ff1d57da0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
-  _setNewPlayerToogle: {fileID: 1337360301}
-  _defaultAvatar: {fileID: 21300000, guid: 6c3065ad07f753f408aef283f552ff80, type: 3}
 --- !u!114 &69414124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1126,7 +1110,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 69414123}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Victorina.EnterLoading, Assembly-CSharp
         m_MethodName: SetIsNewPlayerOption
         m_Mode: 1

@@ -3393,6 +3393,8 @@ MonoBehaviour:
   _backgroundWelcomeGameImg: {fileID: 1476035998}
   _gameProgressPanel: {fileID: 0}
   _gamePanel: {fileID: 1713876869}
+  _helpBtn: {fileID: 539219951}
+  _exitBtn: {fileID: 1072567842}
   _questionPanel: {fileID: 1450981346}
   _answerBtns:
   - {fileID: 1612515108}
@@ -5091,7 +5093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6698113, g: 0.54027236, b: 0.54027236, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

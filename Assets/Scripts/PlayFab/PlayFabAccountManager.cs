@@ -17,6 +17,7 @@ namespace Victorina
         public Action WeeklyRankReceived;
         public Action InventoryReceived;
 
+
         public PlayFabAccountManager()
         {
             _playFabLogin = new PlayFabLogin();
@@ -24,12 +25,14 @@ namespace Victorina
             _player = _gameData.Player;
         }
 
+
         public static PlayFabAccountManager GetInstance()
         {
             if (_instance == null)
                 _instance = new PlayFabAccountManager();
             return _instance;
         }
+
 
         public void GetLeaderBoardWeeklyRank(string playFabID)
         {
@@ -47,6 +50,7 @@ namespace Victorina
                 },
                 error => Debug.LogError(error));
         }
+
 
         public void GetPlayerInventory()
         {
@@ -99,6 +103,7 @@ namespace Victorina
                 error => Debug.LogError(error.GenerateErrorReport()));
         }
 
+
         public void GetTimeRechargeBonus()
         {
             PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(),
@@ -110,6 +115,7 @@ namespace Victorina
                 },
                 error => Debug.LogError(error.GenerateErrorReport()));
         }
+
 
         public void GetQuestionsCount()
         {
@@ -147,6 +153,7 @@ namespace Victorina
             }, error => Debug.LogError(error));
         }
 
+
         public void GetRightAnswersCount()
         {
             var request = new GetLeaderboardAroundPlayerRequest()
@@ -158,12 +165,13 @@ namespace Victorina
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => _player.RightAnswersCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
         }
 
+
         public void GetCatalogItem(string catalogVersion)
         {
             PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = catalogVersion },
                 result =>
                 {
-                    foreach(var item in result.Catalog)
+                    foreach (var item in result.Catalog)
                     {
                         switch (item.DisplayName)
                         {
@@ -174,5 +182,34 @@ namespace Victorina
                     }
                 }, error => Debug.LogError(error));
         }
+
+
+        public void SetDisplayName(string name)
+        {
+            PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
+            {
+                DisplayName = name
+            }, result => _player.Name = name, error => Debug.LogError(error.GenerateErrorReport()));
+        }
+
+
+        public void GetPrize(int level)
+        {
+            if (level == 0) return;
+
+            PurchaseItemRequest request = new PurchaseItemRequest
+            {
+                CatalogVersion = "Prizes",
+                ItemId = "Prize-" + level,
+                VirtualCurrency = "BT",
+                Price = 0,
+            };
+            PlayFabClientAPI.PurchaseItem(request, result =>
+            {
+                PlayerPrefs.SetInt("CurrentStep", 0);
+            }, error => Debug.Log(error));
+        }
+
+
     }
 }

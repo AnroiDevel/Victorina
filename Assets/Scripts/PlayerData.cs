@@ -551,7 +551,8 @@ namespace Victorina
                     PlayFabClientAPI.ConsumeItem(new ConsumeItemRequest
                     {
                         ConsumeCount = 1,
-                        ItemInstanceId = iii
+                        ItemInstanceId = iii,
+                         
 
                     }, result =>
                     {

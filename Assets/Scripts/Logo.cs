@@ -9,29 +9,23 @@ namespace Victorina
         [SerializeField] private float _time;
         [SerializeField] private PlayerData _playerData;
 
+        private Character _player;
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+        }
+
         private void Start()
         {
             ThemaConrtoller.SetActiveThema("GreenThema");
-
-            //PlayerPrefs.DeleteAll();
-
-            //_playerData.SetAvatar();
 
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
-            //_playerData.LoginComplete += LoadGame;
-
-            if (PlayerPrefs.HasKey("Id"))
-            {
-                _playerData.IsNewPlayer = false;
-                _playerData.IsNewPlayer = IsNewVersionApp();
-                //_playerData.Login();
-            }
-
         }
-
 
 
         private IEnumerator LogoPlay()
@@ -41,14 +35,7 @@ namespace Victorina
             LoadGame();
         }
 
-        private void LoadNextScena()
-        {
-            var sceneLoader = GetComponent<SceneLoader>();
-            if (_playerData.IsNewVersionApp || _playerData.IsNewPlayer)
-                sceneLoader.LoadGameScene("Confidencial");
-            else
-                _playerData.Login();
-        }
+
         private bool IsNewVersionApp()
         {
             var currentVersion = Application.version;
@@ -60,16 +47,17 @@ namespace Victorina
             return !currentVersion.Equals(prevVersion);
         }
 
+
         private void LoadGame()
         {
             var sceneLoader = GetComponent<SceneLoader>();
 
-
-            if (_playerData.IsNewPlayer || _playerData.IsNewVersionApp)
+            if (IsNewVersionApp())
                 sceneLoader.LoadGameScene("Confidencial");
+            else if (_player.Name.Length == 16)
+                sceneLoader.LoadGameScene("Autorization");
             else
                 sceneLoader.LoadGameScene("Victorina");
         }
     }
-
 }

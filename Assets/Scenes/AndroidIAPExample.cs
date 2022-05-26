@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Purchasing;
 using UnityEngine.UI;
+using Victorina;
 
 
 public class AndroidIAPExample : MonoBehaviour, IStoreListener
@@ -24,7 +25,7 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
     public void Start()
     {
         // Make PlayFab log in
-        RefreshIAPItems();
+        Login();
         _loadShopPanel.SetActive(true);
     }
 
@@ -189,7 +190,7 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
             ReceiptJson = googleReceipt.PayloadData.json,
             // Pass in the signature
             Signature = googleReceipt.PayloadData.signature
-        }, result => Debug.Log("Validation successful!"),
+        }, result => PlayFabAccountManager.GetInstance().GetPlayerInventory(),
            error => Debug.Log("Validation failed: " + error.GenerateErrorReport())
         );
 
