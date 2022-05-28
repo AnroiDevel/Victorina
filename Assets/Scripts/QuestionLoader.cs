@@ -51,8 +51,6 @@ namespace Victorina
         [SerializeField] private AudioSource _looseAudio;
         [SerializeField] private Animator _animatorReload;
 
-        [SerializeField] private PlayerData _playerData;
-
         private HelpController _helpController;
 
         private string _commentText;
@@ -71,19 +69,28 @@ namespace Victorina
 
         public bool IsLoadComplete { get; private set; }
         private bool _isLoose;
+        private int countTry = 5;
 
-        int countTry = 5;
+        private Character _player;
+        private PlayFabAccountManager _accountManager;
 
         #endregion
 
 
         #region UnityMethods
 
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+            _accountManager = PlayFabAccountManager.GetInstance();
+        }
+
         private void Start()
         {
             _helpController = GetComponent<HelpController>();
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 SetCurrentStep();
             else LoadOneQuestion();
         }
@@ -122,10 +129,10 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 if (_isLoose) Loose();
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 if (_currentStepProgress >= _progressCells.Length)
                 {
                     Win();
@@ -133,18 +140,18 @@ namespace Victorina
                 }
             _question.text = LoadingQuestion;
 
-            if (_playerData.IsTrain)
+            if (_player.IsTrain)
                 SetDefaultRateImage();
             StopAllCoroutines();
 
             var nextLevel = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
             {
                 StartCoroutine(PrevRaundPause(_currentStepProgress++));
             }
             else
-                nextLevel = UnityEngine.Random.Range(0, 5);
+                nextLevel = Random.Range(0, 5);
 
             StartCoroutine(GetQuestion(nextLevel));
         }
@@ -160,11 +167,11 @@ namespace Victorina
             if (PlayerPrefs.GetInt("Music").Equals(1))
                 _winAudio.Play();
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
             {
                 GetComponent<ButtleBitController>().GetWinAndGameOver();
-                _playerData.GetQuestionsCount();
-                _playerData.GetRightAnswersCount();
+                _accountManager.GetQuestionsCount();
+                _accountManager.GetRightAnswersCount();
             }
             PlayerPrefs.SetInt("CurrentStep", 0);
         }
@@ -185,17 +192,17 @@ namespace Victorina
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
 
-                if (!_playerData.IsTrain)
-                    _playerData.AddRightAnswersCount();
+                if (!_player.IsTrain)
+                    _accountManager.AddRightAnswersCount();
 
                 _result.color = Color.green;
                 _result.text = RightResult;
                 _commentPanel.SetActive(true);
 
-                if (!_playerData.IsTrain)
-                    _playerData.RightError = false;
+                if (!_player.IsTrain)
+                    _player.RightError = false;
             }
-            else if (_playerData.RightError)
+            else if (_player.RightError)
             {
                 _answers[index].color = Color.red;
                 //_playerData.RightError = false;
@@ -212,15 +219,15 @@ namespace Victorina
             _commentPanel.SetActive(true);
             _isLoose = true;
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 GetComponent<ButtleBitController>().GameOver();
 
         }
 
         private void Loose()
         {
-            _playerData.GetQuestionsCount();
-            _playerData.GetRightAnswersCount();
+            _accountManager.GetQuestionsCount();
+            _accountManager.GetRightAnswersCount();
 
             _resultPanel.SetActive(true);
             _loose.SetActive(true);
@@ -364,7 +371,7 @@ namespace Victorina
                     countTry--;
                     StartCoroutine(GetQuestion(lvl));
 
-                    if(countTry <= 0)
+                    if (countTry <= 0)
                         StopAllCoroutines();
                     _status.text = "Отсутствует связ с сервером";
 
@@ -405,7 +412,15 @@ namespace Victorina
             textsList.RemoveAt(0);
             textsList.RemoveAt(0);
 
-            _grade = float.Parse(textsList[textsList.Count - 2]);
+            try
+            {
+                _grade = float.Parse(textsList[textsList.Count - 2]);
+            }
+            catch (System.Exception)
+            {
+                StopAllCoroutines();
+                LoadOneQuestion();
+            }
 
             _gradeText.text = ((int)_grade).ToString();
 
@@ -416,7 +431,7 @@ namespace Victorina
 
             while (textsList.Count > 0)
             {
-                int rnd = UnityEngine.Random.Range(0, textsList.Count);
+                int rnd = Random.Range(0, textsList.Count);
                 _answers[textsList.Count - 1].text = textsList[rnd];
                 textsList.RemoveAt(rnd);
 
@@ -434,8 +449,8 @@ namespace Victorina
             _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
-            if (!_playerData.IsTrain)
-                _playerData.AddQuestionCount();
+            if (!_player.IsTrain)
+                _accountManager.AddQuestionCount();
 
             OnLoadNewQuestion();
 
@@ -449,8 +464,6 @@ namespace Victorina
 
             foreach (var t in _answers)
             {
-                //t.resizeTextMaxSize = 70;
-
                 if (t.text.Length > maxLength)
                 {
                     maxLength = t.text.Length;
@@ -552,7 +565,7 @@ namespace Victorina
 
             _progressCells[currentStep].GetComponentInChildren<TMP_Text>().colorGradientPreset = _colorGradient;
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 while (clip > 0)
                 {
                     _progressCells[currentStep].color = Color.green;

@@ -46,17 +46,17 @@ namespace Victorina
         private IEnumerator LoadAllAccautInfo()
         {
             GetPlayerInfo();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetPlayerInventory();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetLeaderBoardWeeklyRank(_player.PlayFabId);
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetTimeRechargeBonus();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetQuestionsCount();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetRightAnswersCount();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForFixedUpdate();
             _accountManager.GetCatalogItem("Tickets");
 
         }

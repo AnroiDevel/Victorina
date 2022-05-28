@@ -7,7 +7,6 @@ namespace Victorina
     public class HelpController : MonoBehaviour
     {
         [SerializeField] private Button[] _helpBtns;
-        [SerializeField] private PlayerData _playerData;
 
         private PurchasesPF _pF = new PurchasesPF();
 
@@ -16,24 +15,36 @@ namespace Victorina
         public bool IsTwoErrorBonusReady;
         public bool IsReloadQuestion;
 
+        private Character _player;
+
+
+        private void Awake()
+        {
+            _player = GameData.GetInstance().Player;
+        }
+
+
         public bool IsTwoErrorBonus()
         {
-            return _playerData.R2 > 0;
+            return _player.HelpicR2 > 0;
         }
+
 
         public void PurchaseR2()
         {
             _pF.PurchaseItem("Tickets", "MinusTwo", "R2", 1);
-            _playerData.R2--;
+            _player.HelpicR2--;
         }
+
 
         public void SetInteractibleR2Btn(bool val)
         {
-            if (_playerData.R2 > 0)
+            if (_player.HelpicR2 > 0)
                 _helpBtns[2].interactable = val;
             else
                 _helpBtns[2].interactable = false;
         }
+
 
         public void SetNotInteracttibleAllHelpBtns()
         {
@@ -49,29 +60,32 @@ namespace Victorina
                 return;
             }
 
-            _playerData.RightError = true;
+            _player.RightError = true;
             foreach (var btn in _helpBtns)
                 btn.interactable = false;
             _isRightErrorComplete = true;
         }
 
+
         private void RightErrorBonus()
         {
-            _playerData.RightError = true;
+            _player.RightError = true;
             foreach (var btn in _helpBtns)
                 btn.interactable = false;
             _pF.PurchaseItem("Tickets", "RightError", "RE", 1);
-            _playerData.RE--;
+            _player.HelpicRE--;
         }
+
 
         public void ReloadComplete()
         {
             IsReloadQuestion = true;
         }
 
+
         private bool GetBonusRE()
         {
-            return _playerData.RE > 0;
+            return _player.HelpicRE > 0;
         }
 
 
@@ -83,5 +97,4 @@ namespace Victorina
             _helpBtns[3].interactable = !IsReloadQuestion;
         }
     }
-
 }

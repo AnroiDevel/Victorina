@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,49 +9,65 @@ namespace Victorina
     {
         [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _timeGame;
-        
 
-        private LeaderBoardsController _boardsController;
+        private PlayFabAccountManager _accountManager;
+        private Character _player;
 
 
-        private void Start()
+        private void Awake()
         {
-            _boardsController = GetComponent<LeaderBoardsController>();
+            _accountManager = PlayFabAccountManager.GetInstance();
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+            _player.IsTrain = false;
         }
+
 
         private void OnEnable()
         {
-            _playerData.ConsumeComplete += OnConsumeComplete;
+            _accountManager.InventoryReceived += OnGetInventory;
+            _accountManager.ConsumeComplete += OnConsumeComplete;
+            _accountManager.PrizeReceived += OnGetPrize;
+        }
+
+        private void OnGetPrize()
+        {
+            _accountManager.GetPlayerInventory();
+        }
+
+        private void OnGetInventory()
+        {
+            if (_player.PlayToken != null)
+                GameOver();
         }
 
         private void OnDisable()
         {
-            _playerData.ConsumeComplete -= OnConsumeComplete;
+            _accountManager.ConsumeComplete -= OnConsumeComplete;
         }
 
-        private void OnConsumeComplete(string item)
+
+        private void OnConsumeComplete()
         {
-            if (item != "PlayToken") return;
-            _timeGame.text = _playerData.LastGameTime;
+            _player.LastGameTime = DateTime.MinValue.AddSeconds((int)(DateTime.UtcNow - _player.StartGameTime).Value.TotalSeconds).ToLongTimeString();
+            _timeGame.text = _player.LastGameTime;
             PlayerPrefs.SetInt("CurrentStep", 0);
+            _player.PlayToken = null;
+            _player.IsPlay = false;
         }
+
 
         public void GameOver()
         {
-            _playerData.ConsumeItem("PlayToken");
+            _accountManager.ConsumeItem(_player.PlayToken);
         }
+
 
         public void GetWinAndGameOver()
         {
             var level = PlayerPrefs.GetInt("CurrentStep");
-            _playerData.GetPrize(level);
-            GameOver();
-            _playerData.SubmitScore(level);
-            //var sceneLoader = gameObject?.GetComponent<SceneLoader>();
-            //if (sceneLoader != null)
-            //    sceneLoader.LoadGameScene("Victorina");
-
+            _accountManager.GetPrize(level);
+            _accountManager.SubmitScore(level);
         }
     }
-
 }

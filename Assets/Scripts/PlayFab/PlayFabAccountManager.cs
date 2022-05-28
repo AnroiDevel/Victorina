@@ -1,6 +1,7 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -16,7 +17,8 @@ namespace Victorina
 
         public Action WeeklyRankReceived;
         public Action InventoryReceived;
-
+        public Action ConsumeComplete;
+        public Action PrizeReceived;
 
         public PlayFabAccountManager()
         {
@@ -87,6 +89,8 @@ namespace Victorina
                                 break;
                             case "PlayToken":
                                 _player.IsPlay = true;
+                                _player.PlayToken = pair.ItemInstanceId;
+                                _player.StartGameTime = pair.PurchaseDate;
                                 break;
                             case "Vip Day":
                                 _player.IsVip = true;
@@ -94,7 +98,6 @@ namespace Victorina
                             case "Not reclama":
                                 _player.IsNotReclama = true;
                                 break;
-
                         }
                     }
                     InventoryReceived?.Invoke();
@@ -129,30 +132,33 @@ namespace Victorina
             {
                 _player.AllQuestionsCount = result.Leaderboard[0].StatValue;
 
-                if (PlayerPrefs.HasKey("AllGameTime"))
-                {
-                    var prevTime = PlayerPrefs.GetInt("AllGameTime");
-
-                    var average = _player.AllQuestionsCount != 0 ? prevTime / _player.AllQuestionsCount : prevTime;
-                    DateTime averageTime = DateTime.MinValue.AddSeconds(average);
-                    _player.AverageTimeAnswers = averageTime.ToLongTimeString();
-
-
-                    int allTime = _player.LastGameTimeSec + prevTime;
-                    _player.AllGameTime = DateTime.MinValue.AddSeconds(allTime).ToLongTimeString();
-                    _player.LastGameTimeSec = 0;
-                    PlayerPrefs.SetInt("AllGameTime", allTime);
-                }
-                else
-                {
-                    _player.AllGameTime = _player.LastGameTime;
-                    DateTime averageTime = DateTime.MinValue;
-                    _player.AverageTimeAnswers = averageTime.ToLongTimeString();
-                    PlayerPrefs.SetInt("AllGameTime", 0);
-                }
+                GetTimeStatistics();
             }, error => Debug.LogError(error));
         }
 
+        private void GetTimeStatistics()
+        {
+            if (PlayerPrefs.HasKey("AllGameTime"))
+            {
+                var prevTime = PlayerPrefs.GetInt("AllGameTime");
+
+                var average = _player.AllQuestionsCount != 0 ? prevTime / _player.AllQuestionsCount : prevTime;
+                DateTime averageTime = DateTime.MinValue.AddSeconds(average);
+                _player.AverageTimeAnswers = averageTime.ToLongTimeString();
+
+                int allTime = _player.LastGameTimeSec + prevTime;
+                _player.AllGameTime = DateTime.MinValue.AddSeconds(allTime).ToLongTimeString();
+                _player.LastGameTimeSec = 0;
+                PlayerPrefs.SetInt("AllGameTime", allTime);
+            }
+            else
+            {
+                _player.AllGameTime = _player.LastGameTime;
+                DateTime averageTime = DateTime.MinValue;
+                _player.AverageTimeAnswers = averageTime.ToLongTimeString();
+                PlayerPrefs.SetInt("AllGameTime", 0);
+            }
+        }
 
         public void GetRightAnswersCount()
         {
@@ -207,9 +213,67 @@ namespace Victorina
             PlayFabClientAPI.PurchaseItem(request, result =>
             {
                 PlayerPrefs.SetInt("CurrentStep", 0);
+                PrizeReceived?.Invoke();
             }, error => Debug.Log(error));
         }
 
+
+        public void ConsumeItem(string itemInstanceId)
+        {
+            if (itemInstanceId == null) return;
+            PlayFabClientAPI.ConsumeItem(new ConsumeItemRequest
+            {
+                ConsumeCount = 1,
+                ItemInstanceId = itemInstanceId,
+            },
+            result => ConsumeComplete?.Invoke(),
+            error => Debug.Log(error));
+        }
+
+
+        public void SubmitScore(int playerScore)
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "MonthRank",
+                Value = playerScore
+            },
+            new StatisticUpdate {
+                StatisticName = "WeeklyRank",
+                Value = playerScore
+            },
+        }
+            }, result => Debug.Log("Рекорд обновлен"), error => Debug.Log(error));
+        }
+
+
+        public void AddRightAnswersCount()
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "RightAnswersCount",
+                Value = 1,
+            }
+        }
+            }, result => Debug.Log("Количество правильных ответов обновлено"), error => Debug.Log(error));
+        }
+
+        public void AddQuestionCount()
+        {
+            PlayFabClientAPI.UpdatePlayerStatistics(new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate> {
+            new StatisticUpdate {
+                StatisticName = "QuestionCount",
+                Value = 1,
+            }
+        }
+            }, result => Debug.Log("Количество вопросов обновлено"), error => Debug.Log(error));
+        }
 
     }
 }

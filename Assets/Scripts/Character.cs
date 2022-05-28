@@ -37,5 +37,9 @@ namespace Victorina
         internal bool IsVip;
         internal bool IsNotReclama;
         internal int PriceBitTicket;
+        internal string PlayToken;
+        internal DateTime? StartGameTime;
+        internal bool IsTrain;
+        internal bool RightError;
     }
 }

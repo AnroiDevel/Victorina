@@ -26,37 +26,41 @@ namespace Victorina
 
         private QuestionLoader _questionLoader;
         private bool _isStartBtnListenerComplete;
-
         private Character _player;
         private PlayFabAccountManager _accountManager;
 
-        private void Start()
+
+        private void Awake()
         {
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
             _accountManager = PlayFabAccountManager.GetInstance();
+        }
 
+
+        private void Start()
+        {
             _questionLoader = gameObject.GetComponent<QuestionLoader>();
             _money.text = _player.Money.ToString();
-            if (_player.Tickets > 0)
-                _ticketPricePanel.SetActive(false);
-
-            InitComplete();
         }
+
 
         private void OnEnable()
         {
-            _ticketPricePanel.gameObject.SetActive(false);
+            InitComplete();
             _exitBtn.interactable = true;
-            _enterBtn.interactable = true;
         }
+
 
         private void InitComplete()
         {
+            if (_player.Tickets > 0)
+                _ticketPricePanel.SetActive(false);
+
             if (_enterBtn && !_isStartBtnListenerComplete)
                 CreateClikEvent(_enterBtn);
-
         }
+
 
         private void CreateClikEvent(Button button)
         {
@@ -88,6 +92,7 @@ namespace Victorina
             }
         }
 
+
         private void ContinuePlay()
         {
             _enterBtn.interactable = false;
@@ -95,6 +100,7 @@ namespace Victorina
 
             _isStartBtnListenerComplete = true;
         }
+
 
         private void EnterOnTicket()
         {
@@ -108,6 +114,7 @@ namespace Victorina
             _isStartBtnListenerComplete = true;
         }
 
+
         private void EnterOnVip()
         {
             _enterBtn.interactable = false;
@@ -117,12 +124,14 @@ namespace Victorina
             _isStartBtnListenerComplete = true;
         }
 
+
         private void AnimateEquipTicket()
         {
             _animator.enabled = true;
             _animator.Play("TicketTrash");
-            _animTicket.Play();
+            _animTicket?.Play();
         }
+
 
         public void BuyingTicket()
         {
@@ -167,7 +176,7 @@ namespace Victorina
         private void PlayTockenComplete(PurchaseItemResult result)
         {
             _byeTicket.enabled = false;
-            //_accountManager.ConsumeItem("BitTicket");
+            _player.IsPlay = true;
             StartCoroutine(WaitLoadFirstQuestion(false));
         }
 
