@@ -12,7 +12,6 @@ namespace Victorina
         public bool IsShowAdButtonReady;
 
         [SerializeField] private BonusManager _bonusManager;
-        [SerializeField] private PlayerData _playerData;
 
         [SerializeField] private GameObject _adsLable;
         [SerializeField] private GameObject _bonusOpenPanel;
@@ -40,13 +39,6 @@ namespace Victorina
 
             //Disable the button until the ad is ready to show:
             _showAdButton.interactable = false;
-        }
-
-
-        private void Start()
-        {
-            //if (!_playerData.NotReclama)
-            //    LoadAd();
         }
 
         #endregion
@@ -87,7 +79,7 @@ namespace Victorina
         {
             _bonusOpenPanel.SetActive(true);
 
-            if (_playerData.NotReclama)
+            if (GameData.GetInstance().Player.IsNotReclama)
             {
                 return;
             }

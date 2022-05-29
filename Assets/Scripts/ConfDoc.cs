@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 namespace Victorina
@@ -10,13 +9,19 @@ namespace Victorina
         //const string CONF_LINK = "https://coxcombic-eliminato.000webhostapp.com/Victorina/privacy_victorina_an_ru.html";
         //const string COND_LINK = "https://coxcombic-eliminato.000webhostapp.com/Victorina/terms_victorina_ru.html";
 
-        [SerializeField] private PlayerData _playerData;
+        private Character _player;
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+        }
 
         public void ConfirmConf()
         {
             PlayerPrefs.SetString("Version", Application.version);
 
-            if (_playerData.IsNewPlayer)
+            if (_player.Name == null)
                 SceneManager.LoadScene("Autorization");
             else
                 SceneManager.LoadScene("Victorina");
@@ -28,7 +33,5 @@ namespace Victorina
             if (!string.IsNullOrEmpty(path))
                 Application.OpenURL(path);
         }
-
     }
-
 }

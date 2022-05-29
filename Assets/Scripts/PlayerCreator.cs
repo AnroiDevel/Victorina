@@ -34,6 +34,8 @@ namespace Victorina
 
         private void SetDisplayName(string name)
         {
+            if (name.Length < 3)
+                name += "  ";
             PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
             {
                 DisplayName = name

@@ -902,7 +902,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac221f30cd99dc44d942923efcf851c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _reitImage: {fileID: 381022103}
   _reitImage2: {fileID: 0}
   _junior: {fileID: 5409873317304019141, guid: a1902ea0a687f4749a179364876e31ac, type: 3}
@@ -922,11 +921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 373cb701ad03bca49b2487ee0f6916be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _avatarImg: {fileID: 978574931}
-  _defaultAvatarSprite: {fileID: 21300000, guid: f1eb664b969bfbf42ab839d959e3c695, type: 3}
-  _loadLable: {fileID: 1608930941}
-  _avatarUIRenderer: {fileID: 0}
 --- !u!1 &239427404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1671,7 +1666,6 @@ MonoBehaviour:
   _currentName: {fileID: 495838891}
   _newName: {fileID: 1560809339}
   _inputField: {fileID: 1587163245}
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!114 &558259198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3476,7 +3470,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.15, y: 0.27973402}
   m_AnchorMax: {x: 0.8502963, y: 0.79600006}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1562800380
@@ -5221,9 +5215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f74bc4c32fca605469cba53e47745570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
   _imageAvatar: {fileID: 978574931}
-  _testImageAvatar: {fileID: 0}
+  _imageAvatarRankPanel: {fileID: 0}
   _workedInfoLabel: {fileID: 771436977}
   _usernameText: {fileID: 495838891}
   _moneyText: {fileID: 0}

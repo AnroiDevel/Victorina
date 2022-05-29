@@ -19,12 +19,15 @@ namespace Victorina
         private PlayFabAccountManager _accountManager;
         private Action OnWeeklyRankReseived;
 
+
         private void Start()
         {
             _gameData = GameData.GetInstance();
             _player = _gameData.Player;
+            _player.Avatar = _defaultAvatarTexture;
             _accountManager = PlayFabAccountManager.GetInstance();
             LoginWithAndroid();
+
         }
 
 
@@ -40,6 +43,7 @@ namespace Victorina
             {
                 Debug.Log("Logged in");
                 StartCoroutine(LoadAllAccautInfo());
+                _player.Avatar = _defaultAvatarTexture;
             }, error => Debug.LogError(error.GenerateErrorReport()));
         }
 

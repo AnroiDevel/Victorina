@@ -11,7 +11,7 @@ namespace Victorina
 
         public bool IsShowAdButtonReady;
 
-        [SerializeField] private PlayerData _playerData;
+        //[SerializeField] private PlayerData _playerData;
 
         [SerializeField] private GameObject _adsLable;
 
@@ -45,7 +45,7 @@ namespace Victorina
 
         private void Start()
         {
-            if (!_playerData.NotReclama)
+            if (!GameData.GetInstance().Player.IsNotReclama)
                 LoadAd();
         }
 
@@ -85,12 +85,8 @@ namespace Victorina
         public void ShowAd()
         {
 
-            if (_playerData.NotReclama || _countStepForAds-- > 0)
+            if (GameData.GetInstance().Player.IsNotReclama || _countStepForAds-- > 0)
             {
-                //if (_countStepForAds == 0)
-                //    _adsLable.SetActive(true);
-                //else _adsLable.SetActive(false);
-
                 return;
             }
             _countStepForAds = 3;

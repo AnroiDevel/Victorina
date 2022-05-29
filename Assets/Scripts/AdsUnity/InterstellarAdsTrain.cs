@@ -24,7 +24,8 @@ namespace Victorina
 
         private void Start()
         {
-            LoadAd();
+            if (!GameData.GetInstance().Player.IsNotReclama)
+                LoadAd();
         }
 
         // Load content to the Ad Unit:
@@ -38,6 +39,7 @@ namespace Victorina
         // Show the loaded content in the Ad Unit:
         public void ShowAd()
         {
+            if (GameData.GetInstance().Player.IsNotReclama) return;
             if (_countStepForAds-- > 0) return;
             _countStepForAds = 3;
 

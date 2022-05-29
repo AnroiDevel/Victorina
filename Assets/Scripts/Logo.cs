@@ -7,7 +7,6 @@ namespace Victorina
     public class Logo : MonoBehaviour
     {
         [SerializeField] private float _time;
-        [SerializeField] private PlayerData _playerData;
 
         private Character _player;
 
@@ -54,8 +53,11 @@ namespace Victorina
 
             if (IsNewVersionApp())
                 sceneLoader.LoadGameScene("Confidencial");
-            else if (_player.Name.Length == 16)
+            else if (_player.Name == null)
+            {
+                PlayerPrefs.DeleteKey("AvatarUrl");
                 sceneLoader.LoadGameScene("Autorization");
+            }
             else
                 sceneLoader.LoadGameScene("Victorina");
         }

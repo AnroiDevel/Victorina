@@ -9,7 +9,6 @@ namespace Victorina
 {
     public class ProfileManager : MonoBehaviour
     {
-        [SerializeField] private PlayerData _playerData;
         [SerializeField] private Image _imageAvatar;
         [SerializeField] private Image _imageAvatarRankPanel;
 
@@ -26,13 +25,17 @@ namespace Victorina
         private Character _player;
         private GameData _gameData;
 
+        private void Awake()
+        {
+            _gameData = GameData.GetInstance();
+            _player = _gameData.Player;
+        }
+
 
         private void Start()
         {
             PlayFabAccountManager.GetInstance().GetPlayerInventory();
 
-            _gameData = GameData.GetInstance();
-            _player = _gameData.Player;
 
             if (_moneyText)
                 _moneyText.text = _player.Money.ToString();
@@ -51,39 +54,6 @@ namespace Victorina
             }
         }
 
-        private void TicketUpdate()
-        {
-            if (_ticketText)
-                _ticketText.text = _playerData.TicketsBit.ToString();
-        }
-
-        private void OnDisable()
-        {
-            _playerData.BitInfoUpdate -= MoneyUpdate;
-            _playerData.TicketInfoUpdate -= TicketUpdate;
-        }
-
-        private void MoneyUpdate()
-        {
-            _moneyText.text = _playerData.Bit.ToString();
-        }
-
-        //public void VerificationAccount()
-        //{
-        //    var newUserReq = new AddUsernamePasswordRequest
-        //    {
-        //        Username = _username,
-        //        Password = _pass,
-        //        Email = _mail
-        //    };
-
-        //    PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
-
-        //    _playerData.Name = _username;
-        //    _playerData.Email = _mail;
-        //    _playerData.Password = _pass;
-
-        //}
 
         private void OnCreateSuccess(AddUsernamePasswordResult result)
         {
@@ -106,14 +76,6 @@ namespace Victorina
             _pass = pass;
         }
 
-        //public void SignIn()
-        //{
-        //    PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
-        //    {
-        //        Username = _username,
-        //        Password = _pass
-        //    }, OnSignInSuccess, OnFailure);
-        //}
 
         private void OnSignInSuccess(LoginResult result)
         {
