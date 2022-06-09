@@ -39,7 +39,8 @@ namespace Victorina
         // Show the loaded content in the Ad Unit:
         public void ShowAd()
         {
-            if (GameData.GetInstance().Player.IsNotReclama) return;
+            var player = GameData.GetInstance().Player;
+            if (player.IsNotReclama | player.IsVip) return;
             if (_countStepForAds-- > 0) return;
             _countStepForAds = 3;
 

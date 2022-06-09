@@ -288,6 +288,7 @@ public class YandexAppMetricaAndroid : BaseYandexAppMetrica
         _metricaClass.CallStatic("reportUserProfile", userProfile.ToAndroidUserProfile());
     }
 
+    [Obsolete]
     public override void ReportRevenue(YandexAppMetricaRevenue revenue)
     {
         _metricaClass.CallStatic("reportRevenue", revenue.ToAndroidRevenue());
@@ -541,6 +542,7 @@ public static class YandexAppMetricaExtensionsAndroid
         return currency;
     }
 
+    [Obsolete]
     public static AndroidJavaObject ToAndroidRevenue(this YandexAppMetricaRevenue self)
     {
         AndroidJavaObject revenue;

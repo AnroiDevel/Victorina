@@ -103,7 +103,7 @@ namespace Victorina
                     InventoryReceived?.Invoke();
                 }
                 ,
-                error => Debug.LogError(error.GenerateErrorReport()));
+                error => GetPlayerInventory());
         }
 
 
@@ -136,7 +136,7 @@ namespace Victorina
             }, error => Debug.LogError(error));
         }
 
-        private void GetTimeStatistics()
+        public void GetTimeStatistics()
         {
             if (PlayerPrefs.HasKey("AllGameTime"))
             {

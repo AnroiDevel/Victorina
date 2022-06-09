@@ -20,7 +20,7 @@ namespace Victorina
         private string[] _answersTxt;
 
 
-        private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
+        //private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
         private const string UrlTextFile2 = "http://a0669097.xsph.ru/Victorina/";
         private const string EmptyAnswerError = "Ответ не может быть пустым";
         private const string EmptyQuestionError = "Слишком короткий вопрос\n";

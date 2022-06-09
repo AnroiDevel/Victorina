@@ -41,5 +41,6 @@ namespace Victorina
         internal DateTime? StartGameTime;
         internal bool IsTrain;
         internal bool RightError;
+        internal int MarkApp;
     }
 }

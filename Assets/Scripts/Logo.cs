@@ -24,6 +24,8 @@ namespace Victorina
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
+
+            Test();
         }
 
 
@@ -52,7 +54,10 @@ namespace Victorina
             var sceneLoader = GetComponent<SceneLoader>();
 
             if (IsNewVersionApp())
+            {
                 sceneLoader.LoadGameScene("Confidencial");
+                PlayerPrefs.SetInt("MarkReview", 0);
+            }
             else if (_player.Name == null)
             {
                 PlayerPrefs.DeleteKey("AvatarUrl");
@@ -60,6 +65,17 @@ namespace Victorina
             }
             else
                 sceneLoader.LoadGameScene("Victorina");
+        }
+
+        private void Test()
+        {
+            double a = 4.52;
+
+            int b = (int)a;
+
+            double c = b;
+
+            Debug.Log(c);
         }
     }
 }

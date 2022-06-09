@@ -84,7 +84,7 @@ namespace Victorina
         // Implement a method to execute when the user clicks the button:
         public void ShowAd()
         {
-
+            if (GameData.GetInstance().Player.IsVip) return;
             if (GameData.GetInstance().Player.IsNotReclama || _countStepForAds-- > 0)
             {
                 return;

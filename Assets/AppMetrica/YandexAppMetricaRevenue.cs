@@ -23,6 +23,7 @@ public struct YandexAppMetricaRevenue
         Payload = null;
     }
 
+    [Obsolete]
     public YandexAppMetricaRevenue(decimal priceDecimal, string currency) : this()
     {
         Price = null;

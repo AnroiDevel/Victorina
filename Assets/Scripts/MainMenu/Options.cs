@@ -1,10 +1,24 @@
 using UnityEngine;
 
 
-public class Options : MonoBehaviour
+namespace Victorina
 {
-    public void SendMail()
+    public class Options : MonoBehaviour
     {
-        Application.OpenURL("mailto:anroidevel@gmail.com");
+        [SerializeField] private GameObject _rewievPanel;
+
+        public void SendMail()
+        {
+            Application.OpenURL("mailto:anroidevel@gmail.com");
+        }
+
+        public void GetMarkApp()
+        {
+            var mark = GameData.GetInstance().Player.MarkApp;
+            if(mark < 6) 
+                _rewievPanel.SetActive(true);
+            
+        }
     }
+
 }

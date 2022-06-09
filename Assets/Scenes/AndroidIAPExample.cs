@@ -108,7 +108,6 @@ public class AndroidIAPExample : MonoBehaviour, IStoreListener
         foreach (var item in Catalog)
         {
             builder.AddProduct(item.ItemId, ProductType.Consumable);
-
         }
 
         // Trigger IAP service initialization

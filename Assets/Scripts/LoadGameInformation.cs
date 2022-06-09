@@ -28,6 +28,9 @@ namespace Victorina
             _accountManager = PlayFabAccountManager.GetInstance();
             LoginWithAndroid();
 
+            if (PlayerPrefs.HasKey("MarkApp"))
+                _player.MarkApp = PlayerPrefs.GetInt("MarkApp");
+
         }
 
 

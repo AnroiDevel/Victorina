@@ -20,14 +20,15 @@ namespace Victorina
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
             _player.IsTrain = false;
+            _accountManager.InventoryReceived += OnGetInventory;
+            _accountManager.ConsumeComplete += OnConsumeComplete;
+            _accountManager.PrizeReceived += OnGetPrize;
         }
 
 
         private void OnEnable()
         {
-            _accountManager.InventoryReceived += OnGetInventory;
-            _accountManager.ConsumeComplete += OnConsumeComplete;
-            _accountManager.PrizeReceived += OnGetPrize;
+            //_accountManager.ConsumeComplete += OnConsumeComplete;
         }
 
         private void OnGetPrize()
@@ -37,23 +38,27 @@ namespace Victorina
 
         private void OnGetInventory()
         {
-            if (_player.PlayToken != null)
-                GameOver();
+            //if (_player.PlayToken != null)
+            //    GameOver();
         }
 
-        private void OnDisable()
-        {
-            _accountManager.ConsumeComplete -= OnConsumeComplete;
-        }
+        //private void OnDisable()
+        //{
+        //    _accountManager.ConsumeComplete -= OnConsumeComplete;
+        //}
+
 
 
         private void OnConsumeComplete()
         {
             _player.LastGameTime = DateTime.MinValue.AddSeconds((int)(DateTime.UtcNow - _player.StartGameTime).Value.TotalSeconds).ToLongTimeString();
-            _timeGame.text = _player.LastGameTime;
+            _player.LastGameTimeSec = (int)(DateTime.UtcNow - _player.StartGameTime).Value.TotalSeconds;
+            if (_timeGame)
+                _timeGame.text = _player.LastGameTime;
             PlayerPrefs.SetInt("CurrentStep", 0);
             _player.PlayToken = null;
             _player.IsPlay = false;
+            Debug.Log("Билет удален");
         }
 
 
@@ -65,6 +70,7 @@ namespace Victorina
 
         public void GetWinAndGameOver()
         {
+            GameOver();
             var level = PlayerPrefs.GetInt("CurrentStep");
             _accountManager.GetPrize(level);
             _accountManager.SubmitScore(level);
