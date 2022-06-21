@@ -9,32 +9,47 @@ namespace Victorina
 {
     public class PlayFabAccountManager
     {
+        #region Fields
+
         private static PlayFabAccountManager _instance;
 
-        private PlayFabLogin _playFabLogin;
         private GameData _gameData;
         private Character _player;
+
+        #endregion
+
+        public PlayFabAccountManager()
+        {
+            _gameData = GameData.GetInstance();
+            _player = _gameData.Player;
+        }
+
+        #region Properties
+
+        public static PlayFabAccountManager Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new PlayFabAccountManager();
+                return _instance;
+            }
+        }
+
+        #endregion
+
+
+        #region Events
 
         public Action WeeklyRankReceived;
         public Action InventoryReceived;
         public Action ConsumeComplete;
         public Action PrizeReceived;
 
-        public PlayFabAccountManager()
-        {
-            _playFabLogin = new PlayFabLogin();
-            _gameData = GameData.GetInstance();
-            _player = _gameData.Player;
-        }
+        #endregion
 
 
-        public static PlayFabAccountManager GetInstance()
-        {
-            if (_instance == null)
-                _instance = new PlayFabAccountManager();
-            return _instance;
-        }
-
+        #region Methods
 
         public void GetLeaderBoardWeeklyRank(string playFabID)
         {
@@ -52,7 +67,6 @@ namespace Victorina
                 },
                 error => Debug.LogError(error));
         }
-
 
         public void GetPlayerInventory()
         {
@@ -106,7 +120,6 @@ namespace Victorina
                 error => GetPlayerInventory());
         }
 
-
         public void GetTimeRechargeBonus()
         {
             PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(),
@@ -118,7 +131,6 @@ namespace Victorina
                 },
                 error => Debug.LogError(error.GenerateErrorReport()));
         }
-
 
         public void GetQuestionsCount()
         {
@@ -171,7 +183,6 @@ namespace Victorina
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => _player.RightAnswersCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
         }
 
-
         public void GetCatalogItem(string catalogVersion)
         {
             PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = catalogVersion },
@@ -189,7 +200,6 @@ namespace Victorina
                 }, error => Debug.LogError(error));
         }
 
-
         public void SetDisplayName(string name)
         {
             PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
@@ -197,7 +207,6 @@ namespace Victorina
                 DisplayName = name
             }, result => _player.Name = name, error => Debug.LogError(error.GenerateErrorReport()));
         }
-
 
         public void GetPrize(int level)
         {
@@ -217,7 +226,6 @@ namespace Victorina
             }, error => Debug.Log(error));
         }
 
-
         public void ConsumeItem(string itemInstanceId)
         {
             if (itemInstanceId == null) return;
@@ -229,7 +237,6 @@ namespace Victorina
             result => ConsumeComplete?.Invoke(),
             error => Debug.Log(error));
         }
-
 
         public void SubmitScore(int playerScore)
         {
@@ -247,7 +254,6 @@ namespace Victorina
         }
             }, result => Debug.Log("Рекорд обновлен"), error => Debug.Log(error));
         }
-
 
         public void AddRightAnswersCount()
         {
@@ -275,5 +281,6 @@ namespace Victorina
             }, result => Debug.Log("Количество вопросов обновлено"), error => Debug.Log(error));
         }
 
+        #endregion    
     }
 }

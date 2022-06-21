@@ -5,11 +5,17 @@ namespace Victorina
 {
     public static class ThemaConrtoller
     {
+        #region Fields
+
         public static Thema ActiveThema;
 
         private static Thema[] _themas;
 
+        #endregion
+
         static ThemaConrtoller() { ThemaActivation(); }
+
+        #region Methods
 
         public static void ThemaActivation()
         {
@@ -41,12 +47,13 @@ namespace Victorina
 
         public static void SetActiveThema(string name)
         {
-            foreach(var tema in _themas)
+            foreach (var tema in _themas)
             {
-                if(tema.name == name)
+                if (tema.name == name)
                     ActiveThema = tema;
             }
         }
-    }
 
+        #endregion   
+    }
 }

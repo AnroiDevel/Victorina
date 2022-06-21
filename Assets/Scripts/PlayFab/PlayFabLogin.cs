@@ -1,19 +1,17 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 namespace Victorina
 {
-    public  class PlayFabLogin
+    public class PlayFabLogin
     {
         private const string TitleId = "D2AD8";
 
+        #region Methods
 
-        public  void LoginWithAndroid()
+        public void LoginWithAndroid()
         {
             if (PlayFabClientAPI.IsClientLoggedIn()) return;
 
@@ -29,5 +27,6 @@ namespace Victorina
             }, error => Debug.LogError(error.GenerateErrorReport()));
         }
 
+        #endregion    
     }
 }

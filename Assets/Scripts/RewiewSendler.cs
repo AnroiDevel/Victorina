@@ -8,8 +8,15 @@ namespace Victorina
 {
     public class RewiewSendler : MonoBehaviour
     {
+        #region Fields
+
         private const string Uri = "http://a0669097.xsph.ru/Victorina/Question/SetRewiev.php";
         [SerializeField] private Text _textRewiev;
+
+        #endregion
+
+
+        #region Methods
 
         public void SendRewievText()
         {
@@ -27,6 +34,7 @@ namespace Victorina
             if (request.result != UnityWebRequest.Result.Success)
                 Debug.Log("Ошибка");
         }
-    }
 
+        #endregion    
+    }
 }

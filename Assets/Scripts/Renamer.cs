@@ -6,22 +6,29 @@ namespace Victorina
 {
     public class Renamer : MonoBehaviour
     {
-        private GameObject _profilePanel;
+        #region Fields
+
         [SerializeField] private Button _renameBtn;
         [SerializeField] private Text _currentName;
         [SerializeField] private Text _newName;
         [SerializeField] private InputField _inputField;
 
+        private GameObject _profilePanel;
         private Button[] _othersBtns;
 
         private PlayFabAccountManager _accountManager;
         private Character _player;
 
+        #endregion
+
+
+        #region UnityMethods
+
         private void Awake()
         {
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
-            _accountManager = PlayFabAccountManager.GetInstance();
+            _accountManager = PlayFabAccountManager.Instance;
         }
 
         private void Start()
@@ -34,8 +41,13 @@ namespace Victorina
 
         private void OnEnable()
         {
-                _currentName.text = _player.Name;
+            _currentName.text = _player.Name;
         }
+
+        #endregion
+
+
+        #region Methods
 
         public void Switcher()
         {
@@ -74,7 +86,6 @@ namespace Victorina
                     btn.interactable = setActivate;
         }
 
+        #endregion    
     }
-
-
 }

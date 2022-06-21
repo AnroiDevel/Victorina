@@ -1,6 +1,5 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +9,8 @@ namespace Victorina
 {
     public class TicketManager : MonoBehaviour
     {
+        #region Fields
+
         private const string TicketEnter = "вход по билету";
         private const string ContinueGame = "продолжить игру";
         private const string VipEnter = "VIP вход";
@@ -29,18 +30,21 @@ namespace Victorina
         [SerializeField] private AudioSource _byeTicket;
 
         private QuestionLoader _questionLoader;
-        private bool _isStartBtnListenerComplete;
         private Character _player;
         private PlayFabAccountManager _accountManager;
+        private bool _isStartBtnListenerComplete;
 
+        #endregion
+
+
+        #region UnityMethods
 
         private void Awake()
         {
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
-            _accountManager = PlayFabAccountManager.GetInstance();
+            _accountManager = PlayFabAccountManager.Instance;
         }
-
 
         private void Start()
         {
@@ -49,14 +53,16 @@ namespace Victorina
             _accountManager.GetPlayerInventory();
         }
 
-
         private void OnEnable()
         {
             InitComplete();
             _exitBtn.interactable = true;
         }
 
+        #endregion
 
+
+        #region Methods
         private void InitComplete()
         {
             if (_player.Tickets > 0)
@@ -65,7 +71,6 @@ namespace Victorina
             if (_enterBtn && !_isStartBtnListenerComplete)
                 CreateClikEvent(_enterBtn);
         }
-
 
         private void CreateClikEvent(Button button)
         {
@@ -86,10 +91,11 @@ namespace Victorina
                 if (_player.Money < _player.PriceBitTicket)
                 {
                     button.interactable = false;
+#if UNITY_EDITOR
                     Debug.Log("Недостаточно средств для покупки билета");
+#endif          
                     return;
                 }
-
             }
             else if (!_player.IsPlay && _player.Tickets > 0)
             {
@@ -104,7 +110,6 @@ namespace Victorina
             }
         }
 
-
         private void ContinuePlay()
         {
             _enterBtn.interactable = false;
@@ -113,7 +118,6 @@ namespace Victorina
             _progressPanel.SetActive(true);
             _welcomePanel.SetActive(false);
         }
-
 
         private void EnterOnTicket()
         {
@@ -126,7 +130,6 @@ namespace Victorina
             _welcomePanel.SetActive(false);
         }
 
-
         private void EnterOnVip()
         {
             _enterBtn.interactable = false;
@@ -138,14 +141,12 @@ namespace Victorina
             _welcomePanel.SetActive(false);
         }
 
-
         private void AnimateEquipTicket()
         {
             _animator.enabled = true;
             _animator.Play("TicketTrash");
             _animTicket?.Play();
         }
-
 
         public void BuyingTicket()
         {
@@ -191,7 +192,9 @@ namespace Victorina
         {
             BuyingPlayTocken("BT", 0);
             _isStartBtnListenerComplete = true;
+#if UNITY_EDITOR
             Debug.Log("Билет куплен");
+#endif        
         }
 
         private void SetPriceTicket(string price)
@@ -212,6 +215,6 @@ namespace Victorina
             _welcomePanel.SetActive(false);
         }
 
+        #endregion   
     }
-
 }

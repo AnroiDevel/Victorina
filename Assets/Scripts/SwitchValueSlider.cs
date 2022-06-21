@@ -6,9 +6,16 @@ namespace Victorina
 {
     public class SwitchValueSlider : MonoBehaviour
     {
+        #region Fields
+
         private Slider _slider;
         [SerializeField] private Image _imageFill;
         [SerializeField] private AudioSource _audioSource;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
@@ -20,6 +27,12 @@ namespace Victorina
             else _slider.direction = (Slider.Direction)1;
             _imageFill.color = _slider.direction > 0 ? Color.green : Color.red;
         }
+
+        #endregion
+
+
+        #region Methods
+
         public void SwithSliderDir()
         {
             if (_slider != null && _imageFill != null)
@@ -34,8 +47,8 @@ namespace Victorina
                 if (PlayerPrefs.GetInt("Sfx") != 0)
                     _audioSource.Play();
             }
-            else print("No slider or image");
         }
-    }
 
+        #endregion   
+    }
 }

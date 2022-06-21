@@ -32,7 +32,7 @@ namespace Victorina
 
         #region Methods
 
-        public void PickImage(int maxSize)
+        public void PickImage()
         {
             NativeGallery.Permission permission = NativeGallery.GetImageFromGallery((path) =>
             {

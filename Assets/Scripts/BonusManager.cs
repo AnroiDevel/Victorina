@@ -35,7 +35,7 @@ namespace Victorina
             _gameData = GameData.GetInstance();
             _bonusTimer = BonusTimer.GetInstance();
             _player = _gameData.Player;
-            _accountManager = PlayFabAccountManager.GetInstance();
+            _accountManager = PlayFabAccountManager.Instance;
 
         }
 

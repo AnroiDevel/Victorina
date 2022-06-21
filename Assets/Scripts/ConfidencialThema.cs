@@ -10,8 +10,7 @@ namespace Victorina
 
         private void Start()
         {
-            _backConf.sprite = ThemaConrtoller.ActiveThema?.Confidential;
+            _backConf.sprite = ThemaConrtoller.ActiveThema != null ? ThemaConrtoller.ActiveThema.Confidential : null;
         }
     }
-
 }

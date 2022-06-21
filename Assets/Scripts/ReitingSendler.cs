@@ -1,22 +1,26 @@
 using Google.Play.Review;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 using Victorina;
 
 
 public class ReitingSendler : MonoBehaviour
 {
+    #region Fields
+
     [SerializeField] private RateStarsSelector _rateStars;
     [SerializeField] private GameObject _reportPanel;
     [SerializeField] private GameObject _thanksPanel;
     private ReviewManager _reviewManager;
     private PlayReviewInfo _playReviewInfo;
 
+    #endregion
 
+
+    #region Methods
     public void Review()
     {
-        var mark = 0;
+        int mark;
         if (PlayerPrefs.HasKey("MarkReview"))
         {
             mark = PlayerPrefs.GetInt("MarkReview");
@@ -31,7 +35,6 @@ public class ReitingSendler : MonoBehaviour
             StartCoroutine(OpenReview());
         }
         else _reportPanel.SetActive(true);
-
     }
 
     private IEnumerator OpenReview()
@@ -41,20 +44,14 @@ public class ReitingSendler : MonoBehaviour
         var requestFlowOperation = _reviewManager.RequestReviewFlow();
         yield return requestFlowOperation;
         if (requestFlowOperation.Error != ReviewErrorCode.NoError)
-        {
-            // Log error. For example, using requestFlowOperation.Error.ToString().
             yield break;
-        }
         _playReviewInfo = requestFlowOperation.GetResult();
 
         var launchFlowOperation = _reviewManager.LaunchReviewFlow(_playReviewInfo);
         yield return launchFlowOperation;
-        _playReviewInfo = null; // Reset the object
+        _playReviewInfo = null;
         if (launchFlowOperation.Error != ReviewErrorCode.NoError)
-        {
-            // Log error. For example, using requestFlowOperation.Error.ToString().
             yield break;
-        }
         else
         {
             _thanksPanel.SetActive(true);
@@ -62,4 +59,5 @@ public class ReitingSendler : MonoBehaviour
         }
     }
 
+    #endregion
 }

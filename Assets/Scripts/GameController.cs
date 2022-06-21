@@ -48,7 +48,6 @@ namespace Victorina
         private Question _currentQ;
         private Animator _logoUnityRotate;
 
-
         #endregion
 
 
@@ -60,7 +59,6 @@ namespace Victorina
             //_logoUnityRotate = _logoUnity.GetComponent<Animator>();
             GetText();
         }
-
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -70,8 +68,7 @@ namespace Victorina
         #endregion
 
 
-
-        #region Public_Metods
+        #region Metods
 
         public void DeleteOneErrorAnswer()
         {
@@ -79,7 +76,6 @@ namespace Victorina
             _errorAnswerGO = _answers[randomIndexErrorAnswer].GetComponentInParent<Button>().gameObject;
             _errorAnswerGO.SetActive(false);
         }
-
 
         public void NextQuestion()
         {
@@ -114,7 +110,6 @@ namespace Victorina
                 indexList.Add(countAnswers++);
             }
 
-
             while (indexList.Count > 0)
             {
                 var randomIndexAnswers = Random.Range(0, indexList.Count);
@@ -147,12 +142,10 @@ namespace Victorina
 
                 QuestionsListGenerate(allQuestions);
             }
-
         }
 
         public void Result(int index)
         {
-
             if (_answers[index].text == _currentQ.Answers[0])
             {
                 _commentText.text = "<color=green>" + Yes + "</color>" + '\n' + _currentQ.Comment;
@@ -179,11 +172,6 @@ namespace Victorina
             Application.Quit();
         }
 
-        #endregion
-
-
-        #region Private_Metods
-
         private void OnFiveAnswer()
         {
             if (_errorAnswerGO && !_errorAnswerGO.activeSelf)
@@ -202,12 +190,10 @@ namespace Victorina
                     yield return new WaitForSeconds(0.1f);
                     if (ind + 1 >= _load.Length)
                         ind = 0;
-
                 }
 
             yield return new WaitForSeconds(1);
             _logoUnityRotate.enabled = false;
-
             _razrabBtn.SetActive(true);
             _start.GetComponentInChildren<Text>().text = StartStr;
             _start.interactable = true;
@@ -217,7 +203,6 @@ namespace Victorina
         {
             UnityWebRequest unityWebRequest = UnityWebRequest.Get(url);
 
-            //StartCoroutine(ProgressLoading(unityWebRequest));
             yield return unityWebRequest.SendWebRequest();
 
             if (unityWebRequest.result == UnityWebRequest.Result.ConnectionError || unityWebRequest.result == UnityWebRequest.Result.ProtocolError)
@@ -265,9 +250,6 @@ namespace Victorina
             }
         }
 
-        #endregion
-
-
         public void BaseReplace()
         {
             StartCoroutine(Post());
@@ -277,7 +259,6 @@ namespace Victorina
         {
             for (var i = 0; i < _questions.Count - 2; i++)
             {
-
                 var form = new WWWForm();
                 form.AddField("question", _questions[i].TextQuestion);
                 form.AddField("ansverTrue", _questions[i].Answers[0]);
@@ -289,10 +270,8 @@ namespace Victorina
                 UnityWebRequest unityWebRequest = UnityWebRequest.Post("https://coxcombic-eliminato.000webhostapp.com/Victorina/", form);
                 yield return unityWebRequest.SendWebRequest();
             }
-            print("ujnjdj");
         }
 
-
+        #endregion
     }
-
 }

@@ -1,9 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-
-
 namespace Victorina
 {
     [System.Serializable]
@@ -22,6 +16,5 @@ namespace Victorina
         {
             Player = new Character();
         }
-
     }
 }

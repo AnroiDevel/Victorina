@@ -6,27 +6,36 @@ namespace Victorina
 {
     internal class BonusTimer
     {
+        #region Fields
+
         private const string Complite = "Готово";
         private static BonusTimer _instance;
         private bool _isActiveTimer;
 
         GameData _gameData;
 
+        #endregion
+
+
+        #region ClassLifeCycles
         public BonusTimer()
         {
             _gameData = GameData.GetInstance();
             _isActiveTimer = false;
         }
+        public static BonusTimer GetInstance() => _instance ??= new BonusTimer();
 
+        #endregion
+
+
+        #region Properties
 
         public string LeftTime { get; private set; }
 
+        #endregion
 
-        public static BonusTimer GetInstance()
-        {
-            return _instance ??= new BonusTimer();
-        }
 
+        #region Methods
 
         public async void StartTimer(int timeSec)
         {
@@ -41,7 +50,8 @@ namespace Victorina
             }
             _isActiveTimer &= false;
             LeftTime = Complite;
-
         }
+
+        #endregion 
     }
 }

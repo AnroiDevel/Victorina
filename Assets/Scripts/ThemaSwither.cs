@@ -24,13 +24,4 @@ namespace Victorina
             _profileThema.ThemaApply();
         }
     }
-
-    public enum ThemaType
-    {
-        ClassicThema,
-        FuturismThema,
-        NeonThema,
-        GreenThema,
-    }
-
 }

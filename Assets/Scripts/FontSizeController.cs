@@ -7,13 +7,25 @@ namespace Victorina
 {
     public class FontSizeController : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private Text _presetText;
         [SerializeField] private Text[] _postsetText;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
             StartCoroutine(SetOptimalFontSize());
         }
+
+        #endregion
+
+
+        #region Methods
 
         private IEnumerator SetOptimalFontSize()
         {
@@ -26,5 +38,7 @@ namespace Victorina
                 text.resizeTextMaxSize = fontSize;
             }
         }
+
+        #endregion    
     }
 }

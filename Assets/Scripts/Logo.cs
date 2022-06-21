@@ -6,9 +6,16 @@ namespace Victorina
 {
     public class Logo : MonoBehaviour
     {
-        [SerializeField] private float _time;
+        #region Fields
 
+        [SerializeField] private float _time;
+        [SerializeField] private Thema _defaultThema;
         private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Awake()
         {
@@ -18,24 +25,24 @@ namespace Victorina
 
         private void Start()
         {
-            ThemaConrtoller.SetActiveThema("GreenThema");
+            ThemaConrtoller.SetActiveThema(_defaultThema.name);
 
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
-
-            Test();
         }
 
+        #endregion
+
+
+        #region Methods
 
         private IEnumerator LogoPlay()
         {
             yield return new WaitForSeconds(_time);
-
             LoadGame();
         }
-
 
         private bool IsNewVersionApp()
         {
@@ -47,7 +54,6 @@ namespace Victorina
 
             return !currentVersion.Equals(prevVersion);
         }
-
 
         private void LoadGame()
         {
@@ -67,15 +73,6 @@ namespace Victorina
                 sceneLoader.LoadGameScene("Victorina");
         }
 
-        private void Test()
-        {
-            double a = 4.52;
-
-            int b = (int)a;
-
-            double c = b;
-
-            Debug.Log(c);
-        }
+        #endregion    
     }
 }

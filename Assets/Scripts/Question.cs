@@ -7,7 +7,5 @@ namespace Victorina
         public string[] Answers;
 
         public string Comment;
-
     }
-
 }

@@ -6,9 +6,10 @@ namespace Victorina
 {
     public class AvatarImageController : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private Image _reitImage;
         [SerializeField] private Image _reitImage2;
-
         [SerializeField] private Sprite _junior;
         [SerializeField] private Sprite _pro;
         [SerializeField] private Sprite _master;
@@ -17,6 +18,11 @@ namespace Victorina
 
         private Character _player;
 
+        #endregion
+
+
+        #region UnityMethods
+
         private void Start()
         {
             var gameData = GameData.GetInstance();
@@ -24,6 +30,10 @@ namespace Victorina
             SetReitImage();
         }
 
+        #endregion
+
+
+        #region Methods
 
         public void SetReitImage()
         {
@@ -45,6 +55,7 @@ namespace Victorina
             if (_reitImage2)
                 _reitImage2.sprite = _reitImage.sprite;
         }
-    }
 
+        #endregion   
+    }
 }

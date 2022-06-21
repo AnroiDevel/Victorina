@@ -8,15 +8,17 @@ namespace Victorina
 {
     public class QuitApp : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private GameObject _exitWindow;
         [SerializeField] private GameObject _mainMenuWindow;
-
         [SerializeField] private GameObject[] _otherPanels;
+
+        #endregion
 
         public Action ActivateMainWindow;
 
-
-
+        #region UnityMethods
 
         private void Update()
         {
@@ -24,7 +26,6 @@ namespace Victorina
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                     _exitWindow.SetActive(true);
-
             }
             else if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -33,13 +34,13 @@ namespace Victorina
                 _mainMenuWindow.SetActive(true);
                 ActivateMainWindow?.Invoke();
             }
-
         }
+
+        #endregion
 
         public void Exit()
         {
             Application.Quit();
         }
     }
-
 }

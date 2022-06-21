@@ -6,6 +6,8 @@ namespace Victorina
 {
     public class GameThema : MonoBehaviour
     {
+        #region Fields
+
         private const string Key = "Music";
         [SerializeField] private PlayerData _playerData;
 
@@ -44,6 +46,10 @@ namespace Victorina
 
         [SerializeField] private AudioSource _crownTuk;
 
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
@@ -63,7 +69,6 @@ namespace Victorina
             if (activeThema == null) return;
 
             _backgroundWelcomeGameImg.sprite = activeThema.GameWelcomePanel;
-
             _gamePanel.sprite = activeThema.GamePanel;
             _helpBtn.sprite = activeThema.HelpBtnImg;
             _exitBtn.sprite = activeThema.ExitBtnImg;
@@ -98,7 +103,8 @@ namespace Victorina
 
             foreach (var img in _welcomeBtns)
                 img.sprite = activeThema.WinPanelBtn;
-
         }
+
+        #endregion    
     }
 }

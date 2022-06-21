@@ -8,25 +8,29 @@ namespace Victorina
 {
     public class LeaderBoardsController : MonoBehaviour
     {
-        [SerializeField] private PlayerData _playerData;
+        #region Fields
 
+        [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _monthReiting;
         [SerializeField] private Text _weekReiting;
         [SerializeField] private Text _pointsLable;
         [SerializeField] private Text _questionsCnt;
         [SerializeField] private Text _rightAnswersCnt;
-
         [SerializeField] private Text _averageTimeAnswers;
         [SerializeField] private Text _allTimeGame;
 
         private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Awake()
         {
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
         }
-
 
         private void Start()
         {
@@ -37,17 +41,12 @@ namespace Victorina
             _rightAnswersCnt.text = _player.RightAnswersCount.ToString();
             _averageTimeAnswers.text = _player.AverageTimeAnswers;
             _allTimeGame.text = _player.AllGameTime;
-
         }
 
-        //private void OnEnable()
-        //{
-        //    _pointsLable.text = _playerData.Bit.ToString();
-        //    _questionsCnt.text = _playerData.AllQuestionsCount.ToString();
-        //    _rightAnswersCnt.text = _playerData.RightAnswersCount.ToString();
+        #endregion
 
 
-        //}
+        #region Methods
 
         private void GetLeaderBoardMonthRank()
         {
@@ -86,8 +85,6 @@ namespace Victorina
             _player.MonthRank = rang;
         }
 
-
-
+        #endregion    
     }
-
 }

@@ -77,7 +77,13 @@ namespace Victorina
 
         #endregion
 
+
+        #region Properties
+
         public bool IsLoadComplete { get; private set; }
+
+        #endregion
+
 
         #region UnityMethods
 
@@ -85,7 +91,7 @@ namespace Victorina
         {
             var gameData = GameData.GetInstance();
             _player = gameData.Player;
-            _accountManager = PlayFabAccountManager.GetInstance();
+            _accountManager = PlayFabAccountManager.Instance;
         }
 
         private void Start()

@@ -6,6 +6,8 @@ namespace Victorina
 {
     public class QuestionRedactorThema : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private Image _backgroundQuestionRedactorPanel;
         [SerializeField] private Image _helpBtn;
         [SerializeField] private Image _exitBtn;
@@ -13,9 +15,7 @@ namespace Victorina
         [SerializeField] private Image _questionPanel;
         [SerializeField] private Image[] _answersFields;
         [SerializeField] private Image _sendBtn;
-
         [SerializeField] private Image _helpPanel;
-
         [SerializeField] private Text _headerTop;
         [SerializeField] private Text _headerBottom;
         [SerializeField] private Text[] _lettersCnt;
@@ -23,6 +23,10 @@ namespace Victorina
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _send;
 
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
@@ -51,11 +55,12 @@ namespace Victorina
 
             _question.color = activeThema.QuestionColor;
 
-            foreach(var answer in _answers)
+            foreach (var answer in _answers)
                 answer.color = activeThema.AnswersColor;
 
             _send.color = activeThema.SendBtnColor;
-
         }
+
+        #endregion   
     }
 }

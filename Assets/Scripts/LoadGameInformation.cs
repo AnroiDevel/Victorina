@@ -10,6 +10,8 @@ namespace Victorina
 {
     public class LoadGameInformation : MonoBehaviour
     {
+        #region Fields
+
         private const string TitleId = "D2AD8";
 
         [SerializeField] private Sprite _defaultAvatarTexture;
@@ -19,20 +21,31 @@ namespace Victorina
         private PlayFabAccountManager _accountManager;
         private Action OnWeeklyRankReseived;
 
+        #endregion
 
-        private void Start()
+
+        #region UnityMethods
+
+        private void Awake()
         {
             _gameData = GameData.GetInstance();
             _player = _gameData.Player;
+        }
+
+        private void Start()
+        {
             _player.Avatar = _defaultAvatarTexture;
-            _accountManager = PlayFabAccountManager.GetInstance();
+            _accountManager = PlayFabAccountManager.Instance;
             LoginWithAndroid();
 
             if (PlayerPrefs.HasKey("MarkApp"))
                 _player.MarkApp = PlayerPrefs.GetInt("MarkApp");
-
         }
 
+        #endregion
+
+
+        #region Methods
 
         private void LoginWithAndroid()
         {
@@ -44,7 +57,9 @@ namespace Victorina
                 AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
             }, result =>
             {
+#if UNITY_EDITOR
                 Debug.Log("Logged in");
+#endif                
                 StartCoroutine(LoadAllAccautInfo());
                 _player.Avatar = _defaultAvatarTexture;
             }, error => Debug.LogError(error.GenerateErrorReport()));
@@ -68,7 +83,6 @@ namespace Victorina
 
         }
 
-
         private void GetPlayerInfo()
         {
             PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(),
@@ -82,10 +96,6 @@ namespace Victorina
                   },
                   error => Debug.LogError(error.GenerateErrorReport()));
         }
-
-
-
-
 
         private void AvatarCreated()
         {
@@ -106,8 +116,6 @@ namespace Victorina
             }
         }
 
+        #endregion   
     }
-
-
-
 }

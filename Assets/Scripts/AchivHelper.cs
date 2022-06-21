@@ -7,10 +7,17 @@ namespace Victorina
 {
     public class AchivHelper : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private Image _infoPanelImage;
         [SerializeField] private GameObject _infoPanel;
         private GameObject[] _achivGOs;
         private Text _infoText;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void OnEnable()
         {
@@ -20,12 +27,19 @@ namespace Victorina
             for (int i = 0; i < _achivGOs.Length; i++)
             {
                 EventTrigger trigger = _achivGOs[i].AddComponent<EventTrigger>();
-                EventTrigger.Entry entry = new EventTrigger.Entry();
-                entry.eventID = EventTriggerType.PointerClick;
+                EventTrigger.Entry entry = new EventTrigger.Entry
+                {
+                    eventID = EventTriggerType.PointerClick
+                };
                 entry.callback.AddListener((result) => { SwitchImage(trigger); });
                 trigger.triggers.Add(entry);
             }
         }
+
+        #endregion
+
+
+        #region Methods
 
         private void SwitchImage(EventTrigger trigger)
         {
@@ -39,6 +53,7 @@ namespace Victorina
                 _infoText.text = targetText.text;
             else _infoText.text = "Это что то значит";
         }
-    }
 
+        #endregion   
+    }
 }

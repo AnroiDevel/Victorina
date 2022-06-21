@@ -6,36 +6,43 @@ namespace Victorina
 {
     public class HelpController : MonoBehaviour
     {
-        [SerializeField] private Button[] _helpBtns;
+        #region Fields
 
-        private PurchasesPF _pF = new PurchasesPF();
+        [SerializeField] private Button[] _helpBtns;
 
         private bool _isRightErrorComplete;
         public bool IsTwoErrorVarintsComplete;
         public bool IsTwoErrorBonusReady;
         public bool IsReloadQuestion;
 
+        private PurchasesPF _pF = new PurchasesPF();
         private Character _player;
 
+        #endregion
+
+
+        #region UnityMethods
 
         private void Awake()
         {
             _player = GameData.GetInstance().Player;
         }
 
+        #endregion
+
+
+        #region Methods
 
         public bool IsTwoErrorBonus()
         {
             return _player.HelpicR2 > 0;
         }
 
-
         public void PurchaseR2()
         {
             _pF.PurchaseItem("Tickets", "MinusTwo", "R2", 1);
             _player.HelpicR2--;
         }
-
 
         public void SetInteractibleR2Btn(bool val)
         {
@@ -44,7 +51,6 @@ namespace Victorina
             else
                 _helpBtns[2].interactable = false;
         }
-
 
         public void SetNotInteracttibleAllHelpBtns()
         {
@@ -66,7 +72,6 @@ namespace Victorina
             _isRightErrorComplete = true;
         }
 
-
         private void RightErrorBonus()
         {
             _player.RightError = true;
@@ -76,18 +81,15 @@ namespace Victorina
             _player.HelpicRE--;
         }
 
-
         public void ReloadComplete()
         {
             IsReloadQuestion = true;
         }
 
-
         private bool GetBonusRE()
         {
             return _player.HelpicRE > 0;
         }
-
 
         internal void Activator()
         {
@@ -96,5 +98,7 @@ namespace Victorina
             _helpBtns[2].interactable = !IsTwoErrorVarintsComplete || IsTwoErrorBonus();
             _helpBtns[3].interactable = !IsReloadQuestion;
         }
+
+        #endregion    
     }
 }

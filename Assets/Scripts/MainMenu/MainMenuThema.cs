@@ -6,6 +6,8 @@ namespace Victorina
 {
     public class MainMenuThema : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private Image _backgroundMainMenu;
         [SerializeField] private Image _backgroundShopMenu;
         [SerializeField] private Image _achivPanel;
@@ -46,6 +48,10 @@ namespace Victorina
         [SerializeField] private Image _topLineMoveble;
         [SerializeField] private Image[] _cellsStatistic;
 
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
@@ -73,7 +79,6 @@ namespace Victorina
 
             _achivPanel.sprite = activeThema.AchivPanelBack;
 
-
             _bottomAnimMenuBack.sprite = activeThema.BottomAnimMenuBack;
             _optionIcon.sprite = activeThema.OptionIcon;
             _reitingIcon.sprite = activeThema.ReitingIcon;
@@ -94,5 +99,7 @@ namespace Victorina
             _exitText.color = activeThema.ExitBtnFontColor;
             _noExitText.color = activeThema.NoExitBtnFontColor;
         }
+
+        #endregion    
     }
 }

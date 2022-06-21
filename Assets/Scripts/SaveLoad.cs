@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
@@ -11,6 +10,8 @@ namespace Victorina
     {
         public static List<GameData> SavedGames = new List<GameData>();
 
+        #region Methods
+
         public static void Save()
         {
             SavedGames.Clear();
@@ -20,7 +21,6 @@ namespace Victorina
             bf.Serialize(file, SavedGames);
             file.Close();
         }
-
 
         public static void Load()
         {
@@ -33,7 +33,6 @@ namespace Victorina
             }
         }
 
+        #endregion  
     }
-
-
 }

@@ -1,12 +1,10 @@
-﻿using PlayFab;
-using PlayFab.ClientModels;
-using System;
+﻿using System;
 using UnityEngine;
 
 
 namespace Victorina
 {
-    [System.Serializable]
+    [Serializable]
     public class Character
     {
         public string Name = "Игрок";

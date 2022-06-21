@@ -6,22 +6,34 @@ namespace Victorina
 {
     class RateStarsSelector : MonoBehaviour
     {
-
-        public Button NextBtn;
-        [SerializeField] private GameObject _prevBtn;
-        [SerializeField] private Sprite _disabledStar;
-        [SerializeField] private Sprite _enabledStar;
+        #region Fields
 
         private const string Next = "оценить";
 
+        public Button NextBtn;
+
+        [SerializeField] private GameObject _prevBtn;
+        [SerializeField] private Sprite _disabledStar;
+        [SerializeField] private Sprite _enabledStar;
         [SerializeField] private Image[] _gradeImages;
 
-        public int UserGrade { get; private set; }
+        #endregion
+
+
+        #region UnityMethods
 
         private void OnEnable()
         {
             SetDefaultRateImage();
         }
+
+        #endregion
+
+
+        #region Methods
+
+        public int UserGrade { get; private set; }
+
 
         public void SetUserGrade(int value)
         {
@@ -36,7 +48,7 @@ namespace Victorina
             NextBtn.interactable = true;
             NextBtn.gameObject.SetActive(true);
 
-            if(_prevBtn != null)
+            if (_prevBtn != null)
                 _prevBtn.SetActive(true);
         }
 
@@ -46,5 +58,6 @@ namespace Victorina
                 img.sprite = _disabledStar;
         }
 
+        #endregion 
     }
 }
