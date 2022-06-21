@@ -1,6 +1,5 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,125 +8,54 @@ namespace Victorina
 {
     public class ProfileManager : MonoBehaviour
     {
-        [SerializeField] private PlayerData _playerData;
+        #region Fields
+
+        private Character _player;
+        private GameData _gameData;
+
         [SerializeField] private Image _imageAvatar;
-        [SerializeField] private Image _testImageAvatar;
-
+        [SerializeField] private Image _imageAvatarRankPanel;
         [SerializeField] private Text _workedInfoLabel;
-
-        private string _username;
-        private string _mail;
-        private string _pass;
-
         [SerializeField] private Text _usernameText;
         [SerializeField] private Text _moneyText;
         [SerializeField] private Text _ticketText;
 
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            _gameData = GameData.GetInstance();
+            _player = _gameData.Player;
+        }
+
         private void Start()
         {
-            _moneyText.text = _playerData.Bit.ToString();
-            _usernameText.text = _playerData.Name;
+            PlayFabAccountManager.Instance.GetPlayerInventory();
+
+            if (_moneyText)
+                _moneyText.text = _player.Money.ToString();
+            if (_usernameText)
+                _usernameText.text = _player.Name;
             if (_ticketText)
-                _ticketText.text = _playerData.TicketsBit.ToString();
-            //_playerData.ReloadAvatar += OnReloadAvatar;
+                _ticketText.text = _player.Tickets.ToString();
+
+            _imageAvatar.sprite = _player.Avatar;
+            _imageAvatar.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
+
+            if (_imageAvatarRankPanel)
+            {
+                _imageAvatarRankPanel.sprite = _player.Avatar;
+                _imageAvatarRankPanel.transform.localScale = Vector3.one * _player.ScaleAvatarCoef;
+            }
         }
 
-        private void OnReloadAvatar()
-        {
-            if (gameObject.activeSelf)
-                StartCoroutine(NewAvatarComplete());
-        }
+        #endregion
 
-        private IEnumerator NewAvatarComplete()
-        {
-            yield return new WaitForSeconds(1);
-            _imageAvatar.sprite = _playerData.Avatar;
-        }
 
-        private void OnEnable()
-        {
-            OnReloadAvatar();
-            _imageAvatar.sprite = _playerData.Avatar;
-            _playerData.BitInfoUpdate += MoneyUpdate;
-            _playerData.TicketInfoUpdate += TicketUpdate;
-
-            var coef = _playerData.ScaleImageAvatarCoef;
-            _imageAvatar.transform.localScale = Vector3.one * coef;
-        }
-
-        private void TicketUpdate()
-        {
-            _ticketText.text = _playerData.TicketsBit.ToString();
-        }
-
-        private void OnDisable()
-        {
-            _playerData.BitInfoUpdate -= MoneyUpdate;
-            _playerData.TicketInfoUpdate -= TicketUpdate;
-        }
-
-        private void MoneyUpdate()
-        {
-            _moneyText.text = _playerData.Bit.ToString();
-        }
-
-        //public void VerificationAccount()
-        //{
-        //    var newUserReq = new AddUsernamePasswordRequest
-        //    {
-        //        Username = _username,
-        //        Password = _pass,
-        //        Email = _mail
-        //    };
-
-        //    PlayFabClientAPI.AddUsernamePassword(newUserReq, OnCreateSuccess, OnFailure);
-
-        //    _playerData.Name = _username;
-        //    _playerData.Email = _mail;
-        //    _playerData.Password = _pass;
-
-        //}
-
-        private void OnCreateSuccess(AddUsernamePasswordResult result)
-        {
-            Debug.Log($"Creation Success: {_username}");
-            AddOrUpdateContactEmail(_mail);
-        }
-
-        public void UpdateUsername(string username)
-        {
-            _username = username;
-        }
-
-        public void UpdateEmail(string mail)
-        {
-            _mail = mail;
-        }
-
-        public void UpdatePassword(string pass)
-        {
-            _pass = pass;
-        }
-
-        //public void SignIn()
-        //{
-        //    PlayFabClientAPI.LoginWithPlayFab(new LoginWithPlayFabRequest
-        //    {
-        //        Username = _username,
-        //        Password = _pass
-        //    }, OnSignInSuccess, OnFailure);
-        //}
-
-        private void OnSignInSuccess(LoginResult result)
-        {
-            Debug.Log($"Sign In Success: {_username}");
-        }
-
-        private void OnFailure(PlayFabError error)
-        {
-            var errorMessage = error.GenerateErrorReport();
-            _workedInfoLabel.text += errorMessage;
-        }
+        #region Methods
 
         public void AddOrUpdateContactEmail(string emailAddress)
         {
@@ -147,8 +75,6 @@ namespace Victorina
             Debug.LogError(error.GenerateErrorReport());
         }
 
-
-
+        #endregion  
     }
-
 }

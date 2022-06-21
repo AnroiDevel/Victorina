@@ -13,35 +13,51 @@ MonoBehaviour:
   m_Name: ClassicThema
   m_EditorClassIdentifier: 
   Confidential: {fileID: 21300000, guid: 84a7158164b4f554bb456cf96394c98b, type: 3}
-  ProfileBackground: {fileID: 21300000, guid: 658abb3f7b7794844b1346908d11b5ac, type: 3}
   WelcomeBackground: {fileID: 21300000, guid: fa59482b8b0c59445bad1c4e3d564dcf, type: 3}
+  OptionMenuBack: {fileID: 21300000, guid: ad029d02da33a5a4d9f70fbaa3207186, type: 3}
+  MainMenuBack: {fileID: 21300000, guid: c4698076b66bfba4a82fe57bd500a855, type: 3}
+  BonusBtnBack: {fileID: -6701414917475068869, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
+  BonusTimerBack: {fileID: 7886353028833146983, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
+  TrainBtnBack: {fileID: -1984222054483282989, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
+  QuestionRedactorBtn: {fileID: -1984222054483282989, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
+  PlayBtnBack: {fileID: -6701414917475068869, guid: 30c906f62ff584642a2acef571860fcd, type: 3}
+  ShopMenuBack: {fileID: 21300000, guid: c029a4b2fa61dec47a45fdb4f2111598, type: 3}
+  AchivPanelBack: {fileID: 21300000, guid: f5d310c32f79f6a4cb28cc942769d060, type: 3}
+  QuestionRedactorBack: {fileID: 21300000, guid: 35e74643fb889b6468b617b520cbb554, type: 3}
+  HelpBtnImg: {fileID: 6526042812854992044, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  ExitBtnImg: {fileID: 6150383807346074404, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  HeaderRedactorImg: {fileID: 5587454586245354732, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  QuestionRedactorPanelImg: {fileID: -2047046632590610842, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  AnswerFieldRedactorImg: {fileID: 3029865473778915098, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  SendRedactorBtnImg: {fileID: -3703981770200104051, guid: 95b6a1230fa99f540b4c955106852c71, type: 3}
+  HeaderTopColor: {r: 0.9921569, g: 0.8352942, b: 0.65882355, a: 1}
+  HeaderBottomColor: {r: 0, g: 0, b: 0, a: 1}
+  LettersCntColor: {r: 0, g: 0, b: 0, a: 1}
+  QuestionColor: {r: 0, g: 0, b: 0, a: 1}
+  AnswersColor: {r: 0.28235295, g: 0.29803923, b: 0.30980393, a: 1}
+  SendBtnColor: {r: 0.9960785, g: 0.98823535, b: 0.6862745, a: 1}
   GameWelcomePanel: {fileID: 21300000, guid: ab14944c430ed6948910ff5e503e8d33, type: 3}
+  MoneyInfoPanelBackColor: {r: 0.8313726, g: 0.50980395, b: 0.2627451, a: 0}
   GameProgressPanel: {fileID: 21300000, guid: 6997b4c038fac3d46a3b0075face3d6a, type: 3}
   GamePanel: {fileID: 21300000, guid: 66ae3355506574441b44f625288b408e, type: 3}
-  GameExitPanel: {fileID: 21300000, guid: 00b8c7fe6ec24334d8eca85fc517ac5a, type: 3}
-  OptionMenuBack: {fileID: 21300000, guid: ad029d02da33a5a4d9f70fbaa3207186, type: 3}
-  MainMenuBack: {fileID: 21300000, guid: 3346911af3bc7f44e87dc7cff4f86c41, type: 3}
-  ShopMenuBack: {fileID: 21300000, guid: c4942136ebcf5a6489394ee0729a606c, type: 3}
-  StatisticsPanelBack: {fileID: 21300000, guid: 4085a62394fcbb446ac4368518e63d51, type: 3}
-  AchivPanelBack: {fileID: 21300000, guid: 9bb0f2e4abd36c74c95dfec50843597b, type: 3}
-  QuestionRedactorBack: {fileID: 21300000, guid: bbfe7b79b46fc254685bd68bc0198ee9, type: 3}
+  QuestPanel: {fileID: 21300000, guid: a8cf226fb3a04df4ea525f050cbc05a7, type: 3}
+  AnswerBtn: {fileID: 21300000, guid: f219b663f98203d4eb9929416c689888, type: 3}
   BottomAnimMenuBack: {fileID: 21300000, guid: 20322b3807c635944a655629b4879894, type: 3}
   OptionIcon: {fileID: 3334585890235954068, guid: af059d018c600be4daacf05b3fab7621, type: 3}
-  ReportedBtn: {fileID: 21300000, guid: be43c6e58b855054aad10b209a8dd410, type: 3}
+  ReportedBtn: {fileID: 4924328384992604233, guid: 20f3d62ca2706e643a9a477001f1e9bd, type: 3}
   ReitingIcon: {fileID: -5765054506968938745, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   MainIcon: {fileID: -8690396945167788949, guid: af059d018c600be4daacf05b3fab7621, type: 3}
   ShopIcon: {fileID: 7084346585972752456, guid: af059d018c600be4daacf05b3fab7621, type: 3}
-  NamePanelAnchoredMinPosition: {x: 0.0865926, y: 0.57383335}
-  NamePanelAnchoredMaxPosition: {x: 0.9154444, y: 0.62025005}
-  ThemeBtnAnchoredMinPosition: {x: 0.15222222, y: 0.44983336}
-  ThemeBtnAnchoredMaxPosition: {x: 0.84700006, y: 0.51341665}
-  EnterFBBtnAnchoredMinPosition: {x: 0.15222222, y: 0.32466668}
-  EnterFBBtnAnchoredMaxPosition: {x: 0.84333336, y: 0.3915}
-  SendFrendBtnAnchoredMinPosition: {x: 0.13651851, y: 0.14864585}
-  SendFrendBtnAnchoredMaxPosition: {x: 0.8672223, y: 0.22841668}
+  ProfileBackground: {fileID: 21300000, guid: 9859ec82e1a280847809b99cdac4e298, type: 3}
+  ExitProfileBtn: {fileID: 268587666347736261, guid: a2962369c5a126a46a1c143116919ecd, type: 3}
+  LineImg: {fileID: 5209601249622534069, guid: a2962369c5a126a46a1c143116919ecd, type: 3}
+  ThemaBtnImg: {fileID: -2892707959147439501, guid: a2962369c5a126a46a1c143116919ecd, type: 3}
   ExitWindow: {fileID: 21300000, guid: 520814ea45f1b144bac906c1e6399435, type: 3}
-  ExitBtn: {fileID: 21300000, guid: 9ffc6ba15becd1b40b34609426b07dee, type: 3}
-  NoExitBtn: {fileID: 21300000, guid: ad438f4f876815240a709655b246d4fe, type: 3}
+  ExitBtn: {fileID: -8171614108281328317, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
+  NoExitBtn: {fileID: -8171614108281328317, guid: deed0dec41ac5f547a6a16c3047e0319, type: 3}
+  MainExitPanelFontColor: {r: 0.9686275, g: 0.909804, b: 0.86274517, a: 1}
+  ExitBtnFontColor: {r: 1, g: 1, b: 1, a: 1}
+  NoExitBtnFontColor: {r: 0.97647065, g: 0.7372549, b: 0.058823533, a: 1}
   LoadShop: {fileID: 21300000, guid: f8629d861a78b4a4b83cf974e3089da1, type: 3}
   GameMusic: {fileID: 8300000, guid: 9d15bcd6fcc021846bd92eb8fc04fbbb, type: 3}
   ByeBtn: {fileID: 21300000, guid: 2ed638fbc12813b49879493d25d5f6b4, type: 3}
@@ -51,3 +67,8 @@ MonoBehaviour:
   RegulationPanel: {fileID: 21300000, guid: 0214e6be6c47a6a49b3c7bcf5135e079, type: 3}
   CommentPanelColor: {r: 0.5764706, g: 0.36078432, b: 0.23529413, a: 1}
   LoosePanel: {fileID: 21300000, guid: 28b0e81db79a3d54292f46a5a2c78446, type: 3}
+  ExitPlayAndGetWinPanelBack: {fileID: 7853258251354816438, guid: e101c0494cf92ab4e89927ae08245991, type: 3}
+  StatisticsPanelBack: {fileID: 21300000, guid: f5d310c32f79f6a4cb28cc942769d060, type: 3}
+  TopLineStatic: {fileID: 3822185500824383097, guid: 45257a248d4f9904d883db25fa4d5a42, type: 3}
+  TopLineMoveble: {fileID: 8501878043593287934, guid: 45257a248d4f9904d883db25fa4d5a42, type: 3}
+  CellStatistic: {fileID: 8984747778688251764, guid: 766006f560641bd49ba46606bfdd46ff, type: 3}

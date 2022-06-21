@@ -1,10 +1,7 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Timers;
 using UnityEngine;
 
 
@@ -13,12 +10,19 @@ namespace Victorina
     [CreateAssetMenu(fileName = "DataPlayer")]
     public class PlayerData : ScriptableObject
     {
-        private string UrlAvatar = "AvatarUrl";
+        #region Fields
+
+        public static PlayerData Instance { get; private set; }
+
+        [SerializeField] internal int R2;
+        [SerializeField] internal int RE;
+        [SerializeField] internal int WeeklyRank;
+        [SerializeField] internal int MonthRank;
         public bool IsNewPlayer;
         public bool IsNewVersionApp;
 
         public string CustomId;
-        public string PlayFabId;
+        public string PlayFabIdCurrentPlayer;
         public string TitlePlayerAccountId;
         public string CreatedDateTimePlayfabProfile;
 
@@ -49,20 +53,19 @@ namespace Victorina
         public uint PriceBitTicket;
 
         public string[] ItemCatalog;
-        private readonly Dictionary<string, CatalogItem> _catalog = new Dictionary<string, CatalogItem>();
 
         public string[] CurrencyVirtual;
-        private readonly Dictionary<string, int> _virtualCurrency = new Dictionary<string, int>();
-
-        private Timer _bonusTimer;
 
         public Action InitComplete;
         public Action<string> ConsumeComplete;
         public Action BitInfoUpdate;
         public Action TicketInfoUpdate;
         public Action ReloadAvatar;
+        public Action<int> GetNumberBonus;
 
         public string LastGameTime;
+        public string AllGameTime;
+        public string AverageTimeAnswers;
 
         public int AllQuestionsCount;
         public int RightAnswersCount;
@@ -70,69 +73,45 @@ namespace Victorina
 
         public Action NewPlayerComplete;
         public Action LoginComplete;
+        [SerializeField] internal bool NotReclama;
 
-        public void CreateNewPlayer()
-        {
-            PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            var id = Guid.NewGuid().ToString();
+        private int _lastGameTimeSec;
 
-            PlayFabClientAPI.LoginWithCustomID(
-                new LoginWithCustomIDRequest()
-                {
-                    CustomId = id,
-                    CreateAccount = true,
-                },
-                sucsess =>
-                {
-                    SetDisplayName(Name);
-                    GuidID = id;
-                },
-                error => Debug.Log("sss"));
-        }
+        #endregion
+
+
+        #region Methods
 
         public void Login()
         {
 
-            PlayFabSettings.staticSettings.TitleId = "D2AD8";
-            PathFileAvatar = PlayerPrefs.GetString(UrlAvatar);
+            //PlayFabSettings.staticSettings.TitleId = "D2AD8";
 
-            PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
-            {
-                CustomId = CustomId,
-                CreateAccount = false,
-            }, success =>
-            {
-                Init();
-                LoginComplete?.Invoke();
+            ////GuidID = PlayerPrefs.GetString("Id");
 
-            }, OnFailure);
+            ////PlayFabClientAPI.LoginWithCustomID(new LoginWithCustomIDRequest()
+            ////{
+            ////    CustomId = GuidID,
+            ////    CreateAccount = false,
+            ////}, success =>
+            ////{
+            ////    Init();
+            ////    LoginComplete?.Invoke();
 
-        }
+            ////}, OnFailure);
 
-        public void SetAvatar()
-        {
-            PathFileAvatar = PlayerPrefs.GetString("AvatarUrl");
-            if (!File.Exists(PathFileAvatar)) return;
-            WWW www = new WWW("file://" + PathFileAvatar);
-            Texture2D texture2D = www.texture;
-            Sprite sprite = Sprite.Create(texture2D, new Rect(0.0f, 0.0f, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
-            Avatar = sprite;
+            //PlayFabClientAPI.LoginWithAndroidDeviceID(new LoginWithAndroidDeviceIDRequest()
+            //{
+            //    CreateAccount = true,
+            //    AndroidDeviceId = SystemInfo.deviceUniqueIdentifier
+            //}, result =>
+            //{
+            //    Debug.Log("Logged in");
+            //    Init();
+            //    LoginComplete?.Invoke();
+            //    // Refresh available items
+            //}, error => Debug.LogError(error.GenerateErrorReport()));
 
-            if (texture2D != null)
-                ScaleImageAvatarCoef = texture2D.width > texture2D.height ? (float)texture2D.width / texture2D.height : texture2D.height / (float)texture2D.width;
-
-            //ReloadAvatar?.Invoke();
-        }
-
-
-        public int GetBonusRechargeSeconds
-        {
-            get
-            {
-                PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-                return BonusRechargeSeconds;
-            }
-            set => BonusRechargeSeconds = value;
         }
 
         public void SubmitScore(int playerScore)
@@ -178,29 +157,13 @@ namespace Victorina
             }, result => Debug.Log("Количество правильных ответов обновлено"), FailureCallback);
         }
 
-        public void Init()
-        {
-            IsPlayed = false;
-            IsVip = false;
-            IsBonusReady = false;
-            CustomId = string.Empty;
-
-            GetAccauntUserInfo();
-            if (_bonusTimer == null)
-                TimerInit();
-
-            GetQuestionsCount();
-            GetRightAnswersCount();
-        }
-
         public void Reset()
         {
-            PlayerPrefs.DeleteAll();
             IsNewPlayer = true;
             IsNewVersionApp = true;
 
             CustomId = string.Empty;
-            PlayFabId = string.Empty;
+            PlayFabIdCurrentPlayer = string.Empty;
             TitlePlayerAccountId = string.Empty;
             CreatedDateTimePlayfabProfile = string.Empty;
 
@@ -209,27 +172,6 @@ namespace Victorina
             Email = string.Empty;
             Password = string.Empty;
             Bit = 0;
-        }
-
-        private void TimerInit()
-        {
-            _bonusTimer = new Timer(1000);
-            _bonusTimer.Elapsed += TimeUpdate;
-        }
-
-        private void TimeUpdate(object sender, ElapsedEventArgs e)
-        {
-            BonusRechargeSeconds = BonusRechargeSeconds <= 0 ? 0 : BonusRechargeSeconds - 1;
-            if (BonusRechargeSeconds > 0)
-            {
-                RechargedBonusT = DateTime.MinValue;
-                RechargedBonusT += DateTime.Now.AddSeconds(BonusRechargeSeconds) - DateTime.Now;
-            }
-            else
-            {
-                IsBonusReady = true;
-                _bonusTimer?.Stop();
-            }
         }
 
         internal void AddMoney(int val)
@@ -244,43 +186,6 @@ namespace Victorina
 
         }
 
-
-        private void GetAccauntUserInfo()
-        {
-            PlayFabClientAPI.GetAccountInfo(new GetAccountInfoRequest(), OnCompletePlayFabAccountInfo, OnFailure);
-            PlayFabClientAPI.GetCatalogItems(new GetCatalogItemsRequest { CatalogVersion = "Tickets" }, OnGetCatalogSuccess, OnFailure);
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
-
-
-        private void OnCompletePlayFabAccountInfo(GetAccountInfoResult info)
-        {
-            CreatedDateTimePlayfabProfile = info.AccountInfo.Created.ToString();
-            if (info.AccountInfo.CustomIdInfo.CustomId != null)
-                CustomId = info.AccountInfo.CustomIdInfo.CustomId;
-            PlayFabId = info.AccountInfo.PlayFabId;
-            TitlePlayerAccountId = info.AccountInfo.TitleInfo.TitlePlayerAccount.Id;
-            Email = info.AccountInfo.PrivateInfo.Email;
-            Name = info.AccountInfo.TitleInfo.DisplayName;
-
-            Debug.Log("Информация об аккаунте Playfab получена");
-        }
-
-        public void SetDisplayName(string name)
-        {
-            PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
-            {
-                DisplayName = name
-            }, AddedNameComplete, error => Debug.LogError(error.GenerateErrorReport()));
-        }
-
-        private void AddedNameComplete(UpdateUserTitleDisplayNameResult obj)
-        {
-            IsNewPlayer = false;
-            NewPlayerComplete?.Invoke();
-            Init();
-        }
-
         private void OnStatisticsUpdated(UpdatePlayerStatisticsResult updateResult)
         {
             Debug.Log("Successfully submitted high score");
@@ -292,165 +197,11 @@ namespace Victorina
             Debug.LogError(error.GenerateErrorReport());
         }
 
-        private void GetInventoryComplete(GetUserInventoryResult result)
-        {
-            _virtualCurrency.Clear();
-            CurrencyVirtual = new string[result.VirtualCurrency.Count];
-            var cnt = 0;
-            foreach (var pair in result.VirtualCurrency)
-            {
-                CurrencyVirtual[cnt++] = pair.Key + " = " + pair.Value;
-                _virtualCurrency.Add(pair.Key, pair.Value);
-            }
 
-            var ticketBit = 0;
-            foreach (var item in result.Inventory)
-            {
-                if (item.DisplayName == "BitTicket")
-                {
-                    ticketBit++;
-                }
-                else if (item.DisplayName == "PlayToken")
-                    IsPlayed = true;
-                else if (item.DisplayName == "Vip Day")
-                    IsVip = true;
-
-            }
-            TicketsBit = ticketBit;
-
-            int bitValue;
-            var isGetBit = _virtualCurrency.TryGetValue("BT", out bitValue);
-            if (isGetBit)
-            {
-                Bit = bitValue;
-                BitInfoUpdate?.Invoke();
-            }
-
-            int ticketValue;
-            var isGetTicket = _virtualCurrency.TryGetValue("TI", out ticketValue);
-            if (isGetTicket)
-            {
-                TicketsBit = ticketValue;
-                TicketInfoUpdate?.Invoke();
-            }
-
-            int bonus;
-            var isGetBonus = _virtualCurrency.TryGetValue("BS", out bonus);
-            if (isGetBonus)
-            {
-                VirtualCurrencyRechargeTime BSRechargedTimes;
-                var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
-                if (isT)
-                {
-                    BonusRechargeSeconds = BSRechargedTimes.SecondsToRecharge;
-                }
-                if (bonus > 0)
-                {
-                    MaxBonusTimeSeconds = BSRechargedTimes.SecondsToRecharge;
-                    IsBonusReady = true;
-                    _bonusTimer.Stop();
-                }
-                else
-                {
-                    IsBonusReady = false;
-                    _bonusTimer.Start();
-                }
-            }
-
-            InitComplete?.Invoke();
-
-        }
-
-        private void OnGetCatalogSuccess(GetCatalogItemsResult result)
-        {
-            HandleCatalog(result.Catalog);
-            Debug.Log($"Каталог успешно загружен");
-
-        }
-
-        private void HandleCatalog(List<CatalogItem> catalog)
-        {
-
-            ItemCatalog = new string[catalog.Count];
-            _catalog.Clear();
-
-            var cnt = 0;
-            foreach (var item in catalog)
-            {
-                ItemCatalog.SetValue(item.ItemId, cnt++);
-                _catalog.Add(item.ItemId, item);
-                if (item.DisplayName != null)
-                    if (item.DisplayName.Equals("BitTicket"))
-                        PriceBitTicket = item.VirtualCurrencyPrices["BT"];
-            }
-        }
         private void OnFailure(PlayFabError obj)
         {
             ErrorInformation = obj.GenerateErrorReport();
             Debug.Log(ErrorInformation);
-        }
-
-        public void GetIsCompletetedBonus()
-        {
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), IsBonusComplete, Debug.Log);
-        }
-
-        private void IsBonusComplete(GetUserInventoryResult result)
-        {
-            int bonusValue;
-            if (result.VirtualCurrency.TryGetValue("BS", out bonusValue))
-            {
-                IsBonusReady = bonusValue > 0 ? true : false;
-            }
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
-
-
-        public Action<int> GetNumberBonus;
-
-        public void GetBonus()
-        {
-            // Bit += 100;
-            IsBonusReady = false;
-
-            var rnd = UnityEngine.Random.Range(1, 5);
-            var itId = "Bonus" + rnd;
-
-            GetNumberBonus?.Invoke(rnd);
-
-            PurchaseItemRequest request = new PurchaseItemRequest
-            {
-                CatalogVersion = "Bonuses",
-                ItemId = itId,
-                VirtualCurrency = "BS",
-                Price = 1,
-
-            };
-            PlayFabClientAPI.PurchaseItem(request, result => OnBonusComplete(), error => Debug.Log(error));
-            RechargedBonusT = DateTime.MinValue.AddSeconds(MaxBonusTimeSeconds);
-        }
-
-
-
-
-        private void OnBonusComplete()
-        {
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), GetInventoryComplete, OnFailure);
-        }
-
-
-        public void GetUserToBonusRechargedTime() =>
-            PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnRechargedTime, OnFailure);
-
-        private void OnRechargedTime(GetUserInventoryResult result)
-        {
-            VirtualCurrencyRechargeTime BSRechargedTimes;
-            var isT = result.VirtualCurrencyRechargeTimes.TryGetValue("BS", out BSRechargedTimes);
-            if (isT)
-            {
-                var tempTime = BSRechargedTimes.SecondsToRecharge;
-                RechargedBonusT += DateTime.Now.AddSeconds(tempTime) - DateTime.Now;
-            }
         }
 
         public void ConsumeItem(string nameItem)
@@ -470,19 +221,20 @@ namespace Victorina
                             var createDate = item.PurchaseDate;
                             var a = item.PurchaseDate.Value;
                             var nowDate = DateTime.UtcNow;
-                            var sec = (nowDate - createDate).Value.TotalSeconds;
-                            LastGameTime = DateTime.MinValue.AddSeconds(sec).ToLongTimeString();
+                            int sec = (int)(nowDate - createDate).Value.TotalSeconds;
+
+                            _lastGameTimeSec = sec;
                         }
                     }
                 if (iii != string.Empty)
                     PlayFabClientAPI.ConsumeItem(new ConsumeItemRequest
                     {
                         ConsumeCount = 1,
-                        ItemInstanceId = iii
+                        ItemInstanceId = iii,
+
 
                     }, result =>
                     {
-                        Init();
                         ConsumeComplete?.Invoke(nameItem);
                     }, OnFailure);
 
@@ -503,7 +255,6 @@ namespace Victorina
             };
             PlayFabClientAPI.PurchaseItem(request, result =>
             {
-                Init();
                 PlayerPrefs.SetInt("CurrentStep", 0);
             }, error => Debug.Log(error));
         }
@@ -519,9 +270,34 @@ namespace Victorina
             {
                 StatisticName = "QuestionCount",
                 MaxResultsCount = 1,
-                PlayFabId = PlayFabId,
+                PlayFabId = PlayFabIdCurrentPlayer,
             };
-            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => AllQuestionsCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
+            PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result =>
+            {
+                AllQuestionsCount = result.Leaderboard[0].StatValue;
+
+                if (PlayerPrefs.HasKey("AllGameTime"))
+                {
+                    var prevTime = PlayerPrefs.GetInt("AllGameTime");
+
+                    var average = AllQuestionsCount != 0 ? prevTime / AllQuestionsCount : prevTime;
+                    DateTime averageTime = DateTime.MinValue.AddSeconds(average);
+                    AverageTimeAnswers = averageTime.ToLongTimeString();
+
+
+                    int allTime = _lastGameTimeSec + prevTime;
+                    AllGameTime = DateTime.MinValue.AddSeconds(allTime).ToLongTimeString();
+                    _lastGameTimeSec = 0;
+                    PlayerPrefs.SetInt("AllGameTime", allTime);
+                }
+                else
+                {
+                    AllGameTime = LastGameTime;
+                    DateTime averageTime = DateTime.MinValue;
+                    AverageTimeAnswers = averageTime.ToLongTimeString();
+                    PlayerPrefs.SetInt("AllGameTime", 0);
+                }
+            }, error => Debug.LogError(error));
         }
 
         public void GetRightAnswersCount()
@@ -530,10 +306,11 @@ namespace Victorina
             {
                 StatisticName = "RightAnswersCount",
                 MaxResultsCount = 1,
-                PlayFabId = PlayFabId,
+                PlayFabId = PlayFabIdCurrentPlayer,
             };
             PlayFabClientAPI.GetLeaderboardAroundPlayer(request, result => RightAnswersCount = result.Leaderboard[0].StatValue, error => Debug.LogError(error));
         }
 
+        #endregion    
     }
 }

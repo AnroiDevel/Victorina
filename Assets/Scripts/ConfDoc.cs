@@ -1,27 +1,40 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 namespace Victorina
 {
     public class ConfDoc : MonoBehaviour
     {
-        //const string CONF_LINK = "https://coxcombic-eliminato.000webhostapp.com/Victorina/privacy_victorina_an_ru.html";
-        //const string COND_LINK = "https://coxcombic-eliminato.000webhostapp.com/Victorina/terms_victorina_ru.html";
+        #region Fields
 
-        [SerializeField] private PlayerData _playerData;
+        private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+        }
+
+        #endregion
+
+
+        #region Methods
 
         public void ConfirmConf()
         {
             PlayerPrefs.SetString("Version", Application.version);
 
-            if (_playerData.IsNewPlayer)
+            if (_player.Name == null)
                 SceneManager.LoadScene("Autorization");
             else
                 SceneManager.LoadScene("Victorina");
         }
-
 
         public void GoToLink(string path)
         {
@@ -29,6 +42,6 @@ namespace Victorina
                 Application.OpenURL(path);
         }
 
+        #endregion   
     }
-
 }

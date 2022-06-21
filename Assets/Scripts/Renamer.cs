@@ -6,32 +6,50 @@ namespace Victorina
 {
     public class Renamer : MonoBehaviour
     {
-        private GameObject _profilePanel;
+        #region Fields
+
         [SerializeField] private Button _renameBtn;
         [SerializeField] private Text _currentName;
         [SerializeField] private Text _newName;
         [SerializeField] private InputField _inputField;
-        [SerializeField] private PlayerData _playerData;
 
-        Button[] _othersBtns;
+        private GameObject _profilePanel;
+        private Button[] _othersBtns;
+
+        private PlayFabAccountManager _accountManager;
+        private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+            _accountManager = PlayFabAccountManager.Instance;
+        }
 
         private void Start()
         {
             _profilePanel = GameObject.Find("ProfilePanel");
             _renameBtn.onClick.AddListener(Switcher);
             _othersBtns = _profilePanel.GetComponentsInChildren<Button>();
-            _currentName.text = _playerData.Name;
+            _currentName.text = _player.Name;
         }
 
         private void OnEnable()
         {
-            if (PlayerPrefs.HasKey("Name"))
-            {
-                _currentName.text = PlayerPrefs.GetString("Name");
-            }
+            _currentName.text = _player.Name;
         }
 
-        private void Switcher()
+        #endregion
+
+
+        #region Methods
+
+        public void Switcher()
         {
             if (!_inputField.isActiveAndEnabled)
             {
@@ -47,7 +65,7 @@ namespace Victorina
             else
             {
                 _inputField.gameObject.SetActive(false);
-                if (_newName.text.Length > 2)
+                if (_newName.text.Length > 0)
                 {
                     PlayerPrefs.SetString("Name", _newName.text);
                     _currentName.text = _newName.text;
@@ -57,7 +75,7 @@ namespace Victorina
                 _renameBtn.GetComponent<Image>().color = Color.white;
                 _profilePanel.GetComponent<Image>().color = Color.white;
                 ActivateButtons(true);
-                _playerData.SetDisplayName(_newName.text);
+                _accountManager.SetDisplayName(_currentName.text);
             }
         }
 
@@ -68,7 +86,6 @@ namespace Victorina
                     btn.interactable = setActivate;
         }
 
+        #endregion    
     }
-
-
 }

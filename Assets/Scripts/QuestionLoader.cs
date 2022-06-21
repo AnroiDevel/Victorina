@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
@@ -14,83 +13,101 @@ namespace Victorina
     {
         #region Fields
 
-        private const string URLGetQuestion = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/GetterQuestion.php";
-        private const string URLSetGrade = "https://coxcombic-eliminato.000webhostapp.com/Victorina/Question/SetGrade.php";
+        public Toggle _endQuestion;
+
+        private const string URLGetQuestion = "http://a0669097.xsph.ru/Victorina/Question/GetterQuestion.php";
+        private const string URLSetGrade = "http://a0669097.xsph.ru/Victorina/Question/SetGrade.php";
         private const string LoadingQuestion = "загрузка вопроса";
         private const string GradeInfo = "Оцените сложность";
-        private const string Next = "Продолжить";
         private const string RightResult = "Верно";
         private const string ErrorResult = "Ошибка";
-        [SerializeField] private PlayerData _playerData;
+
+        [SerializeField] private RateStarsSelector _rateStarsSelector;
 
         [SerializeField] private Text _question;
-        [SerializeField] private Button _startBtn;
         [SerializeField] private Text _timeText;
-        [SerializeField] private Button[] _answerButtons;
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _status;
-        [SerializeField] private Animator _animatorReload;
         [SerializeField] private Text _gradeText;
-        [SerializeField] private Image[] _gradeImages;
-        [SerializeField] private GameObject _ratePanel;
-        [SerializeField] private Button _nextBtn;
+        [SerializeField] private Text _comment;
+        [SerializeField] private Text _result;
+        [SerializeField] private Button _startBtn;
+        [SerializeField] private Button[] _answerButtons;
         [SerializeField] private Image[] _progressCells;
+        [SerializeField] private Color _defaultColor;
+        [SerializeField] private Color _activeColor;
+        [SerializeField] private TMP_ColorGradient _colorGradient;
+
+        [SerializeField] private GameObject _ratePanel;
         [SerializeField] private GameObject _progressPanel;
+        [SerializeField] private GameObject _resultPanel;
+        [SerializeField] private GameObject _victory;
+        [SerializeField] private GameObject _loose;
+        [SerializeField] private GameObject _commentPanel;
+        [SerializeField] private GameObject _reviewPanel;
 
         [SerializeField] private AudioSource _backAudio;
         [SerializeField] private AudioSource _winAudio;
         [SerializeField] private AudioSource _looseAudio;
-        [SerializeField] private GameObject _resultPanel;
-
-        [SerializeField] private GameObject _victory;
-        [SerializeField] private GameObject _loose;
-
-        [SerializeField] private Color _defaultColor;
-        [SerializeField] private Color _activeColor;
-        [SerializeField] private TMP_ColorGradient _colorGradient;
-        [SerializeField] private GameObject _commentPanel;
-
-        [SerializeField] private Text _comment;
-        [SerializeField] private Text _result;
+        [SerializeField] private Animator _animatorReload;
+        [SerializeField] private Text _gameTime;
 
         private HelpController _helpController;
 
+
+        private readonly Queue<int> _questionIndexes = new Queue<int>();
+        private readonly float _stepGrade = 0.1f;
+
+        private int _currentStepProgress = 1;
         private string _commentText;
-
-        private Queue<int> _questionIndexes = new Queue<int>();
-
-        private int _currentStepProgress;
 
         private Coroutine _coroutine;
         private int _trueIndex = -1;
         private float _grade = 3.0f;
-        private float _stepGrade = 0.1f;
-        private int _userGradeQuestion;
         private int _indexCurrentQuestion;
         private Image _prevImgSignal;
 
-        public bool IsLoadComplete { get; private set; }
         private bool _isLoose;
+        private int countTry = 5;
 
-        public Toggle _endQuestion;
+        private Character _player;
+        private PlayFabAccountManager _accountManager;
 
+        private int _repeatQuestionCnt = 0;
+
+        #endregion
+
+
+        #region Properties
+
+        public bool IsLoadComplete { get; private set; }
 
         #endregion
 
 
         #region UnityMethods
 
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+            _accountManager = PlayFabAccountManager.Instance;
+        }
+
         private void Start()
         {
             _helpController = GetComponent<HelpController>();
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 SetCurrentStep();
+            else LoadOneQuestion();
         }
 
         private void OnLoadNewQuestion()
         {
-            _helpController?.Activator();
+            if (_helpController)
+                _helpController.Activator();
+            _repeatQuestionCnt = 0;
         }
 
         private void PreviousCellMark()
@@ -110,9 +127,7 @@ namespace Victorina
 
         public void SetCurrentStep()
         {
-            if (!_endQuestion.isOn)
-                _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
-            else _currentStepProgress = _progressCells.Length - 1;
+            _currentStepProgress = PlayerPrefs.GetInt("CurrentStep");
             PreviousCellMark();
         }
 
@@ -122,10 +137,18 @@ namespace Victorina
         #region PublicMethods
         public void LoadOneQuestion()
         {
-            if (!_playerData.IsTrain)
-                if (_isLoose) Loose();
+            if (!_player.IsTrain)
+            {
+                if (_isLoose)
+                {
+                    Loose();
+                    GetComponent<ButtleBitController>().GameOver();
+                    _isLoose = false;
+                    return;
+                }
+            }
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 if (_currentStepProgress >= _progressCells.Length)
                 {
                     Win();
@@ -133,45 +156,61 @@ namespace Victorina
                 }
             _question.text = LoadingQuestion;
 
-            if (!_playerData.IsTrain)
-                SetDefaultRateImage();
+            if (_player.IsTrain)
+                _rateStarsSelector.SetDefaultRateImage();
             StopAllCoroutines();
 
             var nextLevel = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
             {
                 StartCoroutine(PrevRaundPause(_currentStepProgress++));
             }
             else
-                nextLevel = UnityEngine.Random.Range(0, 5);
-
-            StartCoroutine(GetQuestion(nextLevel));
+            {
+                StartCoroutine(GetQuestion());
+            }
         }
 
         public void Win()
         {
+            if (_currentStepProgress > 5)
+            {
+                if (!PlayerPrefs.HasKey("MarkReview"))
+                    _reviewPanel.SetActive(true);
+            }
+            else if (_currentStepProgress <= 1)
+            {
+                GetComponent<SceneLoader>().LoadGameScene("Game");
+                PlayerPrefs.SetInt("CurrentStep", 0);
+                return;
+            }
 
             _resultPanel.SetActive(true);
+            _gameTime.text = _player.LastGameTime;
             _loose.SetActive(false);
             _victory.SetActive(true);
             _backAudio.Stop();
-            _winAudio.Play();
 
-            if (!_playerData.IsTrain)
+            if (PlayerPrefs.GetInt("Music").Equals(1))
+                _winAudio.Play();
+
+            if (!_player.IsTrain)
             {
                 GetComponent<ButtleBitController>().GetWinAndGameOver();
-                _playerData.GetQuestionsCount();
-                _playerData.GetRightAnswersCount();
+                _accountManager.GetQuestionsCount();
+                _accountManager.GetRightAnswersCount();
             }
+            PlayerPrefs.SetInt("CurrentStep", 0);
+
         }
 
-        public void StartingTimer()
-        {
-            if (_coroutine != null)
-                StopCoroutine(_coroutine);
-            _coroutine = StartCoroutine(TimerUpdate());
-        }
+        //public void StartingTimer()
+        //{
+        //    if (_coroutine != null)
+        //        StopCoroutine(_coroutine);
+        //    _coroutine = StartCoroutine(TimerUpdate());
+        //}
 
         public void SendAnswer(int index)
         {
@@ -182,17 +221,17 @@ namespace Victorina
                 if (_coroutine != null)
                     StopCoroutine(_coroutine);
 
-                if (!_playerData.IsTrain)
-                    _playerData.AddRightAnswersCount();
+                if (!_player.IsTrain)
+                    _accountManager.AddRightAnswersCount();
 
                 _result.color = Color.green;
                 _result.text = RightResult;
                 _commentPanel.SetActive(true);
 
-                if (!_playerData.IsTrain)
-                    _playerData.RightError = false;
+                if (!_player.IsTrain)
+                    _player.RightError = false;
             }
-            else if (_playerData.RightError)
+            else if (_player.RightError)
             {
                 _answers[index].color = Color.red;
                 //_playerData.RightError = false;
@@ -209,43 +248,36 @@ namespace Victorina
             _commentPanel.SetActive(true);
             _isLoose = true;
 
-            if (!_playerData.IsTrain)
+            if (!_player.IsTrain)
                 GetComponent<ButtleBitController>().GameOver();
 
         }
 
         private void Loose()
         {
-            _playerData.GetQuestionsCount();
-            _playerData.GetRightAnswersCount();
-
+            _accountManager.GetQuestionsCount();
+            _accountManager.GetRightAnswersCount();
             _resultPanel.SetActive(true);
             _loose.SetActive(true);
             _backAudio.Stop();
-            _looseAudio.Play();
+            if (PlayerPrefs.GetInt("Music").Equals(1))
+                _looseAudio.Play();
             PlayerPrefs.SetInt("CurrentStep", 0);
             _isLoose = false;
         }
 
-        public void SetUserGrade(int value)
-        {
-            SetDefaultRateImage();
 
-            for (var i = 0; i < value; i++)
-            {
-                _gradeImages[i].color = Color.yellow;
-            }
-            _userGradeQuestion = value;
-            _nextBtn.GetComponentInChildren<Text>().text = Next;
-            _nextBtn.interactable = true;
-        }
+
         public void FiftyFifty()
         {
             var cnt = 0;
+            var errCnt = 0;
+
             if (_answerButtons.Length > 0)
+            {
                 while (cnt < 2)
                 {
-                    var rnd = UnityEngine.Random.Range(0, _answers.Length);
+                    var rnd = Random.Range(0, _answers.Length);
                     if (rnd != _trueIndex)
                     {
                         if (_answerButtons[rnd].isActiveAndEnabled)
@@ -254,17 +286,49 @@ namespace Victorina
                             cnt++;
                         }
                     }
+
+                    errCnt++;
+                    if (errCnt > 100)
+                        return;
                 }
-            _helpController.IsTwoErrorVarintsComplete = true;
+            }
+            cnt = 0;
+            foreach (var btn in _answerButtons)
+                if (btn.isActiveAndEnabled)
+                    cnt++;
+
+            if (cnt >= 3)
+                if (_helpController.IsTwoErrorVarintsComplete)
+                {
+                    if (cnt >= 3)
+                    {
+                        _helpController.PurchaseR2();
+                        _helpController.SetInteractibleR2Btn(true);
+                    }
+                    else if (cnt <= 2)
+                    {
+                        _helpController.PurchaseR2();
+                        _helpController.SetNotInteracttibleAllHelpBtns();
+                        _helpController.SetInteractibleR2Btn(false);
+                    }
+                }
+                else
+                {
+                    _helpController.IsTwoErrorVarintsComplete = true;
+                    _helpController.SetInteractibleR2Btn(true);
+                }
         }
 
         public void DelOneErrorVariant()
         {
             var cnt = 0;
+
+            var errCnt = 0;
+
             if (_answerButtons.Length > 0)
                 while (cnt < 1)
                 {
-                    var rnd = UnityEngine.Random.Range(0, _answers.Length);
+                    var rnd = Random.Range(0, _answers.Length);
                     if (rnd != _trueIndex)
                     {
                         if (_answerButtons[rnd].isActiveAndEnabled)
@@ -273,14 +337,27 @@ namespace Victorina
                             cnt++;
                         }
                     }
+                    errCnt++;
+                    if (errCnt > 100)
+                        return;
                 }
+
+            cnt = 0;
+            foreach (var btn in _answers)
+            {
+                if (btn.isActiveAndEnabled)
+                    cnt++;
+            }
+
+            if (cnt <= 2)
+                _helpController.SetInteractibleR2Btn(false);
         }
 
 
         public void SendGrade()
         {
             if (_progressPanel)
-                _progressPanel?.SetActive(true);
+                _progressPanel.SetActive(true);
             StartCoroutine(SendUserGrade(URLSetGrade));
         }
 
@@ -289,28 +366,42 @@ namespace Victorina
 
         #region PrivateMethods
 
-        private IEnumerator GetQuestion(int level = 0)
+        private IEnumerator GetQuestion()
         {
             //_animatorReload.SetBool("IsLoading", true);
             _trueIndex = -1;
-            var lvl = level;
+            var lvl = _currentStepProgress > 2 ? _currentStepProgress / 5 + 2 : 1;
+            if (_player.IsTrain)
+                lvl = Random.Range(0, 5);
+
+            if (_repeatQuestionCnt > 10)
+                lvl += 1;
+            _repeatQuestionCnt++;
 
             WWWForm form = new WWWForm();
             form.AddField("level", lvl);
 
-            using (UnityWebRequest request = UnityWebRequest.Post(URLGetQuestion, form))
-            {
-                yield return request.SendWebRequest();
+            using UnityWebRequest request = UnityWebRequest.Post(URLGetQuestion, form);
+            yield return request.SendWebRequest();
 
-                if (request.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.Log(request.error);
-                    _status.text = "Отсутствует связ с сервером";
-                }
-                else
-                {
-                    QuestionCreated(request);
-                }
+            if (request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(request.error);
+                _status.text = "Отсутствует связ с сервером";
+
+                countTry--;
+                StartCoroutine(GetQuestion());
+
+                if (countTry <= 0)
+                    StopAllCoroutines();
+                _status.text = "Отсутствует связ с сервером";
+
+            }
+            else
+            {
+                QuestionCreated(request);
+                if (!_player.IsTrain)
+                    _progressPanel.SetActive(false);
             }
         }
 
@@ -329,6 +420,7 @@ namespace Victorina
 
             if (!IsNewIndex(_indexCurrentQuestion))
             {
+                StopAllCoroutines();
                 StartCoroutine(GetQuestion());
                 return;
             }
@@ -343,7 +435,15 @@ namespace Victorina
             textsList.RemoveAt(0);
             textsList.RemoveAt(0);
 
-            _grade = float.Parse(textsList[textsList.Count - 2]);
+            try
+            {
+                _grade = float.Parse(textsList[textsList.Count - 2]);
+            }
+            catch (System.Exception)
+            {
+                StopAllCoroutines();
+                LoadOneQuestion();
+            }
 
             _gradeText.text = ((int)_grade).ToString();
 
@@ -354,7 +454,7 @@ namespace Victorina
 
             while (textsList.Count > 0)
             {
-                int rnd = UnityEngine.Random.Range(0, textsList.Count);
+                int rnd = Random.Range(0, textsList.Count);
                 _answers[textsList.Count - 1].text = textsList[rnd];
                 textsList.RemoveAt(rnd);
 
@@ -372,10 +472,46 @@ namespace Victorina
             _comment.text = _commentText;
             _commentPanel.SetActive(false);
 
-            if (!_playerData.IsTrain)
-                _playerData.AddQuestionCount();
+            if (!_player.IsTrain)
+                _accountManager.AddQuestionCount();
 
             OnLoadNewQuestion();
+
+            StartCoroutine(EquipMinFontSizeAllAnswers());
+        }
+
+
+        private IEnumerator EquipMinFontSizeAllAnswers()
+        {
+            foreach (var t in _answers)
+            {
+                t.resizeTextMaxSize = 300;
+            }
+            yield return new WaitForFixedUpdate();
+
+            var maxLength = 0;
+            var longerstText = _answers[0];
+
+            foreach (var t in _answers)
+            {
+                if (t.text.Length > maxLength)
+                {
+                    maxLength = t.text.Length;
+                    longerstText = t;
+                }
+            }
+
+            var fontSize = longerstText.cachedTextGenerator.fontSizeUsedForBestFit;
+
+
+            foreach (var t in _answers)
+            {
+                t.resizeTextMaxSize = fontSize;
+                //t.fontSize = fontSize;
+            }
+            _comment.resizeTextMaxSize = fontSize;
+
+            yield return new WaitForFixedUpdate();
         }
 
         private bool IsNewIndex(int index)
@@ -399,10 +535,12 @@ namespace Victorina
             foreach (var answer in _answerButtons)
                 if (!answer.isActiveAndEnabled)
                     answer.gameObject.SetActive(true);
-
-            _ratePanel.SetActive(false);
-            _nextBtn.interactable = false;
-            _nextBtn.GetComponentInChildren<Text>().text = GradeInfo;
+            if (_player.IsTrain)
+            {
+                _ratePanel.SetActive(false);
+                _rateStarsSelector.NextBtn.interactable = false;
+                _rateStarsSelector.NextBtn.GetComponentInChildren<Text>().text = GradeInfo;
+            }
         }
 
         private IEnumerator TimerUpdate()
@@ -417,11 +555,42 @@ namespace Victorina
             }
         }
 
-        private void SetDefaultRateImage()
+
+
+        private void CreateGradeValue()
         {
-            foreach (var img in _gradeImages)
-                img.color = Color.white;
+            _grade = _grade > _rateStarsSelector.UserGrade ? _grade - _stepGrade : _grade + _stepGrade;
+            _grade = _grade < 1 ? 1 : _grade;
         }
+
+        private IEnumerator PrevRaundPause(int currentStep)
+        {
+            _progressPanel.SetActive(true);
+            var clip = 3;
+            if (_prevImgSignal != null)
+                _prevImgSignal.color = _defaultColor;
+            _prevImgSignal = _progressCells[currentStep].GetComponentsInChildren<Image>()[1];
+            _prevImgSignal.color = _activeColor;
+
+            _progressCells[currentStep].GetComponentInChildren<TMP_Text>().colorGradientPreset = _colorGradient;
+
+            if (!_player.IsTrain)
+                while (clip > 0)
+                {
+                    _progressCells[currentStep].color = Color.green;
+                    yield return new WaitForSeconds(0.5f);
+                    _progressCells[currentStep].color = Color.yellow;
+                    yield return new WaitForSeconds(0.5f);
+                    clip--;
+                }
+            StartCoroutine(GetQuestion());
+
+            //StartingTimer();
+
+            PlayerPrefs.SetInt("CurrentStep", currentStep);
+
+        }
+
 
         private IEnumerator SendUserGrade(string url)
         {
@@ -444,38 +613,6 @@ namespace Victorina
 
 
             LoadOneQuestion();
-
-        }
-
-        private void CreateGradeValue()
-        {
-            _grade = _grade > _userGradeQuestion ? _grade - _stepGrade : _grade + _stepGrade;
-            _grade = _grade < 1 ? 1 : _grade;
-        }
-
-        private IEnumerator PrevRaundPause(int currentStep)
-        {
-            var clip = 3;
-            if (_prevImgSignal != null)
-                _prevImgSignal.color = _defaultColor;
-            _prevImgSignal = _progressCells[currentStep].GetComponentsInChildren<Image>()[1];
-            _prevImgSignal.color = _activeColor;
-
-            _progressCells[currentStep].GetComponentInChildren<TMP_Text>().colorGradientPreset = _colorGradient;
-
-            if (!_playerData.IsTrain)
-                while (clip > 0)
-                {
-                    _progressCells[currentStep].color = Color.green;
-                    yield return new WaitForSeconds(0.5f);
-                    _progressCells[currentStep].color = Color.yellow;
-                    yield return new WaitForSeconds(0.5f);
-                    clip--;
-                }
-            _progressPanel.SetActive(false);
-            StartingTimer();
-
-            PlayerPrefs.SetInt("CurrentStep", currentStep);
 
         }
 

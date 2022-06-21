@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -10,17 +9,22 @@ namespace Victorina
 {
     public class Registered : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] InputField _name;
         [SerializeField] InputField _passwd;
-
 
         private const string _urlIndex = "https://coxcombic-eliminato.000webhostapp.com/Test/";
         private WWWForm _form;
 
-        public void PostText() => StartCoroutine(Post(_urlIndex,
-                (string error) => Debug.Log("Ошибка: " + error),
-                (string text) => Debug.Log("Текст отправлен" + text)));
+        #endregion
 
+
+        #region Methods
+
+        public void PostText() => StartCoroutine(Post(_urlIndex,
+        (string error) => Debug.Log("Ошибка: " + error),
+        (string text) => Debug.Log("Текст отправлен" + text)));
 
         private IEnumerator Post(string url, Action<string> onError, Action<string> onSucces)
         {
@@ -42,9 +46,6 @@ namespace Victorina
             }
         }
 
-
-
-
+        #endregion  
     }
-
 }

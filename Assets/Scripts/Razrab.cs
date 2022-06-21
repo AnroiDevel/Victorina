@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -10,29 +9,36 @@ namespace Victorina
 {
     public partial class Razrab : MonoBehaviour
     {
+        #region Fields
+
+        private const string UrlTextFile2 = "http://a0669097.xsph.ru/Victorina/";
+        private const string EmptyAnswerError = "Ответ не может быть пустым";
+        private const string EmptyQuestionError = "Слишком короткий вопрос\n";
+        private const string EqualsAnswersError = "Одинаковых ответов быть не должно";
+
         [SerializeField] private Text _question;
         [SerializeField] private InputField[] _inputFields;
         [SerializeField] private Text[] _answers;
         [SerializeField] private Text _errorSendText;
 
-        [SerializeField] private int _minLengthQuestion = 5;
-
         private string _questionTxt;
         private string[] _answersTxt;
-        
+        private WWWForm _form;
 
-        private const string UrlTextFile = "https://coxcombic-eliminato.000webhostapp.com/Test/";
-        private const string UrlTextFile2 = "https://coxcombic-eliminato.000webhostapp.com/Victorina/";
-        private const string EmptyAnswerError = "Ответ не может быть пустым\n";
-        private const string EmptyQuestionError = "Слишком короткий вопрос\n";
-        private const string EqualsAnswersError = "Одинаковых ответов быть не должно\n";
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
             _answersTxt = new string[_answers.Length];
         }
 
-        private WWWForm _form;
+        #endregion
+
+
+        #region Methods
 
         public void PostText()
         {
@@ -66,22 +72,6 @@ namespace Victorina
             else onError(unityWebRequest.error);
         }
 
-
-        private string SendQuestionToBase()
-        {
-            var qStr = string.Empty;
-            _questionTxt = "*\n";
-            _questionTxt += _question.text + "\n";
-            qStr += _questionTxt;
-            for (var i = 0; i < _answers.Length; i++)
-            {
-                _answersTxt[i] = "~" + _answers[i].text + "\n";
-                qStr += _answersTxt[i];
-            }
-
-            return qStr;
-        }
-
         private bool IsCorrectQuestion()
         {
             var correct = true;
@@ -112,7 +102,7 @@ namespace Victorina
                         cnt++;
                     }
 
-                    if (cnt >= 2)
+                    if (cnt > 2)
                     {
                         correct = false;
                         _errorSendText.text = EqualsAnswersError;
@@ -120,14 +110,18 @@ namespace Victorina
                     }
                 }
             }
+
+            Debug.Log(correct);
+
             return correct;
         }
 
         private void ClearAllFields()
         {
-            //foreach (InputField inputField in _inputFields)
-            //    inputField.text = string.Empty;
+            foreach (InputField inputField in _inputFields)
+                inputField.text = string.Empty;
         }
-    }
 
+        #endregion   
+    }
 }

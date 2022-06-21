@@ -7,20 +7,47 @@ namespace Victorina
     public class Thema : ScriptableObject
     {
         public Sprite Confidential;
-        public Sprite ProfileBackground;
         public Sprite WelcomeBackground;
-        public Sprite GameWelcomePanel;
-        public Sprite GameProgressPanel;
-        public Sprite GamePanel;
-        public Sprite GameExitPanel;
+
         public Sprite OptionMenuBack;
 
+        [Header("Главное меню")]
         public Sprite MainMenuBack;
+        public Sprite BonusBtnBack;
+        public Sprite BonusTimerBack;
+        public Sprite TrainBtnBack;
+        public Sprite QuestionRedactorBtn;
+        public Sprite PlayBtnBack;
+
         public Sprite ShopMenuBack;
-        public Sprite StatisticsPanelBack;
         public Sprite AchivPanelBack;
 
+
+        [Header("Редактор")]
         public Sprite QuestionRedactorBack;
+        public Sprite HelpBtnImg;
+        public Sprite ExitBtnImg;
+        public Sprite HeaderRedactorImg;
+        public Sprite QuestionRedactorPanelImg;
+        public Sprite AnswerFieldRedactorImg;
+        public Sprite SendRedactorBtnImg;
+
+        public Color HeaderTopColor;
+        public Color HeaderBottomColor;
+        public Color LettersCntColor;
+        public Color QuestionColor;
+        public Color AnswersColor;
+        public Color SendBtnColor;
+
+
+
+        [Header("Режим игры")]
+        public Sprite GameWelcomePanel;
+        public Color MoneyInfoPanelBackColor;
+        public Sprite GameProgressPanel;
+        public Sprite GamePanel;
+        public Sprite QuestPanel;
+        public Sprite AnswerBtn;
 
         [Header("Меню")]
         public Sprite BottomAnimMenuBack;
@@ -31,22 +58,18 @@ namespace Victorina
         public Sprite ShopIcon;
 
         [Header("Профиль")]
-        public Vector2 NamePanelAnchoredMinPosition;
-        public Vector2 NamePanelAnchoredMaxPosition;
-
-        public Vector2 ThemeBtnAnchoredMinPosition;
-        public Vector2 ThemeBtnAnchoredMaxPosition;
-
-        public Vector2 EnterFBBtnAnchoredMinPosition;
-        public Vector2 EnterFBBtnAnchoredMaxPosition;
-
-        public Vector2 SendFrendBtnAnchoredMinPosition;
-        public Vector2 SendFrendBtnAnchoredMaxPosition;
+        public Sprite ProfileBackground;
+        public Sprite ExitProfileBtn;
+        public Sprite LineImg;
+        public Sprite ThemaBtnImg;
 
         [Header("Окно выхода из приложения")]
         public Sprite ExitWindow;
         public Sprite ExitBtn;
         public Sprite NoExitBtn;
+        public Color MainExitPanelFontColor;
+        public Color ExitBtnFontColor;
+        public Color NoExitBtnFontColor;
 
         [Header("Магазин")]
         public Sprite LoadShop;
@@ -59,5 +82,12 @@ namespace Victorina
         public Sprite RegulationPanel;
         public Color CommentPanelColor;
         public Sprite LoosePanel;
+        public Sprite ExitPlayAndGetWinPanelBack;
+
+        [Header("Статистика")]
+        public Sprite StatisticsPanelBack;
+        public Sprite TopLineStatic;
+        public Sprite TopLineMoveble;
+        public Sprite CellStatistic;
     }
 }

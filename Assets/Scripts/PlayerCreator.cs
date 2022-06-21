@@ -1,6 +1,5 @@
 using PlayFab;
 using PlayFab.ClientModels;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,55 +8,54 @@ namespace Victorina
 {
     public class PlayerCreator : MonoBehaviour
     {
-        private const string Key = "AutorizationKey";
+        #region Fields
+
         [SerializeField] private Text _name;
-        [SerializeField] private PlayerData _playerData;
         private SceneLoader _sceneLoader;
+        private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+        }
 
         private void Start()
         {
             _sceneLoader = GetComponent<SceneLoader>();
         }
 
+        #endregion
+
+
+        #region Methods
+
         public void CreateNewPlayer()
         {
-            _playerData.Name = _name.text;
-            _playerData.CreateNewPlayer();
-            _playerData.NewPlayerComplete += LoadNextScene;
-
+            SetDisplayName(_name.text);
         }
 
-        //private void CreatePlayer()
-        //{
-        //    PlayFabSettings.staticSettings.TitleId = "D2AD8";
-        //    var id = Guid.NewGuid().ToString();
-
-        //    PlayFabClientAPI.LoginWithCustomID(
-        //        new LoginWithCustomIDRequest()
-        //        {
-        //            CustomId = id,
-        //            CreateAccount = true,
-        //        },
-        //        sucsess =>
-        //        {
-        //            PlayerPrefs.SetString(Key, id);
-        //            SetDisplayName(_playerData.Name);
-        //        },
-        //        error => Debug.Log("sss"));
-        //}
-
-        //private void SetDisplayName(string name)
-        //{
-        //    PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
-        //    {
-        //        DisplayName = name
-        //    }, AddedNameComplete, error => Debug.LogError(error.GenerateErrorReport()));
-        //}
+        private void SetDisplayName(string name)
+        {
+            if (name.Length < 3)
+                name += "  ";
+            PlayFabClientAPI.UpdateUserTitleDisplayName(new UpdateUserTitleDisplayNameRequest
+            {
+                DisplayName = name
+            }, result => LoadNextScene(), error => Debug.LogError(error.GenerateErrorReport()));
+        }
 
         private void LoadNextScene()
         {
+            _player.Name = _name.text;
             _sceneLoader.LoadGameScene("Victorina");
         }
-    }
 
+        #endregion  
+    }
 }

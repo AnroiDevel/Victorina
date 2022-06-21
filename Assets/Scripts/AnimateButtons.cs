@@ -6,9 +6,24 @@ namespace Victorina
 {
     public class AnimateButtons : MonoBehaviour
     {
+        #region Fields
+
         private Button[] _buttons;
         [SerializeField] Button _mainButton;
         [SerializeField] AudioSource _audioSource;
+        [SerializeField] private QuitApp _quitApp;
+
+        #endregion
+
+
+        #region Properties
+
+        private bool IsMute => PlayerPrefs.HasKey("Sfx") ? PlayerPrefs.GetInt("Sfx") == 0 : false;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
@@ -17,14 +32,20 @@ namespace Victorina
                 button.onClick.AddListener(() => AnimationSelected(button));
 
             _mainButton.onClick.Invoke();
+            _quitApp.ActivateMainWindow += ReturnToMainWindow;
         }
 
-        private void OnEnable()
+        #endregion
+
+
+        #region Methods
+
+        private void ReturnToMainWindow()
         {
-            _mainButton.onClick.Invoke();
+            AnimationSelected(_mainButton);
         }
 
-        private void AnimationSelected(Button btn)
+        public void AnimationSelected(Button btn)
         {
             foreach (var button in _buttons)
             {
@@ -39,15 +60,6 @@ namespace Victorina
                 _audioSource.Play();
         }
 
-        private bool IsMute
-        {
-            get
-            {
-                if (PlayerPrefs.HasKey("Sfx"))
-                    return PlayerPrefs.GetInt("Sfx") == 0;
-                return false;
-            }
-        }
+        #endregion
     }
-
 }

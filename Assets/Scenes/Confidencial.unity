@@ -215,7 +215,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 402928309}
-  - component: {fileID: 402928308}
   m_Layer: 0
   m_Name: SceneController
   m_TagString: Untagged
@@ -223,19 +222,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &402928308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 402928307}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f7f4799dbefaa04984711fa27afedb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!4 &402928309
 Transform:
   m_ObjectHideFlags: 0
@@ -480,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d93cbfb18ca264494b0a34c5bc9c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerData: {fileID: 11400000, guid: ba96e80e05fd92745846419fa60304c8, type: 2}
 --- !u!222 &7387508776981159831
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1291,18 +1276,6 @@ MonoBehaviour:
       - m_Target: {fileID: 7387508776981159830}
         m_TargetAssemblyTypeName: Victorina.ConfDoc, Assembly-CSharp
         m_MethodName: ConfirmConf
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 402928308}
-        m_TargetAssemblyTypeName: Victorina.ConfConfirm, Assembly-CSharp
-        m_MethodName: Confirm
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

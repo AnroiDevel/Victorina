@@ -5,14 +5,23 @@ namespace Victorina
 {
     public static class ThemaConrtoller
     {
+        #region Fields
+
         public static Thema ActiveThema;
 
+        private static Thema[] _themas;
+
+        #endregion
+
         static ThemaConrtoller() { ThemaActivation(); }
+
+        #region Methods
+
         public static void ThemaActivation()
         {
             Resources.LoadAll<Thema>("");
             var allThems = Resources.FindObjectsOfTypeAll<Thema>();
-
+            _themas = allThems;
             if (allThems.Length > 0)
             {
                 GetActiveThema(allThems);
@@ -35,6 +44,16 @@ namespace Victorina
                 if (thema.name == themaType.ToString())
                     ActiveThema = thema;
         }
-    }
 
+        public static void SetActiveThema(string name)
+        {
+            foreach (var tema in _themas)
+            {
+                if (tema.name == name)
+                    ActiveThema = tema;
+            }
+        }
+
+        #endregion   
+    }
 }

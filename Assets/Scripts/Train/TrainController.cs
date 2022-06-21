@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,12 +5,9 @@ namespace Victorina
 {
     public class TrainController : MonoBehaviour
     {
-        [SerializeField] PlayerData _playerData;
-
-        private void Start()
+        private void Awake()
         {
-            _playerData.IsTrain = true;
+            GameData.GetInstance().Player.IsTrain = true;
         }
     }
-
 }

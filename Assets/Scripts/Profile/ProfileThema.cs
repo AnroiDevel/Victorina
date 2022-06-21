@@ -6,39 +6,39 @@ namespace Victorina
 {
     public class ProfileThema : MonoBehaviour
     {
-        [SerializeField] private Image _backgroundImg;
-        [SerializeField] private GameObject _namePanel;
-        [SerializeField] private GameObject _themeBtn;
-        [SerializeField] private GameObject _enterFBBtn;
-        [SerializeField] private GameObject _sendFrendBtn;
+        #region Fields
+
+        [SerializeField] private Image _profileBack;
+        [SerializeField] private Image _exitBtnImg;
+        [SerializeField] private Image _lineNameLblImg;
+        [SerializeField] private Image _themaSwithBtnImg;
+
+        #endregion
+
+
+        #region UnityMethods
 
         private void Start()
         {
-            var actThema = ThemaConrtoller.ActiveThema;
-
             ThemaApply();
-
         }
 
+        #endregion
+
+
+        #region Methods
         public void ThemaApply()
         {
-            _backgroundImg.sprite = ThemaConrtoller.ActiveThema?.ProfileBackground;
+            var activeThema = ThemaConrtoller.ActiveThema;
 
-            var rt = _namePanel.GetComponent<RectTransform>();
-            rt.anchorMin = ThemaConrtoller.ActiveThema.NamePanelAnchoredMinPosition;
-            rt.anchorMax = ThemaConrtoller.ActiveThema.NamePanelAnchoredMaxPosition;
+            if (activeThema == null) return;
 
-            rt = _themeBtn.GetComponent<RectTransform>();
-            rt.anchorMin = ThemaConrtoller.ActiveThema.ThemeBtnAnchoredMinPosition;
-            rt.anchorMax = ThemaConrtoller.ActiveThema.ThemeBtnAnchoredMaxPosition;
-
-            rt = _enterFBBtn.GetComponent<RectTransform>();
-            rt.anchorMin = ThemaConrtoller.ActiveThema.EnterFBBtnAnchoredMinPosition;
-            rt.anchorMax = ThemaConrtoller.ActiveThema.EnterFBBtnAnchoredMaxPosition;
-
-            rt = _sendFrendBtn.GetComponent<RectTransform>();
-            rt.anchorMin = ThemaConrtoller.ActiveThema.SendFrendBtnAnchoredMinPosition;
-            rt.anchorMax = ThemaConrtoller.ActiveThema.SendFrendBtnAnchoredMaxPosition;
+            _profileBack.sprite = activeThema.ProfileBackground;
+            _exitBtnImg.sprite = activeThema.ExitProfileBtn;
+            _lineNameLblImg.sprite = activeThema.LineImg;
+            _themaSwithBtnImg.sprite = activeThema.ThemaBtnImg;
         }
+
+        #endregion   
     }
 }

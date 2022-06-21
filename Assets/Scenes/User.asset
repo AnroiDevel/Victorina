@@ -12,45 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be960a26d4ffc243ab6a529027ffefc, type: 3}
   m_Name: User
   m_EditorClassIdentifier: 
-  IsNewPlayer: 0
-  IsNewVersionApp: 0
-  CustomId: 33d8deca-0ecd-4c86-8635-6507513ecb61
-  PlayFabId: B91BDEF0EADD2BA
-  TitlePlayerAccountId: E34709D022DB766F
-  CreatedDateTimePlayfabProfile: 06.04.2022 22:54:47
+  R2: 0
+  RE: 0
+  WeeklyRank: 0
+  MonthRank: 0
+  IsNewPlayer: 1
+  IsNewVersionApp: 1
+  CustomId: 
+  PlayFabIdCurrentPlayer: 
+  TitlePlayerAccountId: 
+  CreatedDateTimePlayfabProfile: 
   ErrorInformation: 
   Avatar: {fileID: 0}
-  PathFileAvatar: D:/Victorina/1024MainLogo.png
-  ScaleImageAvatarCoef: 2.048
+  PathFileAvatar: 
+  ScaleImageAvatarCoef: 1
   Item: 
-  GuidID: 33d8deca-0ecd-4c86-8635-6507513ecb61
-  Name: 9808990
+  GuidID: 
+  Name: 
   Email: 
   Password: 
-  Bit: 1000
-  IsBonusReady: 1
-  MaxBonusTimeSeconds: 29
+  Bit: 0
+  IsBonusReady: 0
+  MaxBonusTimeSeconds: 0
   BonusRechargeSeconds: 0
-  IsTrain: 1
+  IsTrain: 0
   IsPlayed: 0
   IsVip: 0
   TicketsBit: 0
-  PriceBitTicket: 100
-  ItemCatalog:
-  - BitTicket
-  - PlayToken
-  - RightError
-  - MinusOne
-  - MinusTwo
-  - Two-Item Drop
-  CurrencyVirtual:
-  - QB = 0
-  - BT = 1000
-  - BS = 0
-  - R2 = 1
-  - RE = 1
-  - TI = 0
-  LastGameTime: 0:00:15
-  AllQuestionsCount: 10
-  RightAnswersCount: 2
+  PriceBitTicket: 0
+  ItemCatalog: []
+  CurrencyVirtual: []
+  LastGameTime: 
+  AllGameTime: 
+  AverageTimeAnswers: 
+  AllQuestionsCount: 0
+  RightAnswersCount: 0
   RightError: 0
+  NotReclama: 0

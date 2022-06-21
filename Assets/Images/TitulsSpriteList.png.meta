@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: -9111252987980234702
     second: TitulsSpriteList_5
+  - first:
+      213: 5409873317304019141
+    second: TitulsSpriteList_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -119,7 +122,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: 53
     textureCompression: 1
@@ -133,36 +136,15 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TitulsSpriteList_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 207
-        width: 214
-        height: 215
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7ebe1de57774ece90800000000000000
-      internalID: -7003581792497046553
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: TitulsSpriteList_2
       rect:
         serializedVersion: 2
-        x: 225
-        y: 163
-        width: 283
-        height: 254
-      alignment: 9
-      pivot: {x: 0.48833388, y: 0.590989}
+        x: 26
+        y: 1808
+        width: 471
+        height: 385
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -178,12 +160,12 @@ TextureImporter:
       name: TitulsSpriteList_3
       rect:
         serializedVersion: 2
-        x: 551
-        y: 163
-        width: 283
-        height: 261
+        x: 42
+        y: 1423
+        width: 450
+        height: 379
       alignment: 9
-      pivot: {x: 0.4844453, y: 0.5758988}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -199,12 +181,12 @@ TextureImporter:
       name: TitulsSpriteList_4
       rect:
         serializedVersion: 2
-        x: 894
-        y: 164
-        width: 440
-        height: 260
+        x: 42
+        y: 1033
+        width: 450
+        height: 372
       alignment: 9
-      pivot: {x: 0.49749923, y: 0.5761909}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -220,12 +202,12 @@ TextureImporter:
       name: TitulsSpriteList_5
       rect:
         serializedVersion: 2
-        x: 1432
-        y: 164
-        width: 440
-        height: 347
+        x: 46
+        y: 578
+        width: 450
+        height: 372
       alignment: 9
-      pivot: {x: 0.50250214, y: 0.44291234}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -233,6 +215,27 @@ TextureImporter:
       bones: []
       spriteID: 230c8b05ea35e8180800000000000000
       internalID: -9111252987980234702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TitulsSpriteList_6
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 89
+        width: 450
+        height: 372
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c825cd8e1bb31b40800000000000000
+      internalID: 5409873317304019141
       vertices: []
       indices: 
       edges: []

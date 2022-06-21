@@ -6,42 +6,73 @@ namespace Victorina
 {
     public class Logo : MonoBehaviour
     {
+        #region Fields
+
         [SerializeField] private float _time;
-        [SerializeField] private PlayerData _playerData;
+        [SerializeField] private Thema _defaultThema;
+        private Character _player;
+
+        #endregion
+
+
+        #region UnityMethods
+
+        private void Awake()
+        {
+            var gameData = GameData.GetInstance();
+            _player = gameData.Player;
+        }
 
         private void Start()
         {
-            _playerData.SetAvatar();
+            ThemaConrtoller.SetActiveThema(_defaultThema.name);
 
             PlayerPrefs.SetInt("Sfx", 1);
             PlayerPrefs.SetInt("Music", 1);
 
             StartCoroutine(LogoPlay());
-            //_playerData.LoginComplete += LoadGame;
         }
+
+        #endregion
+
+
+        #region Methods
 
         private IEnumerator LogoPlay()
         {
             yield return new WaitForSeconds(_time);
-
             LoadGame();
         }
 
-        private void LoadNextScena()
+        private bool IsNewVersionApp()
         {
-            var sceneLoader = GetComponent<SceneLoader>();
-            if (_playerData.IsNewVersionApp || _playerData.IsNewPlayer)
-                sceneLoader.LoadGameScene("Confidencial");
-            else
-                _playerData.Login();
+            var currentVersion = Application.version;
+            string prevVersion = string.Empty;
+
+            if (PlayerPrefs.HasKey("Version"))
+                prevVersion = PlayerPrefs.GetString("Version");
+
+            return !currentVersion.Equals(prevVersion);
         }
 
         private void LoadGame()
         {
             var sceneLoader = GetComponent<SceneLoader>();
-            sceneLoader.LoadGameScene("Victorina");
 
+            if (IsNewVersionApp())
+            {
+                sceneLoader.LoadGameScene("Confidencial");
+                PlayerPrefs.SetInt("MarkReview", 0);
+            }
+            else if (_player.Name == null)
+            {
+                PlayerPrefs.DeleteKey("AvatarUrl");
+                sceneLoader.LoadGameScene("Autorization");
+            }
+            else
+                sceneLoader.LoadGameScene("Victorina");
         }
-    }
 
+        #endregion    
+    }
 }

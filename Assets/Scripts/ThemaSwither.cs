@@ -16,7 +16,7 @@ namespace Victorina
             }
             themaType++;
 
-            if (themaType > ThemaType.NeonThema)
+            if (themaType > ThemaType.GreenThema)
                 themaType = ThemaType.ClassicThema;
 
             PlayerPrefs.SetInt("Thema", (int)themaType);
@@ -24,12 +24,4 @@ namespace Victorina
             _profileThema.ThemaApply();
         }
     }
-
-    public enum ThemaType
-    {
-        ClassicThema,
-        FuturismThema,
-        NeonThema,
-    }
-
 }

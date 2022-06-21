@@ -1,3 +1,5 @@
+using PlayFab;
+using PlayFab.ClientModels;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,30 +9,62 @@ namespace Victorina
 {
     public class BonusManager : MonoBehaviour
     {
-        [SerializeField] private PlayerData _playerData;
         [SerializeField] private Text _timeToNext;
         [SerializeField] private Text _bit;
+        [SerializeField] private Text _tickets;
 
         [SerializeField] private GameObject[] _bonusesPlaces;
         [SerializeField] private Sprite _rightErrImg;
         [SerializeField] private Sprite _twoVarRemoveImg;
+        [SerializeField] private RewardedAdsButton _rewardedAds;
 
         private Button _bonusButton;
 
         private bool _isBonusComplete;
-        private DateTime _startTime;
+
+        private Character _player;
+
+        private BonusTimer _bonusTimer;
+        private GameData _gameData;
+
+        private PlayFabAccountManager _accountManager;
+
 
         private void Awake()
         {
-            _bonusButton = GetComponent<Button>();
-            _isBonusComplete = _playerData.IsBonusReady;
+            _gameData = GameData.GetInstance();
+            _bonusTimer = BonusTimer.GetInstance();
+            _player = _gameData.Player;
+            _accountManager = PlayFabAccountManager.Instance;
+
         }
 
         private void Start()
         {
-            if (_isBonusComplete)
-                OnBonusComplete(true);
-            _playerData.GetNumberBonus += OnGetNumberBonus;
+            if (_player.Bonus > 0)
+                _bonusTimer.StartTimer(_player.BonusSecondsTime);
+            _bonusButton = GetComponent<Button>();
+            _bonusButton.onClick.AddListener(GetBonus);
+            _accountManager.InventoryReceived += OnGetInventory;
+        }
+
+        private void OnGetInventory()
+        {
+            if (_bit)
+                _bit.text = _gameData.Player.Money.ToString();
+            if (_tickets != null)
+                _tickets.text = _gameData.Player.Tickets.ToString();
+        }
+
+        private void FixedUpdate()
+        {
+            if (_isBonusComplete) return;
+            _timeToNext.text = _bonusTimer.LeftTime;
+            if (_timeToNext.text.Length == 6)
+            {
+                _bonusButton.interactable = true;
+                _isBonusComplete = true;
+            }
         }
 
         private void OnGetNumberBonus(int numberBonus)
@@ -65,28 +99,38 @@ namespace Victorina
             }
         }
 
-        private void OnBonusComplete(bool val = false)
-        {
-            _bonusButton.interactable = val;
-            _timeToNext.text = "Готово";
-        }
 
-        private void FixedUpdate()
+        private void GetBonus()
         {
-            if (_playerData.IsBonusReady)
-                OnBonusComplete(true);
-            else
-                _timeToNext.text = _playerData.RechargedBonusT.ToLongTimeString();
-        }
-
-        public void GetBonus()
-        {
-            _playerData.GetBonus();
             _isBonusComplete = false;
             _bonusButton.interactable = false;
-            var tempBit = _playerData.Bit;
-            _bit.text = tempBit.ToString();
+
+            var rnd = UnityEngine.Random.Range(1, 5);
+            var itId = "Bonus" + rnd;
+            OnGetNumberBonus(rnd);
+            PurchaseItemRequest request = new PurchaseItemRequest
+            {
+                CatalogVersion = "Bonuses",
+                ItemId = itId,
+                VirtualCurrency = "BS",
+                Price = 1,
+            };
+            PlayFabClientAPI.PurchaseItem(request, ItemsUpdate(), error => Debug.Log(error));
+        }
+
+        private Action<PurchaseItemResult> ItemsUpdate()
+        {
+            return result =>
+            {
+                Debug.Log("Бонус получен");
+                _bonusButton.interactable = false;
+                _gameData.Player.Bonus--;
+
+                _accountManager.GetPlayerInventory();
+
+                _bonusTimer.StartTimer(_player.BonusSecondsTime);
+                _isBonusComplete = false;
+            };
         }
     }
-
 }

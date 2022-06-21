@@ -2,19 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class LengthTextController : MonoBehaviour
+namespace Victorina
 {
-    [SerializeField] private Text _text;
-
-    private InputField _inputField;
-
-    private void Start()
+    public class LengthTextController : MonoBehaviour
     {
-        _inputField = GetComponent<InputField>();   
-    }
+        [SerializeField] private Text _text;
 
-    public void LengthUpdate()
-    {
-        _text.text = _inputField.text.Length.ToString();
+        private InputField _inputField;
+
+        private void Start()
+        {
+            _inputField = GetComponent<InputField>();
+        }
+
+        public void LengthUpdate()
+        {
+            _text.text = _inputField.text.Length.ToString();
+        }
     }
 }

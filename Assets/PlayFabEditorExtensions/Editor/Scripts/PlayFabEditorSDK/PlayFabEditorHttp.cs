@@ -180,7 +180,7 @@ namespace PlayFab.PfEditor
             }
             else
             {
-                UnityEngine.Debug.Log("UnityWebRequest was null");
+                Debug.Log("UnityWebRequest was null");
                 errorCallback("UnityWebRequest Object was null");
             }
         }
@@ -191,14 +191,14 @@ namespace PlayFab.PfEditor
             {
                 yield return www.SendWebRequest();
 
-                if (!string.IsNullOrEmpty(www.error) || www.isHttpError)
+                if (!string.IsNullOrEmpty(www.error) || www.result != UnityWebRequest.Result.Success)
                     errorCallback(www.error);
                 else
                     callBack(www.downloadHandler.data);
             }
             else
             {
-                UnityEngine.Debug.Log("UnityWebRequest was null");
+                Debug.Log("UnityWebRequest was null");
                 errorCallback("UnityWebRequest Object was null");
             }
         }
