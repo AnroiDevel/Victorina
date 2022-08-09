@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _time: 10
+  _defaultThema: {fileID: 11400000, guid: 8bf66e3ac166c994a869023a16ba6827, type: 2}
 --- !u!4 &69414121
 Transform:
   m_ObjectHideFlags: 0
